@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/bottom_nav_home"
+        android:icon="@mipmap/icon_home"
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_nav_knowledge"
+        android:icon="@mipmap/icon_konwlege"
+        android:title="@string/knowledge_hierarchy"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_nav_public_no"
+        android:icon="@mipmap/icon_public_no"
+        android:title="@string/public_number"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_nav_navigation"
+        android:icon="@mipmap/icon_navigation"
+        android:title="@string/navigation"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_nav_project"
+        android:icon="@mipmap/icon_project"
+        android:title="@string/projects"
+        app:showAsAction="ifRoom" />
+</menu>
