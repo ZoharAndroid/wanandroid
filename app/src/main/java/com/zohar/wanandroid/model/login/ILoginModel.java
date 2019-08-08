@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.model;
+package com.zohar.wanandroid.model.login;
 
 /**
  * Created by zohar on 2019/8/7 15:19

@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         mNavigationFragment = NavigationFragment.newInstance();
         mProjectFragment = ProjectFragment.newInstance();
 
-
         mFragments.add(mHomeFragment);
         mFragments.add(mKnowlegeHierachyFragment);
         mFragments.add(mPublicNoFragment);

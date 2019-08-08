@@ -3,8 +3,8 @@ package com.zohar.wanandroid.presenter;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.User;
-import com.zohar.wanandroid.model.LoginModel;
-import com.zohar.wanandroid.model.OnLoginListener;
+import com.zohar.wanandroid.model.login.LoginModel;
+import com.zohar.wanandroid.model.login.OnLoginListener;
 import com.zohar.wanandroid.view.ILoginView;
 
 /**

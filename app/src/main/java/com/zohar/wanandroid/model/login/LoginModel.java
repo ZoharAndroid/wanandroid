@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.model;
+package com.zohar.wanandroid.model.login;
 
 import com.zohar.wanandroid.bean.User;
 
