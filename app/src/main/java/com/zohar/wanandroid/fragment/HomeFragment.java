@@ -16,7 +16,7 @@ import com.zohar.wanandroid.R;
  */
 public class HomeFragment extends Fragment {
 
-    public static Fragment newInstance(){
+    public static HomeFragment newInstance(){
         return new HomeFragment();
     }
 

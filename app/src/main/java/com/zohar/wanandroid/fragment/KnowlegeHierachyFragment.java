@@ -14,10 +14,10 @@ import com.zohar.wanandroid.R;
  * Created by zohar on 2019/8/8 9:22
  * Describe:
  */
-public class KonwlegeHierachyFragment extends Fragment {
+public class KnowlegeHierachyFragment extends Fragment {
 
-    public static Fragment newInstance(){
-        return new KonwlegeHierachyFragment();
+    public static KnowlegeHierachyFragment newInstance(){
+        return new KnowlegeHierachyFragment();
     }
 
     @Nullable

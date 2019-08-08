@@ -16,7 +16,7 @@ import com.zohar.wanandroid.R;
  */
 public class PublicNoFragment extends Fragment {
 
-    public static Fragment newInstance(){
+    public static PublicNoFragment newInstance(){
         return new PublicNoFragment();
     }
 

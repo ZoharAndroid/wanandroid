@@ -16,7 +16,7 @@ import com.zohar.wanandroid.R;
  */
 public class ProjectFragment extends Fragment {
 
-    public static Fragment newInstance(){
+    public static ProjectFragment newInstance(){
         return new ProjectFragment();
 
     }
