@@ -14,4 +14,6 @@
     <color name="white">#ffffff</color>
 
     <color name="bottom_nav_bg">#e6e6e6</color>
+
+    <color name="tool_bar_text">#ffffff</color>
 </resources>

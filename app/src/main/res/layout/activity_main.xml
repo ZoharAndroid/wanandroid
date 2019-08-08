@@ -13,53 +13,63 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
-            app:titleTextColor="@color/white"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimary"
+            app:titleTextColor="@color/white">
 
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/tool_bar_text"
+                android:textSize="18sp"
+                tools:text="标题" />
+
+        </android.support.v7.widget.Toolbar>
 
         <!-- 展示内容 -->
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
 
         <android.support.design.widget.BottomNavigationView
-            app:labelVisibilityMode="labeled"
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/bottom_nav_bg"
             app:itemIconTint="@drawable/bottom_nav_text_selector"
             app:itemTextColor="@drawable/bottom_nav_text_selector"
-            app:menu="@menu/bottom_nav_men"
-            android:layout_height="wrap_content"/>
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_nav_men" />
 
 
         <!-- 悬浮按钮 -->
         <android.support.design.widget.FloatingActionButton
-            android:layout_gravity="bottom|end"
             android:id="@+id/floating_action_button"
             android:layout_width="wrap_content"
-            android:layout_marginBottom="60dp"
-            android:layout_marginEnd="12dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="60dp"
             android:src="@mipmap/icon_arrow_up" />
 
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
-        android:fitsSystemWindows="true"
-        app:itemBackground="@drawable/item_nav_bg"
-        android:background="@color/draw_bg_normal"
-        android:layout_gravity="start"
         android:id="@+id/navigation_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/draw_bg_normal"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
+        app:itemBackground="@drawable/item_nav_bg"
         app:menu="@menu/nav_menu_main" />
 
 </android.support.v4.widget.DrawerLayout>
