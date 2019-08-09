@@ -46,7 +46,15 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<HomeArticleAdapter.
         articleViewHolder.date.setText(article.getNiceDate());
         articleViewHolder.chapterName.setText(article.getChapterName());
         articleViewHolder.superChapterName.setText(article.getSuperChapterName());
-        LogUtils.d(article.toString());
+        //LogUtils.d(article.toString());
+        if (article.isFresh()){
+            articleViewHolder.refresh.setVisibility(View.VISIBLE);
+        }
+        // 处理tag
+        if (article.getTags().size() != 0){
+            articleViewHolder.tag.setVisibility(View.VISIBLE);
+            articleViewHolder.tag.setText(article.getTags().get(0).getName());
+        }
 
     }
 
@@ -64,6 +72,8 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<HomeArticleAdapter.
         TextView superChapterName;
         TextView date; // niceDate
         ImageView collectImageView;
+        TextView refresh;
+        TextView tag;
 
         public ArticleViewHolder( View itemView) {
             super(itemView);
@@ -73,6 +83,8 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<HomeArticleAdapter.
             superChapterName = itemView.findViewById(R.id.item_super_chapter_name);
             date = itemView.findViewById(R.id.item_date);
             collectImageView = itemView.findViewById(R.id.item_collect_image_view);
+            refresh = itemView.findViewById(R.id.item_tag_refresh);
+            tag = itemView.findViewById(R.id.item_tag);
         }
     }
 }

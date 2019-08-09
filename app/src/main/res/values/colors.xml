@@ -17,4 +17,7 @@
 
     <color name="tool_bar_text">#ffffff</color>
     <color name="item_text_sub">#515151</color>
+    <color name="item_line">#bfbfbf</color>
+    <color name="item_tag_refresh">#3CB371</color>
+    <color name="item_tag">#DC143C</color>
 </resources>
