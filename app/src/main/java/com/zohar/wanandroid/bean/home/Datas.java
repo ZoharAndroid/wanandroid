@@ -256,4 +256,10 @@ public class Datas {
     public void setZan(int zan) {
         this.zan = zan;
     }
+
+    @Override
+    public String toString() {
+
+        return "[title:"+getTitle() + " author:" + getAuthor() +"]";
+    }
 }
