@@ -1,12 +1,13 @@
 package com.zohar.wanandroid.bean.home;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by zohar on 2019/8/8 14:40
  * Describe:
  */
-public class Datas {
+public class Datas implements Serializable {
     /**
      * "apkLink": "",
      *         "author": "code小生",

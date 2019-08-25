@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.icon_menu);
+            actionBar.setDisplayShowTitleEnabled(false);
         }
         mToolbarTitle.setText(getResources().getString(R.string.home)); // 设置标题
 

@@ -1,6 +1,7 @@
 package com.zohar.wanandroid.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zohar.wanandroid.ArticleDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.utils.LogUtils;
@@ -27,19 +29,35 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<HomeArticleAdapter.
     public HomeArticleAdapter(Context context, List<Datas> articles) {
         mContext = context;
         this.articles = articles;
-        LogUtils.d("传递过来的数据为：" + articles.toString() );
+        // LogUtils.d("传递过来的数据为：" + articles.toString() );
     }
 
     @NonNull
     @Override
     public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article, viewGroup, false);
-        ArticleViewHolder holder = new ArticleViewHolder(view);
+        final ArticleViewHolder holder = new ArticleViewHolder(view);
+        // 设置点击事件
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition(); // 获取当前点击的位置
+                Datas article = articles.get(position);
+                // 跳转到内容详情页面
+                String articleLink = article.getLink();
+                Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+                intent.putExtra(ArticleDetailActivity.ARTICLE_FROM_HOME, articleLink);
+                mContext.startActivity(intent);
+            }
+        });
+
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder( ArticleViewHolder articleViewHolder, int position) {
+        // viewholder绑定的数据
         Datas article = articles.get(position);
         articleViewHolder.title.setText(article.getTitle());
         articleViewHolder.author.setText(article.getAuthor());
@@ -66,6 +84,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<HomeArticleAdapter.
 
     static class ArticleViewHolder extends RecyclerView.ViewHolder{
 
+        View itemView;
         TextView title;
         TextView author;
         TextView chapterName;
@@ -77,6 +96,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<HomeArticleAdapter.
 
         public ArticleViewHolder( View itemView) {
             super(itemView);
+            this.itemView = itemView;
             title = itemView.findViewById(R.id.item_title);
             author = itemView.findViewById(R.id.item_author);
             chapterName = itemView.findViewById(R.id.item_chapter_name);
