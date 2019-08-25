@@ -21,4 +21,6 @@
     <string name="slash_line">/</string>
     <string name="refresh">新</string>
 
+    <string name="loading">正在加载...</string>
+
 </resources>
