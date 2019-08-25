@@ -13,12 +13,22 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/item_author_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_item_header"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/item_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
             android:textColor="@color/item_text_sub"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/item_author_header"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="用户名" />
 
@@ -27,10 +37,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:src="@mipmap/icon_item_chapter_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/item_chapter_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,12 +56,14 @@
                 tools:text="小分类" />
 
             <TextView
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/slash_line"
                 android:textColor="@color/item_text_sub" />
 
             <TextView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/item_super_chapter_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,14 +77,14 @@
 
     <!-- 中间标题 -->
     <TextView
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:gravity="center"
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textColor="@color/mainBlackColor"
-        android:textSize="16sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -82,53 +102,52 @@
 
 
         <TextView
-            android:visibility="gone"
+            android:id="@+id/item_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shap_item_tag"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:textColor="@color/item_tag"
-            android:background="@drawable/shap_item_tag"
-            android:id="@+id/item_tag"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="项目"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            tools:text="项目" />
 
 
         <TextView
-            android:visibility="gone"
+            android:id="@+id/item_tag_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shap_item_tag_refresh"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:layout_marginLeft="5dp"
             android:text="@string/refresh"
             android:textColor="@color/item_tag_refresh"
-            android:background="@drawable/shap_item_tag_refresh"
-            android:id="@+id/item_tag_refresh"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/item_tag"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="新"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            tools:text="新" />
 
 
         <ImageView
-            android:layout_marginLeft="5dp"
             android:id="@+id/item_date_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:src="@mipmap/icon_item_date"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/item_tag_refresh"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_marginLeft="5dp"
             android:id="@+id/item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/item_text_sub"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/item_date_image_view"
@@ -148,7 +167,6 @@
 
 
     </android.support.constraint.ConstraintLayout>
-
 
 
 </android.support.constraint.ConstraintLayout>
