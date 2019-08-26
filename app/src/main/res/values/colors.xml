@@ -22,4 +22,5 @@
     <color name="item_tag">#DC143C</color>
 
     <color name="colorBackground">#C0C0C0</color>
+    <color name="text_color">#000000</color>
 </resources>

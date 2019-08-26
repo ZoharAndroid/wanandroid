@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
         Fragment targetFragment = mFragments.get(position);
         Fragment currentFragment = mFragments.get(mCurrentIndex);
         mCurrentIndex = position;
-        Log.d(TAG, "=========当前页面：" + mCurrentIndex + " =========");
         fragmentTransaction.hide(currentFragment);
         if (!targetFragment.isAdded()){
             // 如果目标fragment没有被添加,那么就进行谈价

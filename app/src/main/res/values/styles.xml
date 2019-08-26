@@ -24,4 +24,17 @@
         <item name="android:layout_margin">20dp</item>
     </style>
 
+    <!--toolbar标题栏样式-->
+    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+    <!--popmenu样式-->
+    <style name="ToolbarMenuTheme" parent="ThemeOverlay.AppCompat">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:background">@drawable/item_popmenu_selector</item>
+    </style>
+
 </resources>
