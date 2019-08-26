@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -29,8 +30,10 @@ public class ArticleDetailActivity extends AppCompatActivity implements IArticle
 
     private ArticleDetialPresenter mPresenter;
 
+    // View
     private WebView mWebView;
     private ProgressBar mLoadProgress;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements IArticle
     private void initView() {
         mWebView = findViewById(R.id.content_web_view);
         mLoadProgress = findViewById(R.id.load_article_progress_bar);
+        mToolbar = findViewById(R.id.article_detail_tool_bar);
 
     }
 
