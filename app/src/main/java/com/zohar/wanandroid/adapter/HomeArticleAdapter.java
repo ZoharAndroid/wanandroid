@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.zohar.wanandroid.ArticleDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.bean.home.Datas;
+import com.zohar.wanandroid.utils.LogUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ import java.util.List;
  */
 public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Datas> articles;
+    private List<Datas> articles = new ArrayList<>();
     private Context mContext;
 
     // 正常内容
@@ -32,15 +34,13 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final static int TYPE_FOOTER = 1;
 
 
-    public HomeArticleAdapter(Context context, List<Datas> articles) {
+    public HomeArticleAdapter(Context context) {
         mContext = context;
-        this.articles = articles;
-        // LogUtils.d("传递过来的数据为：" + articles.toString() );
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == articles.size()){
+        if (position == articles.size()) {
             return TYPE_FOOTER;
         }
         return TYPE_CONTENT;
@@ -66,7 +66,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             });
             return holder;
-        }else{
+        } else {
             // footer
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article_footer, viewGroup, false);
             return new FooterViewHolder(view);
@@ -77,10 +77,10 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (getItemViewType(position) == TYPE_FOOTER){
+        if (getItemViewType(position) == TYPE_FOOTER) {
             // 上拉加载
 
-        }else {
+        } else {
             // 正常内容
             // viewholder绑定的数据
             ArticleViewHolder articleViewHolder = (ArticleViewHolder) viewHolder;
@@ -109,7 +109,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
 
-    class FooterViewHolder extends RecyclerView.ViewHolder{
+    class FooterViewHolder extends RecyclerView.ViewHolder {
 
         public FooterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -141,5 +141,22 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             refresh = itemView.findViewById(R.id.item_tag_refresh);
             tag = itemView.findViewById(R.id.item_tag);
         }
+    }
+
+    /**
+     * 添加内容，然后更新
+     *
+     * @param addArticle
+     */
+    public void addArticle(List<Datas> addArticle) {
+        articles.addAll(addArticle);
+        notifyItemRangeChanged(articles.size() - addArticle.size(), addArticle.size());
+    }
+
+    /**
+     * 清空list
+     */
+    public void clearArticle(){
+        articles.clear();
     }
 }

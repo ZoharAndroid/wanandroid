@@ -3,6 +3,7 @@ package com.zohar.wanandroid.presenter;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.home.HomeModel;
 import com.zohar.wanandroid.model.home.OnHttpListener;
 import com.zohar.wanandroid.view.home.IHomeView;
@@ -49,6 +50,68 @@ public class HomePresenter {
                     public void run() {
                         mHomeView.hideLoading();
                         mHomeView.httpFailed(msg);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 加载更多请求
+     *
+     * @param url
+     */
+    public void loadMoreRequest(String url){
+        // 通过pressent调用model来发送http请求
+        mHomeModel.sendHomeHttp(url, new OnHttpListener() {
+
+            @Override
+            public void httpSuccess(final Article article) {
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHomeView.loadMoreRequestSuccess(article);
+                    }
+                });
+            }
+
+            @Override
+            public void httpFailed(final String msg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHomeView.loadMoreRequestFailed(msg);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 刷新
+     */
+    public void onRefresh(){
+        // 通过pressent调用model来发送http请求
+        mHomeModel.sendHomeHttp(ApiAddress.homeAritcleAddress(0), new OnHttpListener() {
+
+            @Override
+            public void httpSuccess(final Article article) {
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHomeView.refreshRequestSuccess(article);
+                    }
+                });
+            }
+
+            @Override
+            public void httpFailed(final String msg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHomeView.refreshRequestFailded(msg);
                     }
                 });
             }

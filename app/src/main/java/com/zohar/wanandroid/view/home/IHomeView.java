@@ -13,4 +13,10 @@ public interface IHomeView {
 
     void httpSuccess(Article data);
     void httpFailed(String msg);
+
+    void loadMoreRequestSuccess(Article data);
+    void loadMoreRequestFailed(String msg);
+
+    void refreshRequestSuccess(Article data);
+    void refreshRequestFailded(String msg);
 }
