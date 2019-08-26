@@ -23,4 +23,6 @@
 
     <string name="loading">正在加载...</string>
 
+    <string name="share">分享</string>
+    <string name="open_browser">用浏览器打开</string>
 </resources>

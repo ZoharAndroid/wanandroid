@@ -1,24 +1,21 @@
 package com.zohar.wanandroid;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.ArticleDetialPresenter;
-import com.zohar.wanandroid.utils.LogUtils;
-import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.delail.IArticleDetailView;
 
 /**
@@ -66,12 +63,14 @@ public class ArticleDetailActivity extends AppCompatActivity implements IArticle
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ToastUtils.toastShow(ArticleDetailActivity.this, "点击了");
                 finish();
             }
         });
     }
 
+    /**
+     * 设置一些事件相关的内容
+     */
     private void initEvent() {
         // 设置WebView
         settingWebView();
@@ -79,6 +78,9 @@ public class ArticleDetailActivity extends AppCompatActivity implements IArticle
         mPresenter.loadArticleContent();
     }
 
+    /**
+     * 初始化View
+     */
     private void initView() {
         mWebView = findViewById(R.id.content_web_view);
         mLoadProgress = findViewById(R.id.load_article_progress_bar);
@@ -102,6 +104,27 @@ public class ArticleDetailActivity extends AppCompatActivity implements IArticle
         settings.setLoadWithOverviewMode(true);
         // 自适应屏幕
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 创建菜单
+        getMenuInflater().inflate(R.menu.menu_article_tool_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // menu选项
+        switch (item.getItemId()){
+            case R.id.item_collection_article:
+                break;
+            case R.id.item_share_article:
+                break;
+            case R.id.item_open_browser:
+                break;
+        }
+        return true;
     }
 
     @Override
