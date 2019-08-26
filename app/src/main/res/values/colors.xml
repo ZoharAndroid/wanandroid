@@ -20,4 +20,6 @@
     <color name="item_line">#bfbfbf</color>
     <color name="item_tag_refresh">#3CB371</color>
     <color name="item_tag">#DC143C</color>
+
+    <color name="colorBackground">#C0C0C0</color>
 </resources>
