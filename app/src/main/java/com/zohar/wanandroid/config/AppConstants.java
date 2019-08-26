@@ -1,0 +1,12 @@
+package com.zohar.wanandroid.config;
+
+/**
+ * Created by zohar on 2019/8/26 17:16
+ * Describe:
+ *  App常量配置文件
+ */
+public class AppConstants {
+
+    public static final String ARTICLE_FROM_HOME = "article_from_home";
+    public static final String ARTICLE_TITLE_FROM_HOME = "article_title_frome_home";
+}

@@ -92,27 +92,22 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.bottom_nav_home:
                         mToolbarTitle.setText(getResources().getString(R.string.home)); // 设置标题
                         switchFragment(0);
-                        ToastUtils.toastShow(MainActivity.this, "home");
                         break;
                     case R.id.bottom_nav_knowledge:
                         mToolbarTitle.setText(getResources().getString(R.string.knowledge_hierarchy)); // 设置标题
                         switchFragment(1);
-                        ToastUtils.toastShow(MainActivity.this, "知识体系");
                         break;
                     case R.id.bottom_nav_public_no:
                         mToolbarTitle.setText(getResources().getString(R.string.public_number)); // 设置标题
                         switchFragment(2);
-                        ToastUtils.toastShow(MainActivity.this, "公众号");
                         break;
                     case R.id.bottom_nav_navigation:
                         mToolbarTitle.setText(getResources().getString(R.string.navigation)); // 设置标题
                         switchFragment(3);
-                        ToastUtils.toastShow(MainActivity.this, "导航");
                         break;
                     case R.id.bottom_nav_project:
                         mToolbarTitle.setText(getResources().getString(R.string.projects)); // 设置标题
                         switchFragment(4);
-                        ToastUtils.toastShow(MainActivity.this, "项目");
                         break;
                 }
                 return true;

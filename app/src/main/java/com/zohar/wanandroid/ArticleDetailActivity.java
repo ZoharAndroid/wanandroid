@@ -3,6 +3,7 @@ package com.zohar.wanandroid;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,10 +12,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.zohar.wanandroid.bean.home.Datas;
+import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.ArticleDetialPresenter;
 import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.delail.IArticleDetailView;
 
 /**
@@ -23,10 +27,9 @@ import com.zohar.wanandroid.view.delail.IArticleDetailView;
  */
 public class ArticleDetailActivity extends AppCompatActivity implements IArticleDetailView {
 
-    public static final String ARTICLE_FROM_HOME = "article_from_home";
-
     // 从主页获取的文章
     private String articleLink;
+    private String articleTitle;
 
     private ArticleDetialPresenter mPresenter;
 
@@ -34,17 +37,39 @@ public class ArticleDetailActivity extends AppCompatActivity implements IArticle
     private WebView mWebView;
     private ProgressBar mLoadProgress;
     private Toolbar mToolbar;
+    private TextView mTextViewTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
-        articleLink = getIntent().getStringExtra(ARTICLE_FROM_HOME);
+        articleLink = getIntent().getStringExtra(AppConstants.ARTICLE_FROM_HOME);
+        articleTitle = getIntent().getStringExtra(AppConstants.ARTICLE_TITLE_FROM_HOME);
 
         initView();
-
+        initToolBar();
         initEvent();
 
+    }
+
+    /**
+     * 设置toolbar
+     */
+    private void initToolBar() {
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+        // 显示标题
+        mTextViewTitle.setText(articleTitle);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ToastUtils.toastShow(ArticleDetailActivity.this, "点击了");
+                finish();
+            }
+        });
     }
 
     private void initEvent() {
@@ -58,7 +83,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements IArticle
         mWebView = findViewById(R.id.content_web_view);
         mLoadProgress = findViewById(R.id.load_article_progress_bar);
         mToolbar = findViewById(R.id.article_detail_tool_bar);
-
+        mTextViewTitle = findViewById(R.id.article_toolbar_title);
     }
 
     /**

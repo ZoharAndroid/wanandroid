@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.zohar.wanandroid.ArticleDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.bean.home.Datas;
+import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -61,7 +62,8 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     // 跳转到内容详情页面
                     String articleLink = article.getLink();
                     Intent intent = new Intent(mContext, ArticleDetailActivity.class);
-                    intent.putExtra(ArticleDetailActivity.ARTICLE_FROM_HOME, articleLink);
+                    intent.putExtra(AppConstants.ARTICLE_FROM_HOME, articleLink); // 传递链接
+                    intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, article.getTitle()); // 传递标题
                     mContext.startActivity(intent);
                 }
             });

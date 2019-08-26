@@ -13,7 +13,7 @@
     <color name="draw_bg_normal">#e6e6e6</color>
     <color name="white">#ffffff</color>
 
-    <color name="bottom_nav_bg">#e6e6e6</color>
+    <color name="bottom_nav_bg">#FFFAFA</color>
 
     <color name="tool_bar_text">#ffffff</color>
     <color name="item_text_sub">#515151</color>
