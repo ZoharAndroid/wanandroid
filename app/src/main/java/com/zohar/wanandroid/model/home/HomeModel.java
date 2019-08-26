@@ -33,7 +33,7 @@ public class HomeModel implements IHomeModel{
 
         Request request = new Request.Builder()
                 .get()
-                .url(ApiAddress.homeAritcleAddress(0))
+                .url(url)
                 .build();
 
         Call call = client.newCall(request);
