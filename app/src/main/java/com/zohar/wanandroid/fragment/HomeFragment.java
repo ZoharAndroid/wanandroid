@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.stx.xhb.xbanner.XBanner;
@@ -20,10 +21,15 @@ import com.zohar.wanandroid.adapter.OnLoadMoreListener;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Data;
 import com.zohar.wanandroid.bean.home.banner.Banner;
+import com.zohar.wanandroid.bean.home.banner.BannerData;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.HomePresenter;
+import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.utils.ScreenUtil;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.home.IHomeView;
+
+import java.util.List;
 
 /**
  * Created by zohar on 2019/8/8 9:20
@@ -44,8 +50,11 @@ public class HomeFragment extends Fragment implements IHomeView {
     private int mPageIndex = 0;
     private HomeArticleAdapter mArticleAdapter;
 
+    // 首页banner数据list
+    private List<BannerData> mBannerDatas;
 
-    public static HomeFragment newInstance(){
+
+    public static HomeFragment newInstance() {
         return new HomeFragment();
     }
 
@@ -107,8 +116,9 @@ public class HomeFragment extends Fragment implements IHomeView {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mHomeRecyclerView.setLayoutManager(linearLayoutManager);
-    }
 
+        mArticleAdapter = new HomeArticleAdapter(getContext());
+    }
 
 
     @Override
@@ -123,15 +133,14 @@ public class HomeFragment extends Fragment implements IHomeView {
 
     @Override
     public void httpSuccess(Article data) {
-        if (data.getErrorCode() == 0){
+        if (data.getErrorCode() == 0) {
             // 没有错误
             Data homeData = data.getData();
             // 添加recyclerview的apter
-            mArticleAdapter = new HomeArticleAdapter(getContext());
             mArticleAdapter.addArticle(homeData.getDatas());
             mHomeRecyclerView.setAdapter(mArticleAdapter);
 
-        }else{
+        } else {
             ToastUtils.toastShow(getContext(), data.getErrorMsg());
         }
     }
@@ -143,13 +152,13 @@ public class HomeFragment extends Fragment implements IHomeView {
 
     @Override
     public void loadMoreRequestSuccess(Article data) {
-        if (data.getErrorCode() == 0){
+        if (data.getErrorCode() == 0) {
             // 没有错误
             Data homeData = data.getData();
             // 新获取下来的文章数目
             // 添加到新list中
             mArticleAdapter.addArticle(homeData.getDatas());
-        }else{
+        } else {
             ToastUtils.toastShow(getContext(), data.getErrorMsg());
         }
     }
@@ -177,6 +186,36 @@ public class HomeFragment extends Fragment implements IHomeView {
 
     @Override
     public void bannerHttpRequestSuccess(Banner banner) {
+        if (banner.getErrorCode() == 0) {
+            // 添加RecyclerView的header
+            setHeaderView();
+            // 获取广告图片内容
+            mBannerDatas = banner.getData();
+            mArticleAdapter.setBanners(mBannerDatas);
+            //刷新数据之后，需要重新设置是否支持自动轮播
+            mBanner.setAutoPlayAble(mBannerDatas.size() > 1);
+            mBanner.setBannerData(mBannerDatas);
+        }
 
+
+    }
+
+
+    /**
+     * 添加RecyclerView的头布局
+     */
+    private void setHeaderView() {
+        View headView = View.inflate(getContext(), R.layout.item_banner_header, null);
+        mBanner = headView.findViewById(R.id.banner);
+        mArticleAdapter.setHeaderView(headView);
+        // 开始自动播放
+        mBanner.startAutoPlay();
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBanner.stopAutoPlay();
     }
 }

@@ -1,11 +1,13 @@
 package com.zohar.wanandroid.bean.home.banner;
 
+import com.stx.xhb.xbanner.entity.SimpleBannerInfo;
+
 /**
  * Created by zohar on 2019/8/26 23:11
  * Describe:
  *  轮播图中的item中的data json格式
  */
-public class BannerData {
+public class BannerData extends SimpleBannerInfo {
 
     /**
      *  {
@@ -82,5 +84,24 @@ public class BannerData {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "BannerData{" +
+                "imagePath='" + imagePath + '\'' +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
+
+    @Override
+    public Object getXBannerUrl() {
+        return url;
+    }
+
+    @Override
+    public String getXBannerTitle() {
+        return title;
     }
 }
