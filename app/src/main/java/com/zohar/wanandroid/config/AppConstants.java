@@ -12,4 +12,6 @@ public class AppConstants {
 
     public static final String KNOWLEDGE_TITLE = "knowledge_title";
     public static final String KNOWLEDGE_CHILDREN_DATA = "knowledge_children_data";
+
+    public static final String ARG_PARAM1 = "args_param1";
 }

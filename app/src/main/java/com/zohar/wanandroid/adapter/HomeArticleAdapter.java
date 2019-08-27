@@ -189,7 +189,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      */
     class FooterViewHolder extends RecyclerView.ViewHolder {
 
-        public FooterViewHolder(@NonNull View itemView) {
+        public FooterViewHolder( View itemView) {
             super(itemView);
         }
     }
@@ -201,7 +201,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         XBanner banner;
 
-        public HeaderViewHolder(@NonNull View itemView) {
+        public HeaderViewHolder( View itemView) {
             super(itemView);
             banner = itemView.findViewById(R.id.banner);
         }
