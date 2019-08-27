@@ -55,9 +55,9 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int getItemViewType(int position) {
         if (position == articles.size() + 1) {
             return TYPE_FOOTER;
-        }else if (position == 0){
+        } else if (position == 0) {
             return TYPE_HEADER;
-        }else {
+        } else {
             return TYPE_CONTENT;
         }
     }
@@ -67,7 +67,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      *
      * @param headerView 头布局
      */
-    public void setHeaderView(View headerView){
+    public void setHeaderView(View headerView) {
         this.headerView = headerView;
         // 插入到顶部
         notifyItemChanged(0);
@@ -78,7 +78,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      *
      * @return View
      */
-    public View getHeaderView(){
+    public View getHeaderView() {
         return headerView;
     }
 
@@ -87,7 +87,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      *
      * @param banners
      */
-    public void setBanners(List<BannerData> banners){
+    public void setBanners(List<BannerData> banners) {
         this.banners = banners;
     }
 
@@ -112,18 +112,18 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             });
             return holder;
-        } else if (viewType == TYPE_FOOTER){
+        } else if (viewType == TYPE_FOOTER) {
             // footer
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article_footer, viewGroup, false);
             return new FooterViewHolder(view);
-        }else{
+        } else {
             HeaderViewHolder headerViewHolder = new HeaderViewHolder(headerView);
             // 设置广告图片的点击事件
             headerViewHolder.banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
                 @Override
                 public void onItemClick(XBanner banner, Object model, View view, int position) {
                     //ToastUtils.toastShow(mContext, "点击了第" + (position + 1) + "图片");
-                    BannerData bannerData = (BannerData)model;
+                    BannerData bannerData = (BannerData) model;
                     Intent intent = new Intent(mContext, ArticllDetailActivity.class);
                     intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, bannerData.getTitle());
                     intent.putExtra(AppConstants.ARTICLE_FROM_HOME, bannerData.getUrl());
@@ -134,10 +134,10 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             headerViewHolder.banner.loadImage(new XBanner.XBannerAdapter() {
                 @Override
                 public void loadBanner(XBanner banner, Object model, View view, int position) {
-                    BannerData bannerData = (BannerData)model;
+                    BannerData bannerData = (BannerData) model;
                     // 设置标题
                     // 架子啊图片
-                    Glide.with(mContext).load(bannerData.getImagePath()).into((ImageView)view);
+                    Glide.with(mContext).load(bannerData.getImagePath()).into((ImageView) view);
                 }
             });
             return headerViewHolder;
@@ -151,11 +151,11 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (getItemViewType(position) == TYPE_FOOTER) {
             // 上拉加载
 
-        } else if (getItemViewType(position) == TYPE_CONTENT){
+        } else if (getItemViewType(position) == TYPE_CONTENT) {
             // 正常内容
             // viewholder绑定的数据
             ArticleViewHolder articleViewHolder = (ArticleViewHolder) viewHolder;
-            Datas article= articles.get(position - 1);
+            Datas article = articles.get(position - 1);
 
             articleViewHolder.title.setText(article.getTitle());
             articleViewHolder.author.setText(article.getAuthor());
@@ -170,7 +170,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 articleViewHolder.tag.setVisibility(View.VISIBLE);
                 articleViewHolder.tag.setText(article.getTags().get(0).getName());
             }
-        }else{
+        } else {
             // header
             HeaderViewHolder headerHolder = (HeaderViewHolder) viewHolder;
 
@@ -197,7 +197,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     /**
      * header View Holder
      */
-    class HeaderViewHolder extends RecyclerView.ViewHolder{
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         XBanner banner;
 
@@ -247,7 +247,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     /**
      * 清空list
      */
-    public void clearArticle(){
+    public void clearArticle() {
         articles.clear();
     }
 }

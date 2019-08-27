@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.zohar.wanandroid.R;
+import com.zohar.wanandroid.adapter.KnowledgeAdapter;
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.KnowledgePresenter;
@@ -32,6 +35,7 @@ public class KnowlegeHierachyFragment extends Fragment implements IKnowledgeView
     private View mView;
 
     private KnowledgePresenter mPresenter;
+    private KnowledgeAdapter mKnowledgeAdapter;
 
     public static KnowlegeHierachyFragment newInstance(){
         return new KnowlegeHierachyFragment();
@@ -63,6 +67,25 @@ public class KnowlegeHierachyFragment extends Fragment implements IKnowledgeView
         mSwipeRefreshLayout = mView.findViewById(R.id.swipe_refresh_knowledge);
         mRecyclerView = mView.findViewById(R.id.recycler_view_knowledge);
         mProgressBar = mView.findViewById(R.id.progress_bar_knowledge);
+
+        initRecyclerView();
+    }
+
+
+    private void initRecyclerView() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        // 设置下拉刷新的图标颜色
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
+
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(manager);
+
+        //设置adapter
+        mKnowledgeAdapter = new KnowledgeAdapter(getContext());
+        mRecyclerView.setAdapter(mKnowledgeAdapter);
+
     }
 
 
@@ -78,7 +101,9 @@ public class KnowlegeHierachyFragment extends Fragment implements IKnowledgeView
 
     @Override
     public void httpSuccess(Knowledge knowledge) {
-        LogUtils.d(knowledge.getData().toString());
+        // 把数据传到adapter
+        mKnowledgeAdapter.addData(knowledge.getData());
+       // LogUtils.d(knowledge.getData().toString());
     }
 
     @Override

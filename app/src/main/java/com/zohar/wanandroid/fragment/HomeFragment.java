@@ -111,7 +111,6 @@ public class HomeFragment extends Fragment implements IHomeView {
         // 设置下拉刷新的图标颜色
         mHomeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
 
-
         mHomeRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
