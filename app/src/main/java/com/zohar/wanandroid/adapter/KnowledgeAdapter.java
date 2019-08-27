@@ -78,4 +78,8 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
+    public void clearData(){
+        mKnowledgeDatas.clear();
+    }
+
 }

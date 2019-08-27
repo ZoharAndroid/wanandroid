@@ -4,6 +4,7 @@ package com.zohar.wanandroid.presenter;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
+import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.http.HttpRequestUtils;
 import com.zohar.wanandroid.model.knowledge.KnowledgeModel;
 import com.zohar.wanandroid.model.knowledge.OnKnowledgeListener;
@@ -61,5 +62,33 @@ public class KnowledgePresenter {
             }
         });
 
+    }
+
+    /**
+     * 刷新请求
+     */
+    public void onRefresh(){
+        mKnowledgeModel.sendKnowledgeGetRequest(ApiAddress.KNOWLEDGE_TREE, new OnKnowledgeListener() {
+            @Override
+            public void httpFailed(final String msg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mKnowledgeView.refreshHttpFailed(msg);
+                    }
+                });
+
+            }
+
+            @Override
+            public void knowledgeHttpSuccess(final Knowledge knowledge) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mKnowledgeView.refreshHttpSuccess(knowledge);
+                    }
+                });
+            }
+        });
     }
 }

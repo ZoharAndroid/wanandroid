@@ -15,4 +15,8 @@ public interface IKnowledgeView {
     // 请求数据成功
     void httpSuccess(Knowledge knowledge);
     void httpFailed(String msg);
+
+
+    void refreshHttpSuccess(Knowledge knowledge);
+    void refreshHttpFailed(String msg);
 }

@@ -58,6 +58,14 @@ public class KnowlegeHierachyFragment extends Fragment implements IKnowledgeView
             // 调用presenter去发送请求
             mPresenter.sendKnowledgeRequest(ApiAddress.KNOWLEDGE_TREE);
         }
+
+        // 下拉刷新
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.onRefresh();
+            }
+        });
     }
 
     /**
@@ -108,6 +116,21 @@ public class KnowlegeHierachyFragment extends Fragment implements IKnowledgeView
 
     @Override
     public void httpFailed(String msg) {
+        ToastUtils.toastShow(getContext(), msg);
+    }
+
+    @Override
+    public void refreshHttpSuccess(Knowledge knowledge) {
+        // 清空list
+        mKnowledgeAdapter.clearData();
+        // 重新加载数据
+        mKnowledgeAdapter.addData(knowledge.getData());
+        // 停止刷新
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void refreshHttpFailed(String msg) {
         ToastUtils.toastShow(getContext(), msg);
     }
 }
