@@ -6,7 +6,7 @@ package com.zohar.wanandroid.http;
  */
 public class ApiAddress {
 
-    public static final String Host = "https://www.wanandroid.com/";
+    public static final String HOST = "https://www.wanandroid.com";
 
     /**
      * 获取首页文章列表
@@ -15,8 +15,8 @@ public class ApiAddress {
      * @return
      */
     public static String homeAritcleAddress(int num){
-        StringBuilder sb = new StringBuilder(Host);
-        sb.append("article/list/");
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/article/list/");
         sb.append(num);
         sb.append("/json");
         return sb.toString();
@@ -25,6 +25,27 @@ public class ApiAddress {
     /**
      * 首页banner
      */
-    public static final String HOME_BANNER = "https://www.wanandroid.com/banner/json";
+    public static final String HOME_BANNER =  HOST + "/banner/json";
+
+    /**
+     * 获取体系数据
+     */
+    public static final String KNOWLEDGE_TREE = HOST + "/tree/json";
+
+    /**
+     * 知识体系下的文章
+     *  e.g. https://www.wanandroid.com/article/list/0/json?cid=60
+     * @param pageNum
+     * @param cid
+     * @return
+     */
+    public static final String KNOWLEDGE_TREE_ARTICLE(int pageNum, int cid){
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/article/list/");
+        sb.append(pageNum);
+        sb.append("/json?cid=");
+        sb.append(cid);
+        return sb.toString();
+    }
 
 }
