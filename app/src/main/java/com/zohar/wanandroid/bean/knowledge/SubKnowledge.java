@@ -1,5 +1,8 @@
 package com.zohar.wanandroid.bean.knowledge;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  * Describe:
  *  Knowledge的data的子bean
  */
-public class SubKnowledge {
+public class SubKnowledge implements Parcelable {
     /**
      *        "children:[**]
      *       "courseId": 13,
@@ -27,6 +30,29 @@ public class SubKnowledge {
     private boolean userControlSetTop;
     private int visible;
 
+
+    protected SubKnowledge(Parcel in) {
+        children = in.createTypedArrayList(SubKnowledge.CREATOR);
+        courseId = in.readInt();
+        id = in.readInt();
+        name = in.readString();
+        order = in.readInt();
+        parentChapterId = in.readInt();
+        userControlSetTop = in.readByte() != 0;
+        visible = in.readInt();
+    }
+
+    public static final Creator<SubKnowledge> CREATOR = new Creator<SubKnowledge>() {
+        @Override
+        public SubKnowledge createFromParcel(Parcel in) {
+            return new SubKnowledge(in);
+        }
+
+        @Override
+        public SubKnowledge[] newArray(int size) {
+            return new SubKnowledge[size];
+        }
+    };
 
     public List<SubKnowledge> getChildren() {
         return children;
@@ -98,5 +124,22 @@ public class SubKnowledge {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(children);
+        dest.writeInt(courseId);
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeInt(order);
+        dest.writeInt(parentChapterId);
+        dest.writeByte((byte) (userControlSetTop ? 1 : 0));
+        dest.writeInt(visible);
     }
 }

@@ -1,6 +1,7 @@
 package com.zohar.wanandroid.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zohar.wanandroid.KnowledgeDetailActivity;
 import com.zohar.wanandroid.R;
+import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.bean.knowledge.SubKnowledge;
+import com.zohar.wanandroid.config.AppConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +45,18 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_knowledge, viewGroup, false);
-        KnowledgeViewHolder holder = new KnowledgeViewHolder(view);
+        final KnowledgeViewHolder holder = new KnowledgeViewHolder(view);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SubKnowledge knowledge = mKnowledgeDatas.get(holder.getAdapterPosition());
+                Intent intent = new Intent(mContext, KnowledgeDetailActivity.class);
+                intent.putExtra(AppConstants.KNOWLEDGE_TITLE, knowledge.getName());
+                intent.putParcelableArrayListExtra(AppConstants.KNOWLEDGE_CHILDREN_DATA, (ArrayList)knowledge.getChildren());
+                mContext.startActivity(intent);
+            }
+        });
 
         return holder;
     }
