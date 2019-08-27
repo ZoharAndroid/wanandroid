@@ -11,24 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.stx.xhb.xbanner.XBanner;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.HomeArticleAdapter;
 import com.zohar.wanandroid.adapter.OnLoadMoreListener;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Data;
-import com.zohar.wanandroid.bean.home.Datas;
+import com.zohar.wanandroid.bean.home.banner.Banner;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.HomePresenter;
-import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.home.IHomeView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zohar on 2019/8/8 9:20
@@ -41,6 +36,8 @@ public class HomeFragment extends Fragment implements IHomeView {
     private SwipeRefreshLayout mHomeRefreshLayout;
     private RecyclerView mHomeRecyclerView;
     private ProgressBar mProgressBar;
+    private XBanner mBanner;
+
     private HomePresenter mPresenter;
 
     // 当前需要加载的页面
@@ -59,6 +56,7 @@ public class HomeFragment extends Fragment implements IHomeView {
         mHomeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout_home);
         mHomeRecyclerView = view.findViewById(R.id.home_recycler_view);
         mProgressBar = view.findViewById(R.id.home_progress_bar);
+
         // 初始化recyclerview
         initRecyclerView();
 
@@ -73,8 +71,10 @@ public class HomeFragment extends Fragment implements IHomeView {
         if (mPresenter == null) {
             // 调用presenter来请求网络
             mPresenter = new HomePresenter(this);
-            // 请求第0页数据额
+            // 请求文章列表数据
             mPresenter.sendHomeHttpRequest(ApiAddress.homeAritcleAddress(mPageIndex));
+            // 请求首页banner数据
+            mPresenter.sendBannerHttpRequest(ApiAddress.HOME_BANNER);
         }
 
         // 添加更多数据
@@ -173,5 +173,10 @@ public class HomeFragment extends Fragment implements IHomeView {
     @Override
     public void refreshRequestFailded(String msg) {
         ToastUtils.toastShow(getContext(), msg);
+    }
+
+    @Override
+    public void bannerHttpRequestSuccess(Banner banner) {
+
     }
 }

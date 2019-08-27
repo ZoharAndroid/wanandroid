@@ -5,7 +5,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.bean.home.banner.Banner;
 import com.zohar.wanandroid.http.ApiAddress;
+import com.zohar.wanandroid.http.HttpRequestUtils;
 import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ToastUtils;
 
@@ -27,16 +29,8 @@ public class HomeModel implements IHomeModel{
 
     @Override
     public void sendHomeHttp(String url, final OnHttpListener httpListener) {
-        OkHttpClient client = new OkHttpClient();
 
-        LogUtils.d( "请求的地址为:" + url);
-
-        Request request = new Request.Builder()
-                .get()
-                .url(url)
-                .build();
-
-        Call call = client.newCall(request);
+        Call call = HttpRequestUtils.sendHttpGetRequest(url);
 
         call.enqueue(new Callback() {
             @Override
@@ -50,6 +44,27 @@ public class HomeModel implements IHomeModel{
                 Gson gson = new Gson();
                 Article homeReuslt = gson.fromJson(result, Article.class);
                 httpListener.httpSuccess(homeReuslt);
+            }
+        });
+    }
+
+
+    @Override
+    public void sendBannerHttp(String url, final OnBannerHttpListener bannerListener) {
+        Call call = HttpRequestUtils.sendHttpGetRequest(url);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                bannerListener.httpFailed("网络请求失败！");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String result = response.body().string();
+                Gson gson = new Gson();
+                Banner banner = gson.fromJson(result, Banner.class);
+                bannerListener.bannerHttpSuccess(banner);
             }
         });
     }

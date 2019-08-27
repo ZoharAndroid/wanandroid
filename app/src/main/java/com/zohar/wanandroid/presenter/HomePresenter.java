@@ -3,8 +3,10 @@ package com.zohar.wanandroid.presenter;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.bean.home.banner.Banner;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.home.HomeModel;
+import com.zohar.wanandroid.model.home.OnBannerHttpListener;
 import com.zohar.wanandroid.model.home.OnHttpListener;
 import com.zohar.wanandroid.view.home.IHomeView;
 
@@ -24,7 +26,27 @@ public class HomePresenter {
         mHomeModel = new HomeModel();
     }
 
-    // 发送http请求
+    /**
+     * 发送首页banner的网络请求
+     *
+     * @param url 网络地址
+     */
+    public void sendBannerHttpRequest(String url){
+        mHomeModel.sendBannerHttp(url, new OnBannerHttpListener() {
+            @Override
+            public void httpFailed(String msg) {
+                // 请求失败
+                mHomeView.httpFailed(msg);
+            }
+
+            @Override
+            public void bannerHttpSuccess(Banner banner) {
+                mHomeView.bannerHttpRequestSuccess(banner);
+            }
+        });
+    }
+
+    // 发送获取文章列表http请求
     public void sendHomeHttpRequest(String url){
         // 显示加载
         mHomeView.showLoading();

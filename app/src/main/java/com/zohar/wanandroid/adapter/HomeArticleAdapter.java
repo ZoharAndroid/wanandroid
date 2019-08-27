@@ -2,7 +2,6 @@ package com.zohar.wanandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zohar.wanandroid.ArticleDetailActivity;
+import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.config.AppConstants;
-import com.zohar.wanandroid.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +59,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     Datas article = articles.get(position);
                     // 跳转到内容详情页面
                     String articleLink = article.getLink();
-                    Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+                    Intent intent = new Intent(mContext, ArticllDetailActivity.class);
                     intent.putExtra(AppConstants.ARTICLE_FROM_HOME, articleLink); // 传递链接
                     intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, article.getTitle()); // 传递标题
                     mContext.startActivity(intent);

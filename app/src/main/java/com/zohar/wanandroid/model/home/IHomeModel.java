@@ -6,6 +6,17 @@ package com.zohar.wanandroid.model.home;
  */
 public interface IHomeModel {
 
-    // 去发送请求到服务器
+    /**
+     * 去发送请求到服务器
+     * @param url
+     * @param httpListener
+     */
     void sendHomeHttp(String url, OnHttpListener httpListener);
+
+    /**
+     *
+     * @param url
+     * @param bannerListener
+     */
+    void sendBannerHttp(String url, OnBannerHttpListener bannerListener);
 }

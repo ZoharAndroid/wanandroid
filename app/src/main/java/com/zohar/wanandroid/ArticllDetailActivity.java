@@ -15,20 +15,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zohar.wanandroid.config.AppConstants;
-import com.zohar.wanandroid.presenter.ArticleDetialPresenter;
+import com.zohar.wanandroid.presenter.ArticleDetailPresenter;
 import com.zohar.wanandroid.view.delail.IArticleDetailView;
 
 /**
  * Created by zohar on 2019/8/25 16:04
  * Describe:
  */
-public class ArticleDetailActivity extends AppCompatActivity implements IArticleDetailView {
+public class ArticllDetailActivity extends AppCompatActivity implements IArticleDetailView {
 
     // 从主页获取的文章
     private String articleLink;
     private String articleTitle;
 
-    private ArticleDetialPresenter mPresenter;
+    private ArticleDetailPresenter mPresenter;
 
     // View
     private WebView mWebView;
@@ -74,7 +74,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements IArticle
     private void initEvent() {
         // 设置WebView
         settingWebView();
-        mPresenter = new ArticleDetialPresenter(this);
+        mPresenter = new ArticleDetailPresenter(this);
         mPresenter.loadArticleContent();
     }
 
