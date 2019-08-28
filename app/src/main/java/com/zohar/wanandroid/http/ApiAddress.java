@@ -79,6 +79,7 @@ public class ApiAddress {
      */
     public final static String PROJECT_CATEGORIES_ADDRESS = HOST + "/project/tree/json";
 
+
     /**
      * 项目列表地址：根据id来获取对应的项目列表
      *
@@ -92,6 +93,12 @@ public class ApiAddress {
         sb.append("/json?cid=");
         sb.append(cid);
         return sb.toString();
-
     }
+
+    /**
+     * 导航数据地址
+     *
+     * https://www.wanandroid.com/navi/json
+     */
+    public static final String NAVI_ADDRESS = HOST + "/navi/json";
 }

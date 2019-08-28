@@ -1,45 +1,41 @@
-package com.zohar.wanandroid.bean.home;
+package com.zohar.wanandroid.bean.navi;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by zohar on 2019/8/8 14:40
+ * Created by zohar on 2019/8/28 15:42
  * Describe:
  */
-public class Datas implements Serializable {
-    /**
-     *          "apkLink": "",
-     *         "author": "code小生",
-     *         "chapterId": 414,
-     *         "chapterName": "code小生",
-     *         "collect": false,
-     *         "courseId": 13,
-     *         "desc": "",
-     *         "envelopePic": "",
-     *         "fresh": false,
-     *         "id": 8818,
-     *         "link": "https://mp.weixin.qq.com/s/2TTXt5virr2vMNZRlzIT3w",
-     *         "niceDate": "2019-07-31",
-     *         "origin": "",
-     *         "prefix": "",
-     *         "projectLink": "",
-     *         "publishTime": 1564588566000,
-     *         "superChapterId": 408,
-     *         "superChapterName": "公众号",
-     *         "tags": [
-     *           {
-     *             "name": "公众号",
-     *             "url": "/wxarticle/list/414/1"
-     *           }
-     *         ],
-     *         "title": "如何开发一款高性能的 gradle transform",
-     *         "type": 0,
-     *         "userId": -1,
-     *         "visible": 1,
-     *         "zan": 0
-     */
+public class NaviArticle {
 
+    /**
+     * "apkLink": "",
+     *           "author": "小编",
+     *           "chapterId": 272,
+     *           "chapterName": "常用网站",
+     *           "collect": true,
+     *           "courseId": 13,
+     *           "desc": "",
+     *           "envelopePic": "",
+     *           "fresh": false,
+     *           "id": 1848,
+     *           "link": "https://developers.google.cn/",
+     *           "niceDate": "2018-01-07",
+     *           "origin": "",
+     *           "prefix": "",
+     *           "projectLink": "",
+     *           "publishTime": 1515322795000,
+     *           "superChapterId": 0,
+     *           "superChapterName": "",
+     *           "tags": [
+     *
+     *           ],
+     *           "title": "Google开发者",
+     *           "type": 0,
+     *           "userId": -1,
+     *           "visible": 0,
+     *           "zan": 0
+     */
     private String apkLink;
     private String author;
     private int chapterId;
@@ -64,7 +60,6 @@ public class Datas implements Serializable {
     private int userId;
     private int visible;
     private int zan;
-
 
     public String getApkLink() {
         return apkLink;
@@ -260,7 +255,9 @@ public class Datas implements Serializable {
 
     @Override
     public String toString() {
-
-        return "[title:"+getTitle() + " author:" + getAuthor() +"]";
+        return "NaviArticle{" +
+                "link='" + link + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

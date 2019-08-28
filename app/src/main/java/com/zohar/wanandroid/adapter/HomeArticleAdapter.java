@@ -169,7 +169,6 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         } else {
             // header
-            HeaderViewHolder headerHolder = (HeaderViewHolder) viewHolder;
 
         }
 
