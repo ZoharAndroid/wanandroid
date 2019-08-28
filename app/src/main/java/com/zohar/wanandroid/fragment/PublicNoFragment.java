@@ -15,10 +15,8 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.bean.knowledge.SubKnowledge;
-import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.WechatPresenter;
-import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.view.wechat.IWechatView;
 
 import java.util.ArrayList;

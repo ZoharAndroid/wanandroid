@@ -1,8 +1,10 @@
 package com.zohar.wanandroid.presenter;
 
 import android.os.Handler;
+import android.widget.ProgressBar;
 
 import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.fragment.KnowledgeHierarchyListFragment;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.home.HomeModel;
 import com.zohar.wanandroid.model.home.OnHttpListener;
@@ -59,9 +61,15 @@ public class KnowledgeListPresenter {
     /**
      * 刷新
      */
-    public void onRefresh(int id) {
+    public void onRefresh(int id, int type) {
+        String url;
+        if (type == KnowledgeHierarchyListFragment.TYPE_KNOWLEDGE){
+            url = ApiAddress.KNOWLEDGE_TREE_ARTICLE(0, id);
+        }else{
+            url = ApiAddress.WECHAT_ARTICLE_ADDRESS(id, 0);
+        }
         // 通过pressent调用model来发送http请求
-        mModel.sendHomeHttp(ApiAddress.KNOWLEDGE_TREE_ARTICLE(0, id), new OnHttpListener() {
+        mModel.sendHomeHttp(url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {

@@ -71,4 +71,27 @@ public class ApiAddress {
         return sb.toString();
     }
 
+
+    /**
+     * 项目名称地址
+     *
+     * https://www.wanandroid.com/project/tree/json
+     */
+    public final static String PROJECT_CATEGORIES_ADDRESS = HOST + "/project/tree/json";
+
+    /**
+     * 项目列表地址：根据id来获取对应的项目列表
+     *
+     * https://www.wanandroid.com/project/list/1/json?cid=294
+     * @return
+     */
+    public static String PROJECT_LIST_ADDRESS(int cid, int pageNum){
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/project/list/");
+        sb.append(pageNum);
+        sb.append("/json?cid=");
+        sb.append(cid);
+        return sb.toString();
+
+    }
 }

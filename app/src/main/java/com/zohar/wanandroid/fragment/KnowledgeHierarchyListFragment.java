@@ -34,6 +34,7 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
 
     public static final int TYPE_KNOWLEDGE = 1;
     public static final int TYPE_WECHAT = 2;
+    public static final int TYPE_PROJECT = 3;
 
     private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -101,14 +102,16 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
         if (type == TYPE_KNOWLEDGE) {
             // 去分别请求不同ID的第0页数据
             mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
-        }else{
+        }else if (type == TYPE_WECHAT){
             mPresenter.sendHomeHttpRequest(ApiAddress.WECHAT_ARTICLE_ADDRESS(id, mCurrentPage));
+        }else {
+            mPresenter.sendHomeHttpRequest(ApiAddress.PROJECT_LIST_ADDRESS(id, mCurrentPage));
         }
         // 下拉刷新操作
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.onRefresh(id);
+                mPresenter.onRefresh(id, type);
             }
         });
 
@@ -121,7 +124,13 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
                 if (++mCurrentPage < mPageCount) {
                     // 当当前页面小于总的页数的时候是可以去请求服务器
                     mAdapter.setFooterViewVisable();
-                    mPresenter.loadMoreRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
+                    if (type == TYPE_KNOWLEDGE) {
+                        mPresenter.loadMoreRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
+                    }else if (type == TYPE_WECHAT){
+                        mPresenter.loadMoreRequest(ApiAddress.WECHAT_ARTICLE_ADDRESS(id, mCurrentPage));
+                    }else {
+                        mPresenter.loadMoreRequest(ApiAddress.PROJECT_LIST_ADDRESS(id, mCurrentPage));
+                    }
                 }else{
                     // 如果当前页码等于或者大于页码的时候，隐藏加载更多界面
                     mAdapter.deleteLastItem();
