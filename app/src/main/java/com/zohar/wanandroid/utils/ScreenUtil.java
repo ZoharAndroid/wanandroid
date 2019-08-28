@@ -2,11 +2,14 @@ package com.zohar.wanandroid.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
 import com.zohar.wanandroid.R;
+
+import java.util.Random;
 
 public class ScreenUtil {
 
@@ -57,4 +60,17 @@ public class ScreenUtil {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
 
+
+    /**
+     * 随机产生颜色
+     *
+     * @return
+     */
+    public static int randomColor(){
+        Random random = new Random();
+        int red = random.nextInt(150);
+        int green = random.nextInt(150);
+        int blue = random.nextInt(150);
+        return Color.rgb(red, green, blue);
+    }
 }

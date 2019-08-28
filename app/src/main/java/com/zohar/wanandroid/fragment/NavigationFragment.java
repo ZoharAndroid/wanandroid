@@ -13,12 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.zohar.wanandroid.R;
+import com.zohar.wanandroid.adapter.NaviAdapter;
+import com.zohar.wanandroid.bean.navi.NaviArticles;
 import com.zohar.wanandroid.bean.navi.NaviData;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.NaviPresenter;
 import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.navi.INaviView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zohar on 2019/8/8 9:23
@@ -31,6 +36,8 @@ public class NavigationFragment extends Fragment implements INaviView {
     private ProgressBar mProgressBar;
 
     private NaviPresenter mPresenter;
+
+    private List<NaviArticles> mNaviArticles = new ArrayList<>();
 
     public static NavigationFragment newInstance(){
         return new NavigationFragment();
@@ -79,7 +86,12 @@ public class NavigationFragment extends Fragment implements INaviView {
 
     @Override
     public void httpSuccess(NaviData naviData) {
-        LogUtils.d(naviData.getData().toString());
+        // 从服务端获取数据
+        if (naviData.getErrorCode() == 0){
+            // 调用adapter
+            NaviAdapter mAdapter = new NaviAdapter(getContext(), naviData.getData());
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     @Override
