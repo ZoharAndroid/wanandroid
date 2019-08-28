@@ -1,12 +1,12 @@
-package com.zohar.wanandroid.view.knowledge.list;
+package com.zohar.wanandroid.view.wechat;
 
 import com.zohar.wanandroid.bean.home.Article;
 
 /**
- * Created by zohar on 2019/8/27 22:26
+ * Created by zohar on 2019/8/28 14:55
  * Describe:
  */
-public interface IKnowledgeListView {
+public interface IWechatListView {
 
     void showLoadingView();
     void hideLoadingView();

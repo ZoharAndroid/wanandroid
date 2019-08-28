@@ -17,9 +17,8 @@ import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.bean.knowledge.SubKnowledge;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.ProjectPresenter;
-import com.zohar.wanandroid.presenter.WechatPresenter;
+import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.project.IProjectView;
-import com.zohar.wanandroid.view.wechat.IWechatView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ public class ProjectFragment extends Fragment implements IProjectView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_public_number, container, false);
+        mView = inflater.inflate(R.layout.fragment_project, container, false);
 
         initView();
 
@@ -54,9 +53,9 @@ public class ProjectFragment extends Fragment implements IProjectView {
     }
 
     private void initView() {
-        mTabLayout = mView.findViewById(R.id.wechat_article_tab_layout);
-        mViewPager = mView.findViewById(R.id.wechat_article_view_pager);
-        mProgressBar = mView.findViewById(R.id.wechat_article_progress_bar);
+        mTabLayout = mView.findViewById(R.id.project_article_tab_layout);
+        mViewPager = mView.findViewById(R.id.project_article_view_pager);
+        mProgressBar = mView.findViewById(R.id.project_article_progress_bar);
     }
 
 
@@ -101,7 +100,7 @@ public class ProjectFragment extends Fragment implements IProjectView {
         }
 
         for (SubKnowledge data : mProjectList) {
-            mFragments.add(KnowledgeHierarchyListFragment.newInstance(data.getId(), KnowledgeHierarchyListFragment.TYPE_PROJECT));
+            mFragments.add(ProjectListFragment.newInstance(data.getId()));
         }
     }
 
@@ -135,7 +134,7 @@ public class ProjectFragment extends Fragment implements IProjectView {
 
     @Override
     public void httpFailed(String msg) {
-
+        ToastUtils.toastShow(getContext(), msg);
     }
 
     @Override
@@ -145,7 +144,7 @@ public class ProjectFragment extends Fragment implements IProjectView {
 
     @Override
     public void loadMoreRequestFailed(String msg) {
-
+        ToastUtils.toastShow(getContext(), msg);
     }
 
     @Override
@@ -155,6 +154,6 @@ public class ProjectFragment extends Fragment implements IProjectView {
 
     @Override
     public void refreshRequestFailded(String msg) {
-
+        ToastUtils.toastShow(getContext(), msg);
     }
 }

@@ -17,6 +17,7 @@ import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.bean.knowledge.SubKnowledge;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.WechatPresenter;
+import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.wechat.IWechatView;
 
 import java.util.ArrayList;
@@ -26,10 +27,10 @@ import java.util.List;
  * Created by zohar on 2019/8/8 9:22
  * Describe:
  */
-public class PublicNoFragment extends Fragment implements IWechatView {
+public class WechatFragment extends Fragment implements IWechatView {
 
-    public static PublicNoFragment newInstance(){
-        return new PublicNoFragment();
+    public static WechatFragment newInstance(){
+        return new WechatFragment();
     }
     
     private SlidingTabLayout mTabLayout;
@@ -44,7 +45,7 @@ public class PublicNoFragment extends Fragment implements IWechatView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_public_number, container, false);
+        mView = inflater.inflate(R.layout.fragment_wechat, container, false);
 
         initView();
 
@@ -99,7 +100,7 @@ public class PublicNoFragment extends Fragment implements IWechatView {
         }
 
         for (SubKnowledge data : mWechatList) {
-            mFragments.add(KnowledgeHierarchyListFragment.newInstance(data.getId(), KnowledgeHierarchyListFragment.TYPE_WECHAT));
+            mFragments.add(WechatListFragment.newInstance(data.getId()));
         }
     }
 
@@ -133,7 +134,7 @@ public class PublicNoFragment extends Fragment implements IWechatView {
 
     @Override
     public void httpFailed(String msg) {
-
+        ToastUtils.toastShow(getContext(), msg);
     }
 
     @Override
@@ -143,7 +144,7 @@ public class PublicNoFragment extends Fragment implements IWechatView {
 
     @Override
     public void loadMoreRequestFailed(String msg) {
-
+        ToastUtils.toastShow(getContext(), msg);
     }
 
     @Override
@@ -153,6 +154,6 @@ public class PublicNoFragment extends Fragment implements IWechatView {
 
     @Override
     public void refreshRequestFailded(String msg) {
-
+        ToastUtils.toastShow(getContext(), msg);
     }
 }

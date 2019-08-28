@@ -177,7 +177,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return articles.size() + 2;
+        return articles == null ? 2 : articles.size() + 2;
     }
 
 

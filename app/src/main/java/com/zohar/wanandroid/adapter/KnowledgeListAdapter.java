@@ -115,7 +115,7 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return articles.size() + 1;
+        return articles == null ? 1 : articles.size() + 1;
     }
 
 

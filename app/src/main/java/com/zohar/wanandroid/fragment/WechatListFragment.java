@@ -19,22 +19,23 @@ import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Data;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.http.ApiAddress;
-import com.zohar.wanandroid.presenter.KnowledgeListPresenter;
+import com.zohar.wanandroid.presenter.ProjectListPresenter;
+import com.zohar.wanandroid.presenter.WechatListPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
-import com.zohar.wanandroid.view.knowledge.IKnowledgeListView;
+import com.zohar.wanandroid.view.project.IProjectListView;
+import com.zohar.wanandroid.view.wechat.IWechatListView;
 
 /**
  * Created by zohar on 2019/8/27 21:42
  * Describe:
  */
-public class KnowledgeHierarchyListFragment extends Fragment implements IKnowledgeListView {
-
+public class WechatListFragment extends Fragment implements IWechatListView {
 
     private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
 
-    private KnowledgeListPresenter mPresenter;
+    private WechatListPresenter mPresenter;
 
     private int id;
     // 当前页数
@@ -46,17 +47,17 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
     public static Fragment newInstance(int id) {
         Bundle args = new Bundle();
         args.putInt(AppConstants.ARG_PARAM1, id);
-        Fragment fragment = new KnowledgeHierarchyListFragment();
+        Fragment fragment = new WechatListFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_knowledge_list, container, false);
-        mRefreshLayout = view.findViewById(R.id.knowledge_list_swipe_refresh_layout);
-        mRecyclerView = view.findViewById(R.id.knowledge_list_recycler_view);
-        mProgressBar = view.findViewById(R.id.knowledge_list_progress_bar);
+        View view = inflater.inflate(R.layout.fragment_wechat_list, container, false);
+        mRefreshLayout = view.findViewById(R.id.wechat_list_swipe_refresh_layout);
+        mRecyclerView = view.findViewById(R.id.wechat_list_recycler_view);
+        mProgressBar = view.findViewById(R.id.wechat_list_progress_bar);
         mRefreshLayout.setRefreshing(false);
         initRecyclerView();
         return view;
@@ -89,10 +90,9 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
 
         mCurrentPage = 0;
 
-        mPresenter = new KnowledgeListPresenter(this);
+        mPresenter = new WechatListPresenter(this);
 
-        // 去分别请求不同ID的第0页数据
-        mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
+        mPresenter.sendHomeHttpRequest(ApiAddress.WECHAT_ARTICLE_ADDRESS(id, mCurrentPage));
 
         // 下拉刷新操作
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -111,7 +111,7 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
                 if (++mCurrentPage < mPageCount) {
                     // 当当前页面小于总的页数的时候是可以去请求服务器
                     mAdapter.setFooterViewVisable();
-                    mPresenter.loadMoreRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
+                    mPresenter.loadMoreRequest(ApiAddress.WECHAT_ARTICLE_ADDRESS(id, mCurrentPage));
                 } else {
                     // 如果当前页码等于或者大于页码的时候，隐藏加载更多界面
                     mAdapter.deleteLastItem();

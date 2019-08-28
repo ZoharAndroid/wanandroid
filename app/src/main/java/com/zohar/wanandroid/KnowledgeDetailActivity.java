@@ -123,7 +123,7 @@ public class KnowledgeDetailActivity extends AppCompatActivity {
         }
 
         for (SubKnowledge data : mKnowledgeList) {
-            mFragments.add(KnowledgeHierarchyListFragment.newInstance(data.getId(), KnowledgeHierarchyListFragment.TYPE_KNOWLEDGE));
+            mFragments.add(KnowledgeHierarchyListFragment.newInstance(data.getId()));
         }
     }
 }

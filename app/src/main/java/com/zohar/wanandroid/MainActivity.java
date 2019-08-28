@@ -1,7 +1,6 @@
 package com.zohar.wanandroid;
 
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,11 +13,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,9 +24,7 @@ import com.zohar.wanandroid.fragment.HomeFragment;
 import com.zohar.wanandroid.fragment.KnowlegeHierachyFragment;
 import com.zohar.wanandroid.fragment.NavigationFragment;
 import com.zohar.wanandroid.fragment.ProjectFragment;
-import com.zohar.wanandroid.fragment.PublicNoFragment;
-import com.zohar.wanandroid.utils.KeyboardUtils;
-import com.zohar.wanandroid.utils.ToastUtils;
+import com.zohar.wanandroid.fragment.WechatFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private int mCurrentIndex = 0; // 当前的table位置
     private HomeFragment mHomeFragment;
     private KnowlegeHierachyFragment mKnowlegeHierachyFragment;
-    private PublicNoFragment mPublicNoFragment;
+    private WechatFragment mWechatFragment;
     private NavigationFragment mNavigationFragment;
     private ProjectFragment mProjectFragment;
 
@@ -129,13 +124,13 @@ public class MainActivity extends AppCompatActivity {
     private void initFragment(){
         mHomeFragment = HomeFragment.newInstance();
         mKnowlegeHierachyFragment = KnowlegeHierachyFragment.newInstance();
-        mPublicNoFragment = PublicNoFragment.newInstance();
+        mWechatFragment = WechatFragment.newInstance();
         mNavigationFragment = NavigationFragment.newInstance();
         mProjectFragment = ProjectFragment.newInstance();
 
         mFragments.add(mHomeFragment);
         mFragments.add(mKnowlegeHierachyFragment);
-        mFragments.add(mPublicNoFragment);
+        mFragments.add(mWechatFragment);
         mFragments.add(mNavigationFragment);
         mFragments.add(mProjectFragment);
 
