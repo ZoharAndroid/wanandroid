@@ -54,6 +54,7 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
         mRefreshLayout = view.findViewById(R.id.knowledge_list_swipe_refresh_layout);
         mRecyclerView = view.findViewById(R.id.knowledge_list_recycler_view);
         mProgressBar = view.findViewById(R.id.knowledge_list_progress_bar);
+        mRefreshLayout.setRefreshing(false);
         initRecyclerView();
         return view;
     }
@@ -87,8 +88,15 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
         mCurrentPage = 0;
 
         mPresenter = new KnowledgeListPresenter(this);
+        // 去分别请求不同ID的第0页数据
         mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
-
+        // 下拉刷新操作
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.onRefresh(id);
+            }
+        });
     }
 
     @Override
@@ -124,7 +132,12 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
 
     @Override
     public void refreshRequestSuccess(Article data) {
-
+        // 清空
+        mAdapter.clearArticle();
+        // 添加
+        mAdapter.addArticle(data.getData().getDatas());
+        mCurrentPage = 0;
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.zohar.wanandroid.presenter;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.home.HomeModel;
 import com.zohar.wanandroid.model.home.OnHttpListener;
 import com.zohar.wanandroid.view.knowledge.list.IKnowledgeListView;
@@ -49,6 +50,36 @@ public class KnowledgeListPresenter {
                     public void run() {
                         mView.hideLoadingView();
                         mView.httpFailed(msg);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 刷新
+     */
+    public void onRefresh(int id){
+        // 通过pressent调用model来发送http请求
+        mModel.sendHomeHttp(ApiAddress.KNOWLEDGE_TREE_ARTICLE(0, id), new OnHttpListener() {
+
+            @Override
+            public void httpSuccess(final Article article) {
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.refreshRequestSuccess(article);
+                    }
+                });
+            }
+
+            @Override
+            public void httpFailed(final String msg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.refreshRequestFailded(msg);
                     }
                 });
             }
