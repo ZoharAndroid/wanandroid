@@ -8,19 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.stx.xhb.xbanner.XBanner;
 import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
+import com.zohar.wanandroid.adapter.viewholder.FooterViewHolder;
+import com.zohar.wanandroid.adapter.viewholder.ArticleViewHolder;
 import com.zohar.wanandroid.bean.home.Datas;
-import com.zohar.wanandroid.bean.home.banner.Banner;
 import com.zohar.wanandroid.bean.home.banner.BannerData;
 import com.zohar.wanandroid.config.AppConstants;
-import com.zohar.wanandroid.utils.LogUtils;
-import com.zohar.wanandroid.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,12 +184,6 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     /**
      * footer View Holder
      */
-    class FooterViewHolder extends RecyclerView.ViewHolder {
-
-        public FooterViewHolder( View itemView) {
-            super(itemView);
-        }
-    }
 
     /**
      * header View Holder
@@ -207,32 +198,6 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-
-    static class ArticleViewHolder extends RecyclerView.ViewHolder {
-
-        View itemView;
-        TextView title;
-        TextView author;
-        TextView chapterName;
-        TextView superChapterName;
-        TextView date; // niceDate
-        ImageView collectImageView;
-        TextView refresh;
-        TextView tag;
-
-        public ArticleViewHolder(View itemView) {
-            super(itemView);
-            this.itemView = itemView;
-            title = itemView.findViewById(R.id.item_title);
-            author = itemView.findViewById(R.id.item_author);
-            chapterName = itemView.findViewById(R.id.item_chapter_name);
-            superChapterName = itemView.findViewById(R.id.item_super_chapter_name);
-            date = itemView.findViewById(R.id.item_date);
-            collectImageView = itemView.findViewById(R.id.item_collect_image_view);
-            refresh = itemView.findViewById(R.id.item_tag_refresh);
-            tag = itemView.findViewById(R.id.item_tag);
-        }
-    }
 
     /**
      * 添加内容，然后更新

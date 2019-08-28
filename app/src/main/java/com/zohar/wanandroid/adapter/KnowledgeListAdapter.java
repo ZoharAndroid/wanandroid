@@ -2,22 +2,18 @@ package com.zohar.wanandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.stx.xhb.xbanner.XBanner;
 import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
+import com.zohar.wanandroid.adapter.viewholder.FooterViewHolder;
 import com.zohar.wanandroid.bean.home.Datas;
-import com.zohar.wanandroid.bean.home.banner.BannerData;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.adapter.viewholder.ArticleViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,32 +26,49 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private List<Datas> articles = new ArrayList<>();
     private Context mContext;
+    // 正常内容
+    private final static int TYPE_CONTENT = 0;
+    // footer
+    private final static int TYPE_FOOTER = 1;
 
     public KnowledgeListAdapter(Context context) {
         mContext = context;
     }
 
 
-    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article, viewGroup, false);
-        final ArticleViewHolder holder = new ArticleViewHolder(view);
-        // 设置点击事件
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition(); // 获取当前点击的位置
-                Datas article = articles.get(position);
-                // 跳转到内容详情页面
-                String articleLink = article.getLink();
-                Intent intent = new Intent(mContext, ArticllDetailActivity.class);
-                intent.putExtra(AppConstants.ARTICLE_FROM_HOME, articleLink); // 传递链接
-                intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, article.getTitle()); // 传递标题
-                mContext.startActivity(intent);
-            }
-        });
-        return holder;
+    public int getItemViewType(int position) {
+        if (position == articles.size()) {
+            return TYPE_FOOTER;
+        }
+        return TYPE_CONTENT;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        if (viewType == TYPE_CONTENT) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article, viewGroup, false);
+            final ArticleViewHolder holder = new ArticleViewHolder(view);
+            // 设置点击事件
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition(); // 获取当前点击的位置
+                    Datas article = articles.get(position - 1);
+                    // 跳转到内容详情页面
+                    String articleLink = article.getLink();
+                    Intent intent = new Intent(mContext, ArticllDetailActivity.class);
+                    intent.putExtra(AppConstants.ARTICLE_FROM_HOME, articleLink); // 传递链接
+                    intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, article.getTitle()); // 传递标题
+                    mContext.startActivity(intent);
+                }
+            });
+            return holder;
+        } else {
+            // footer
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article_footer, viewGroup, false);
+            return new FooterViewHolder(view);
+        }
     }
 
 
@@ -87,32 +100,6 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
-    private class ArticleViewHolder extends RecyclerView.ViewHolder {
-
-        View itemView;
-        TextView title;
-        TextView author;
-        TextView chapterName;
-        TextView superChapterName;
-        TextView date; // niceDate
-        ImageView collectImageView;
-        TextView refresh;
-        TextView tag;
-
-        public ArticleViewHolder(View itemView) {
-            super(itemView);
-            this.itemView = itemView;
-            title = itemView.findViewById(R.id.item_title);
-            author = itemView.findViewById(R.id.item_author);
-            chapterName = itemView.findViewById(R.id.item_chapter_name);
-            superChapterName = itemView.findViewById(R.id.item_super_chapter_name);
-            date = itemView.findViewById(R.id.item_date);
-            collectImageView = itemView.findViewById(R.id.item_collect_image_view);
-            refresh = itemView.findViewById(R.id.item_tag_refresh);
-            tag = itemView.findViewById(R.id.item_tag);
-        }
-
-    }
 
     /**
      * 添加内容，然后更新

@@ -86,7 +86,6 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
 
         mCurrentPage = 0;
 
-
         mPresenter = new KnowledgeListPresenter(this);
         mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
 
