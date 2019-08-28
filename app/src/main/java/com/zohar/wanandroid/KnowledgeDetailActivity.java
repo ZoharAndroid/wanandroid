@@ -49,7 +49,6 @@ public class KnowledgeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_knowledge_detail);
         title = getIntent().getStringExtra(AppConstants.KNOWLEDGE_TITLE);
         mKnowledgeList = getIntent().getParcelableArrayListExtra(AppConstants.KNOWLEDGE_CHILDREN_DATA);
-        LogUtils.d(mKnowledgeList.toString());
 
         initView();
         initToolbar();
@@ -124,7 +123,7 @@ public class KnowledgeDetailActivity extends AppCompatActivity {
         }
 
         for (SubKnowledge data : mKnowledgeList) {
-            mFragments.add(KnowledgeHierarchyListFragment.newInstance(data.getId()));
+            mFragments.add(KnowledgeHierarchyListFragment.newInstance(data.getId(), KnowledgeHierarchyListFragment.TYPE_KNOWLEDGE));
         }
     }
 }

@@ -39,12 +39,35 @@ public class ApiAddress {
      * @param cid
      * @return
      */
-    public static final String KNOWLEDGE_TREE_ARTICLE(int pageNum, int cid){
+    public static  String KNOWLEDGE_TREE_ARTICLE(int pageNum, int cid){
         StringBuilder sb = new StringBuilder(HOST);
         sb.append("/article/list/");
         sb.append(pageNum);
         sb.append("/json?cid=");
         sb.append(cid);
+        return sb.toString();
+    }
+
+    /**
+     * 获取微信公众号列表内容
+     */
+    public static final String WEICHAT_LIST_ADDRESS = HOST + "/wxarticle/chapters/json";
+
+    /**
+     * 获取公众号对应id的文章
+     * https://wanandroid.com/wxarticle/list/408/1/json
+     *
+     * @param cid 公众号id
+     * @param pageNum 页码
+     * @return
+     */
+    public static String WECHAT_ARTICLE_ADDRESS(int cid, int pageNum){
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/wxarticle/list/");
+        sb.append(cid);
+        sb.append("/");
+        sb.append(pageNum);
+        sb.append("/json");
         return sb.toString();
     }
 

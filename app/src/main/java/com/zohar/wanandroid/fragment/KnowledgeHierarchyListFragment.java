@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.fragment;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,9 @@ import com.zohar.wanandroid.view.knowledge.list.IKnowledgeListView;
  */
 public class KnowledgeHierarchyListFragment extends Fragment implements IKnowledgeListView {
 
+    public static final int TYPE_KNOWLEDGE = 1;
+    public static final int TYPE_WECHAT = 2;
+
     private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
@@ -38,15 +42,17 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
     private KnowledgeListPresenter mPresenter;
 
     private int id;
+    private int type;
     // 当前页数
     private int mCurrentPage;
     // 总的页数
     private int mPageCount;
     private KnowledgeListAdapter mAdapter;
 
-    public static Fragment newInstance(int id) {
+    public static Fragment newInstance(int id, int type) {
         Bundle args = new Bundle();
         args.putInt(AppConstants.ARG_PARAM1, id);
+        args.putInt(AppConstants.ARG_PARAM2, type);
         Fragment fragment = new KnowledgeHierarchyListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -83,7 +89,7 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
     private void initEventAndData() {
         Bundle args = getArguments();
         id = args.getInt(AppConstants.ARG_PARAM1, 0);
-        LogUtils.d(" 当前的ID：" + id);
+        type = args.getInt(AppConstants.ARG_PARAM2, TYPE_KNOWLEDGE);
 
         if (id == 0) {
             return;
@@ -92,8 +98,12 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
         mCurrentPage = 0;
 
         mPresenter = new KnowledgeListPresenter(this);
-        // 去分别请求不同ID的第0页数据
-        mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
+        if (type == TYPE_KNOWLEDGE) {
+            // 去分别请求不同ID的第0页数据
+            mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
+        }else{
+            mPresenter.sendHomeHttpRequest(ApiAddress.WECHAT_ARTICLE_ADDRESS(id, mCurrentPage));
+        }
         // 下拉刷新操作
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

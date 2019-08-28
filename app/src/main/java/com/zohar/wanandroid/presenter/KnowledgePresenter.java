@@ -5,18 +5,9 @@ import android.os.Handler;
 
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.http.ApiAddress;
-import com.zohar.wanandroid.http.HttpRequestUtils;
 import com.zohar.wanandroid.model.knowledge.KnowledgeModel;
 import com.zohar.wanandroid.model.knowledge.OnKnowledgeListener;
 import com.zohar.wanandroid.view.knowledge.IKnowledgeView;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * Created by zohar on 2019/8/27 14:02

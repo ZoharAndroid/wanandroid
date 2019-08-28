@@ -64,7 +64,7 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition(); // 获取当前点击的位置
-                    Datas article = articles.get(position - 1);
+                    Datas article = articles.get(position);
                     // 跳转到内容详情页面
                     String articleLink = article.getLink();
                     Intent intent = new Intent(mContext, ArticllDetailActivity.class);

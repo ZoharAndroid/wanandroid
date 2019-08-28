@@ -14,4 +14,5 @@ public class AppConstants {
     public static final String KNOWLEDGE_CHILDREN_DATA = "knowledge_children_data";
 
     public static final String ARG_PARAM1 = "args_param1";
+    public static final String ARG_PARAM2 = "args_param2";
 }

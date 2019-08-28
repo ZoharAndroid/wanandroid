@@ -9,6 +9,7 @@ import java.util.List;
  * Created by zohar on 2019/8/27 13:33
  * Describe:
  *  Knowledge的data的子bean
+ *  公众号的data 同bean
  */
 public class SubKnowledge implements Parcelable {
     /**
