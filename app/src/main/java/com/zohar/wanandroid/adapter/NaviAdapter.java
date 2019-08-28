@@ -1,6 +1,7 @@
 package com.zohar.wanandroid.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
+import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.viewholder.NaviViewHolder;
 import com.zohar.wanandroid.bean.navi.NaviArticleDetail;
 import com.zohar.wanandroid.bean.navi.NaviArticles;
+import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.utils.ScreenUtil;
 
 import java.util.ArrayList;
@@ -52,7 +55,7 @@ public class NaviAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.mFlowLayout.setAdapter(new TagAdapter<NaviArticleDetail>(details) {
 
             @Override
-            public View getView(FlowLayout parent, int position, NaviArticleDetail naviArticleDetail) {
+            public View getView(FlowLayout parent, int position, final NaviArticleDetail naviArticleDetail) {
                 TextView tv = (TextView) LayoutInflater.from(mContext).inflate(R.layout.item_flow_tv , parent, false);
                 if (details == null){
                     return null;
@@ -65,7 +68,12 @@ public class NaviAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.mFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                     @Override
                     public boolean onTagClick(View view, int position, FlowLayout parent) {
-                        return false;
+
+                        Intent intent = new Intent(mContext, ArticllDetailActivity.class);
+                        intent.putExtra(AppConstants.ARTICLE_FROM_HOME, details.get(position).getLink());
+                        intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, details.get(position).getTitle());
+                        mContext.startActivity(intent);
+                        return true;
                     }
                 });
                 return tv;
