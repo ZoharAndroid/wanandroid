@@ -78,18 +78,18 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
     private void initEventAndData() {
         Bundle args = getArguments();
         id = args.getInt(AppConstants.ARG_PARAM1, 0);
-        LogUtils.d( " 当前的ID：" + id);
+        LogUtils.d(" 当前的ID：" + id);
 
-        if (id == 0){
+        if (id == 0) {
             return;
         }
 
         mCurrentPage = 0;
 
-        if (mPresenter == null){
-            mPresenter = new KnowledgeListPresenter(this);
-            mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
-        }
+
+        mPresenter = new KnowledgeListPresenter(this);
+        mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
+
     }
 
     @Override
@@ -105,11 +105,12 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
     @Override
     public void httpSuccess(Article data) {
         mAdapter.addArticle(data.getData().getDatas());
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void httpFailed(String msg) {
-        ToastUtils.toastShow(getContext(),msg);
+        ToastUtils.toastShow(getContext(), msg);
     }
 
     @Override
@@ -119,7 +120,7 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
 
     @Override
     public void loadMoreRequestFailed(String msg) {
-        ToastUtils.toastShow(getContext(),msg);
+        ToastUtils.toastShow(getContext(), msg);
     }
 
     @Override
@@ -129,6 +130,6 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
 
     @Override
     public void refreshRequestFailded(String msg) {
-        ToastUtils.toastShow(getContext(),msg);
+        ToastUtils.toastShow(getContext(), msg);
     }
 }
