@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class NaviData {
 
-    private List<NaviArticle> data;
+    private List<NaviArticles> data;
     private int errorCode;
     private String errorMsg;
 
@@ -29,11 +29,11 @@ public class NaviData {
         this.errorMsg = errorMsg;
     }
 
-    public List<NaviArticle> getData() {
+    public List<NaviArticles> getData() {
         return data;
     }
 
-    public void setData(List<NaviArticle> data) {
+    public void setData(List<NaviArticles> data) {
         this.data = data;
     }
 }

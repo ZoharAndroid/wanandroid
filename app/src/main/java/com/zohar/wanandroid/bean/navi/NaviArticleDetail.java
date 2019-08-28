@@ -6,7 +6,7 @@ import java.util.List;
  * Created by zohar on 2019/8/28 15:42
  * Describe:
  */
-public class NaviArticle {
+public class NaviArticleDetail {
 
     /**
      * "apkLink": "",
@@ -255,7 +255,7 @@ public class NaviArticle {
 
     @Override
     public String toString() {
-        return "NaviArticle{" +
+        return "NaviArticleDetail{" +
                 "link='" + link + '\'' +
                 ", title='" + title + '\'' +
                 '}';
