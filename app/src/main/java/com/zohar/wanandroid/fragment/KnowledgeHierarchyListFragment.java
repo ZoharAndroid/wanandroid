@@ -15,7 +15,9 @@ import android.widget.ProgressBar;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.HomeArticleAdapter;
 import com.zohar.wanandroid.adapter.KnowledgeListAdapter;
+import com.zohar.wanandroid.adapter.OnLoadMoreListener;
 import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.bean.home.Data;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.KnowledgeListPresenter;
@@ -38,6 +40,8 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
     private int id;
     // 当前页数
     private int mCurrentPage;
+    // 总的页数
+    private int mPageCount;
     private KnowledgeListAdapter mAdapter;
 
     public static Fragment newInstance(int id) {
@@ -97,6 +101,24 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
                 mPresenter.onRefresh(id);
             }
         });
+
+        // 加载更多
+        mRecyclerView.addOnScrollListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+
+                // 获取总的页码
+                if (++mCurrentPage < mPageCount) {
+                    // 当当前页面小于总的页数的时候是可以去请求服务器
+                    mAdapter.setFooterViewVisable();
+                    mPresenter.loadMoreRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));
+                }else{
+                    // 如果当前页码等于或者大于页码的时候，隐藏加载更多界面
+                    mAdapter.deleteLastItem();
+                    ToastUtils.toastShow(getContext(),"已经没有更多内容了！");
+                }
+            }
+        });
     }
 
     @Override
@@ -113,6 +135,7 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
     public void httpSuccess(Article data) {
         mAdapter.addArticle(data.getData().getDatas());
         mRecyclerView.setAdapter(mAdapter);
+        mPageCount = data.getData().getPageCount();
     }
 
     @Override
@@ -122,7 +145,15 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
 
     @Override
     public void loadMoreRequestSuccess(Article data) {
-
+        if (data.getErrorCode() == 0) {
+            // 没有错误
+            Data homeData = data.getData();
+            // 新获取下来的文章数目
+            // 添加到新list中
+            mAdapter.addArticle(homeData.getDatas());
+        } else {
+            ToastUtils.toastShow(getContext(), data.getErrorMsg());
+        }
     }
 
     @Override

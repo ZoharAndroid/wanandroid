@@ -25,7 +25,7 @@ public class KnowledgeListPresenter {
     }
 
     // 发送获取文章列表http请求
-    public void sendHomeHttpRequest(String url){
+    public void sendHomeHttpRequest(String url) {
         // 显示加载
         mView.showLoadingView();
         // 通过pressent调用model来发送http请求
@@ -59,7 +59,7 @@ public class KnowledgeListPresenter {
     /**
      * 刷新
      */
-    public void onRefresh(int id){
+    public void onRefresh(int id) {
         // 通过pressent调用model来发送http请求
         mModel.sendHomeHttp(ApiAddress.KNOWLEDGE_TREE_ARTICLE(0, id), new OnHttpListener() {
 
@@ -85,5 +85,38 @@ public class KnowledgeListPresenter {
             }
         });
     }
+
+    /**
+     * 加载更多请求
+     *
+     * @param url
+     */
+    public void loadMoreRequest(String url) {
+        // 通过pressent调用model来发送http请求
+        mModel.sendHomeHttp(url, new OnHttpListener() {
+
+            @Override
+            public void httpSuccess(final Article article) {
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.loadMoreRequestSuccess(article);
+                    }
+                });
+            }
+
+            @Override
+            public void httpFailed(final String msg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.loadMoreRequestFailed(msg);
+                    }
+                });
+            }
+        });
+    }
+
 
 }

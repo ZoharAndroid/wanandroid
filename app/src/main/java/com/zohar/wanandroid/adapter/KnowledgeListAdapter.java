@@ -30,6 +30,9 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private final static int TYPE_CONTENT = 0;
     // footer
     private final static int TYPE_FOOTER = 1;
+    private final static int TYPE_FOOTER_NO = 2;
+
+    private boolean isFooterShow = false;
 
     public KnowledgeListAdapter(Context context) {
         mContext = context;
@@ -39,15 +42,22 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public int getItemViewType(int position) {
         if (position == articles.size()) {
-            return TYPE_FOOTER;
+            if (isFooterShow) {
+                return TYPE_FOOTER;
+            } else {
+                return TYPE_FOOTER_NO;
+            }
         }
         return TYPE_CONTENT;
     }
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        FooterViewHolder footerHolder;
+        View view;
         if (viewType == TYPE_CONTENT) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article, viewGroup, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article, viewGroup, false);
             final ArticleViewHolder holder = new ArticleViewHolder(view);
             // 设置点击事件
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -64,41 +74,49 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             });
             return holder;
+        } else if (TYPE_FOOTER == viewType) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article_footer, viewGroup, false);
+            footerHolder = new FooterViewHolder(view);
+            return footerHolder;
         } else {
-            // footer
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article_footer, viewGroup, false);
-            return new FooterViewHolder(view);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article_footer_no, viewGroup, false);
+            footerHolder = new FooterViewHolder(view);
+            return footerHolder;
+
         }
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        // 正常内容
-        // viewholder绑定的数据
-        ArticleViewHolder articleViewHolder = (ArticleViewHolder) viewHolder;
-        Datas article = articles.get(position);
+        if (getItemViewType(position) == TYPE_CONTENT) {
+            // 正常内容
+            // viewholder绑定的数据
+            ArticleViewHolder articleViewHolder = (ArticleViewHolder) viewHolder;
+            Datas article = articles.get(position);
 
-        articleViewHolder.title.setText(article.getTitle());
-        articleViewHolder.author.setText(article.getAuthor());
-        articleViewHolder.date.setText(article.getNiceDate());
-        articleViewHolder.chapterName.setText(article.getChapterName());
-        articleViewHolder.superChapterName.setText(article.getSuperChapterName());
-        if (article.isFresh()) {
-            articleViewHolder.refresh.setVisibility(View.VISIBLE);
-        }
-        // 处理tag
-        if (article.getTags().size() != 0) {
-            articleViewHolder.tag.setVisibility(View.VISIBLE);
-            articleViewHolder.tag.setText(article.getTags().get(0).getName());
+            articleViewHolder.title.setText(article.getTitle());
+            articleViewHolder.author.setText(article.getAuthor());
+            articleViewHolder.date.setText(article.getNiceDate());
+            articleViewHolder.chapterName.setText(article.getChapterName());
+            articleViewHolder.superChapterName.setText(article.getSuperChapterName());
+            if (article.isFresh()) {
+                articleViewHolder.refresh.setVisibility(View.VISIBLE);
+            }
+            // 处理tag
+            if (article.getTags().size() != 0) {
+                articleViewHolder.tag.setVisibility(View.VISIBLE);
+                articleViewHolder.tag.setText(article.getTags().get(0).getName());
+            }
+        } else {
+
         }
     }
 
     @Override
     public int getItemCount() {
-        return articles.size();
+        return articles.size() + 1;
     }
-
 
 
     /**
@@ -108,8 +126,7 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
      */
     public void addArticle(List<Datas> addArticle) {
         articles.addAll(addArticle);
-        LogUtils.d(articles.toString());
-        notifyItemRangeChanged(articles.size() - addArticle.size() + 1, addArticle.size());
+        notifyItemRangeChanged(articles.size() - addArticle.size(), addArticle.size());
     }
 
     /**
@@ -117,5 +134,16 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
      */
     public void clearArticle() {
         articles.clear();
+    }
+
+    /**
+     * 隐藏最后一条加载更多现实
+     */
+    public void deleteLastItem() {
+        notifyItemRemoved(articles.size() + 1);
+    }
+
+    public void setFooterViewVisable() {
+        isFooterShow = true;
     }
 }
