@@ -151,17 +151,17 @@ public class MainActivity extends AppCompatActivity {
             // 如果用户名不为空，那么就禁止用户名点击事件
             mUsernameTextView.setClickable(false);
             mUsernameTextView.setText(username);
+        }else {
+            // 设置注册登录点击事件
+            mUsernameTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 跳转到登录界面
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
-
-        // 设置注册登录点击事件
-        mUsernameTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 跳转到登录界面
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void initFragment(){

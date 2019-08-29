@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
             @Override
             public void onClick(View v) {
                 // 通过presenter发送注册请求
-                mPresenter.registerRequest(getUsername(), getPassword(), getAgainPassword());
+                mPresenter.registerRequest(RegisterActivity.this, getUsername(), getPassword(), getAgainPassword());
             }
         });
     }

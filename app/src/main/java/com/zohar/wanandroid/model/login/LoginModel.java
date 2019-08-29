@@ -12,6 +12,7 @@ import com.zohar.wanandroid.http.cookies.CookieJarImpl;
 import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
 import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.MD5Utils;
+import com.zohar.wanandroid.utils.SharePreferenceUtils;
 
 import java.io.IOException;
 
@@ -76,11 +77,7 @@ public class LoginModel implements ILoginModel {
                     }
                 });
                 // 保存用户相关信息
-                SharedPreferences sp = context.getSharedPreferences(AppConstants.COOKIE_PREFS, 0);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString(AppConstants.LOGIN_PASSWORD, MD5Utils.convertMD5(MD5Utils.string2MD5(password)));
-                editor.putString(AppConstants.CURRENT_USER_NAME, username);
-                editor.apply();
+                SharePreferenceUtils.saveUserInfo(context, username, password);
             }
         });
     }

@@ -1,10 +1,12 @@
 package com.zohar.wanandroid.model.register;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.register.RegisterData;
 import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.utils.SharePreferenceUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +29,7 @@ public class RegisterModel implements IRegisterModel {
     private Handler mHandler = new Handler();
 
     @Override
-    public void register(String url, String username, String password, String againPassword, final OnRegisterListener registerListener) {
+    public void register(final Context context, String url, final String username, final String password, String againPassword, final OnRegisterListener registerListener) {
         /**
          * https://www.wanandroid.com/user/register
          *
@@ -68,6 +70,8 @@ public class RegisterModel implements IRegisterModel {
                     @Override
                     public void run() {
                         registerListener.registerSuccess(registerData);
+                        // 保存用户相关信息
+                        SharePreferenceUtils.saveUserInfo(context, username, password);
                     }
                 });
 

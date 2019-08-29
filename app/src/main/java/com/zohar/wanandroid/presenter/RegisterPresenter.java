@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.presenter;
 
+import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
 
@@ -32,7 +33,7 @@ public class RegisterPresenter {
      * @param password      密码
      * @param againPassword 确认密码
      */
-    public void registerRequest(String username, String password, String againPassword) {
+    public void registerRequest(Context context, String username, String password, String againPassword) {
         if (TextUtils.isEmpty(username)) {
             mView.emptyUsername();
             return;
@@ -57,7 +58,7 @@ public class RegisterPresenter {
         // 然后去请求服务器
         // 显示请求加载
         mView.showLoadingView();
-        mModel.register(ApiAddress.REGISTER_ADDRESS, username, password, againPassword, new OnRegisterListener() {
+        mModel.register(context, ApiAddress.REGISTER_ADDRESS, username, password, againPassword, new OnRegisterListener() {
             @Override
             public void registerSuccess(final RegisterData registerData) {
                 mView.hideLoadingView();
