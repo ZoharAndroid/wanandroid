@@ -1,6 +1,7 @@
 package com.zohar.wanandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -14,9 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zohar.wanandroid.bean.register.RegisterData;
+import com.zohar.wanandroid.config.AppConstants;
+import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
 import com.zohar.wanandroid.presenter.LoginPresenter;
+import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.login.ILoginView;
+
+import java.util.List;
+
+import okhttp3.Cookie;
 
 /**
  * Created by zohar on 2019/8/5 21:46
@@ -54,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
             @Override
             public void onClick(View v) {
                 // 调用presenter去请求登录操作
-                mLoginPresenter.loginRequest(getUsername(), getPassword());
+                mLoginPresenter.loginRequest(LoginActivity.this, getUsername(), getPassword());
             }
         });
 
@@ -126,7 +134,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         if (registerData.getErrorCode() == 0){
             ToastUtils.toastShow(LoginActivity.this, "登录成功");
             // Todo: 保存登录信息
-
+            PersistentCookieStore cookieStore = new PersistentCookieStore(this);
+            List<Cookie> cookies = cookieStore.getCookies();
+            for (Cookie cookie : cookies){
+                LogUtils.d("登录：" + cookie.name());
+            }
             // 销毁这个界面
             finish();
         }else {

@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.presenter;
 
+import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
 
@@ -27,7 +28,7 @@ public class LoginPresenter {
     /**
      * 处理View发送过来的登录操作
      */
-    public void loginRequest(String username, String password) {
+    public void loginRequest(Context context, String username, String password) {
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
             mView.emptyUsernameOrPassword();
             return;
@@ -35,7 +36,7 @@ public class LoginPresenter {
 
         mView.showLoading();
         // 调用model的login操作去验证登录信息
-        mModel.login(ApiAddress.LOGIN_ADDRESS, username, password, new OnLoginListener() {
+        mModel.login(context, ApiAddress.LOGIN_ADDRESS, username, password, new OnLoginListener() {
             @Override
             public void loginSuccess(RegisterData registerData) {
                 mView.hideLoading();

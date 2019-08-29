@@ -15,4 +15,6 @@ public class AppConstants {
 
     public static final String ARG_PARAM1 = "args_param1";
     public static final String ARG_PARAM2 = "args_param2";
+
+    public static final String COOKIE_PREFS = "CookiePrefsFile";
 }

@@ -1,10 +1,13 @@
 package com.zohar.wanandroid.model.login;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.User;
 import com.zohar.wanandroid.bean.register.RegisterData;
+import com.zohar.wanandroid.http.cookies.CookieJarImpl;
+import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
 import com.zohar.wanandroid.utils.LogUtils;
 
 import java.io.IOException;
@@ -26,7 +29,7 @@ public class LoginModel implements ILoginModel {
     private Handler mHandler = new Handler();
 
     @Override
-    public void login(String url, final String username, final String password, final OnLoginListener loginListener) {
+    public void login(Context context, String url, final String username, final String password, final OnLoginListener loginListener) {
         /**
          * https://www.wanandroid.com/user/login
          *
@@ -34,7 +37,7 @@ public class LoginModel implements ILoginModel {
          * 参数：
          * 	username，password
          */
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder().cookieJar(new CookieJarImpl(new PersistentCookieStore(context))).build();
         LogUtils.d("post 提交的地址 ：" + url + " password : " + password);
         RequestBody requestBody = new FormBody.Builder()
                 .add("username", username)

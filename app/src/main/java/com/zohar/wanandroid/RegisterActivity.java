@@ -13,10 +13,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zohar.wanandroid.bean.register.RegisterData;
+import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
 import com.zohar.wanandroid.presenter.RegisterPresenter;
 import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.register.IRegisterView;
+
+import java.util.List;
+
+import okhttp3.Cookie;
 
 /**
  * Created by zohar on 2019/8/29 9:40
@@ -134,6 +139,12 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
     @Override
     public void registerRequestSuccess(RegisterData registerData) {
         if (registerData.getErrorCode() == 0){
+            // TODO:注册成功
+            PersistentCookieStore cookieStore = new PersistentCookieStore(this);
+            List<Cookie> cookies = cookieStore.getCookies();
+            for (Cookie cookie : cookies){
+                LogUtils.d("注册：" + cookie.name());
+            }
             LogUtils.d(registerData.getData().toString());
         }else if (registerData.getErrorCode() == -1){
             ToastUtils.toastShow(this, registerData.getErrorMsg());
