@@ -34,14 +34,25 @@ public class HomePresenter {
     public void sendBannerHttpRequest(String url){
         mHomeModel.sendBannerHttp(url, new OnBannerHttpListener() {
             @Override
-            public void httpFailed(String msg) {
-                // 请求失败
-                mHomeView.httpFailed(msg);
+            public void httpFailed(final String msg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 请求失败
+                        mHomeView.httpFailed(msg);
+                    }
+                });
+
             }
 
             @Override
-            public void bannerHttpSuccess(Banner banner) {
-                mHomeView.bannerHttpRequestSuccess(banner);
+            public void bannerHttpSuccess(final Banner banner) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHomeView.bannerHttpRequestSuccess(banner);
+                    }
+                });
             }
         });
     }

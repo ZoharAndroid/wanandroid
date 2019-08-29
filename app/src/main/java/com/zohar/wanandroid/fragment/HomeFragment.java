@@ -42,7 +42,6 @@ public class HomeFragment extends Fragment implements IHomeView {
     private SwipeRefreshLayout mHomeRefreshLayout;
     private RecyclerView mHomeRecyclerView;
     private ProgressBar mProgressBar;
-    private XBanner mBanner;
 
     private HomePresenter mPresenter;
 
@@ -186,35 +185,16 @@ public class HomeFragment extends Fragment implements IHomeView {
     @Override
     public void bannerHttpRequestSuccess(Banner banner) {
         if (banner.getErrorCode() == 0) {
-            // 添加RecyclerView的header
-            setHeaderView();
             // 获取广告图片内容
             mBannerDatas = banner.getData();
-            mArticleAdapter.setBanners(mBannerDatas);
-            //刷新数据之后，需要重新设置是否支持自动轮播
-            mBanner.setAutoPlayAble(mBannerDatas.size() > 1);
-            mBanner.setBannerData(mBannerDatas);
+           mArticleAdapter.updateHeaderView(mBannerDatas);
         }
-
-
-    }
-
-
-    /**
-     * 添加RecyclerView的头布局
-     */
-    private void setHeaderView() {
-        View headView = View.inflate(getContext(), R.layout.item_banner_header, null);
-        mBanner = headView.findViewById(R.id.banner);
-        mArticleAdapter.setHeaderView(headView);
-        // 开始自动播放
-        mBanner.startAutoPlay();
     }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        mBanner.stopAutoPlay();
+        mArticleAdapter.getBannerView().stopAutoPlay();
     }
 }
