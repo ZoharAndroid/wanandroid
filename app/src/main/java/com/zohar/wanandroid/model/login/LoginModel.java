@@ -77,7 +77,10 @@ public class LoginModel implements ILoginModel {
                 });
                 // 保存用户相关信息
                 SharedPreferences sp = context.getSharedPreferences(AppConstants.COOKIE_PREFS, 0);
-                sp.edit().putString(AppConstants.LOGIN_PASSWORD, MD5Utils.convertMD5(MD5Utils.string2MD5(password))).apply();
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString(AppConstants.LOGIN_PASSWORD, MD5Utils.convertMD5(MD5Utils.string2MD5(password)));
+                editor.putString(AppConstants.CURRENT_USER_NAME, username);
+                editor.apply();
             }
         });
     }

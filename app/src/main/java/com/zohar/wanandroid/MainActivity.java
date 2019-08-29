@@ -1,6 +1,7 @@
 package com.zohar.wanandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,17 +23,20 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.fragment.HomeFragment;
 import com.zohar.wanandroid.fragment.KnowlegeHierachyFragment;
 import com.zohar.wanandroid.fragment.NavigationFragment;
 import com.zohar.wanandroid.fragment.ProjectFragment;
 import com.zohar.wanandroid.fragment.WechatFragment;
+import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
 import com.zohar.wanandroid.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Cookie;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -132,6 +137,21 @@ public class MainActivity extends AppCompatActivity {
 
         // 初始化Fragment
         initFragment();
+
+        // 获取sp保存的用户信息
+        String username = null;
+        PersistentCookieStore cookieStore = new PersistentCookieStore(this);
+        List<Cookie> cookies = cookieStore.getCookies();
+        for (Cookie cookie : cookies){
+            if (cookie.name().equals(AppConstants.LOGIN_USER_NAME)){
+                username = cookie.value();
+            }
+        }
+        if (!TextUtils.isEmpty(username)){
+            // 如果用户名不为空，那么就禁止用户名点击事件
+            mUsernameTextView.setClickable(false);
+            mUsernameTextView.setText(username);
+        }
 
         // 设置注册登录点击事件
         mUsernameTextView.setOnClickListener(new View.OnClickListener() {

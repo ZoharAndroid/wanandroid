@@ -17,5 +17,7 @@ public class AppConstants {
     public static final String ARG_PARAM2 = "args_param2";
 
     public static final String COOKIE_PREFS = "CookiePrefsFile";
+    public static final String LOGIN_USER_NAME = "loginUserName";
     public static final String LOGIN_PASSWORD = "loginPassword";
+    public static final String CURRENT_USER_NAME = "currentUserName";
 }
