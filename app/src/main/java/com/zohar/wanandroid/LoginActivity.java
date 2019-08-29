@@ -1,12 +1,16 @@
 package com.zohar.wanandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zohar.wanandroid.presenter.LoginPresenter;
@@ -24,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     private Button mLoginButton;
     private Button mRegisterButton;
     private ProgressBar mLoginProgressbar;
+    private Toolbar mToolbar;
+    private TextView mTextViewTitle;
 
     private LoginPresenter mLoginPresenter;
 
@@ -33,7 +39,12 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         setContentView(R.layout.activity_login);
 
         initView();
+        initToolBar();
+        initEventAndData();
 
+    }
+
+    private void initEventAndData() {
         mLoginPresenter = new LoginPresenter(this);
 
         // 登录按钮
@@ -49,7 +60,28 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 跳转到注册界面
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                // 消除登录界面
+                finish();
+            }
+        });
+    }
 
+
+    private void initToolBar() {
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+        // 显示标题
+        mTextViewTitle.setText("登录");
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -63,6 +95,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         mLoginButton = findViewById(R.id.login_button);
         mRegisterButton = findViewById(R.id.register_button);
         mLoginProgressbar = findViewById(R.id.login_progress_bar);
+        mToolbar = findViewById(R.id.login_tool_bar);
+        mTextViewTitle = findViewById(R.id.login_toolbar_title);
     }
 
     @Override

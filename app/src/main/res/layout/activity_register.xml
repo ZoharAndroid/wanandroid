@@ -6,11 +6,10 @@
     android:layout_height="match_parent">
 
 
-
     <android.support.v7.widget.Toolbar
         app:popupTheme="@style/ToolbarMenuTheme"
         style="@style/AppTheme.Toolbar"
-        android:id="@+id/login_tool_bar"
+        android:id="@+id/register_tool_bar"
         android:background="@color/colorPrimary"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +20,7 @@
         <TextView
             android:maxLines="1"
             android:ellipsize="end"
-            android:id="@+id/login_toolbar_title"
+            android:id="@+id/register_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/tool_bar_text"
@@ -43,7 +42,7 @@
             style="@style/TextViewForNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
+            android:text="@string/register"
             android:textSize="24sp" />
 
         <android.support.design.widget.TextInputLayout
@@ -53,7 +52,7 @@
             android:hint="@string/note_username">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/user_name_edit_text"
+                android:id="@+id/register_user_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@mipmap/icon_account"
@@ -67,12 +66,15 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:hint="@string/note_password"
             app:passwordToggleEnabled="true">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/password_edit_text"
+                android:id="@+id/register_password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@mipmap/icon_password"
@@ -82,17 +84,26 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/login_button"
-            style="@style/LoginButton"
-            android:text="@string/login" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/register_note" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/again_note_password"
+            app:passwordToggleEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/again_register_password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@mipmap/icon_password"
+                android:drawablePadding="10dp"
+                android:inputType="textPassword"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <Button
             android:id="@+id/register_button"
@@ -102,7 +113,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/login_progress_bar"
+        android:id="@+id/register_login_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"

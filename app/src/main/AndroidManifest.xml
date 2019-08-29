@@ -29,6 +29,9 @@
 
         <activity android:name=".KnowledgeDetailActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".RegisterActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

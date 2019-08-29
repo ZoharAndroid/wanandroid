@@ -137,8 +137,6 @@ public class MainActivity extends AppCompatActivity {
         mUsernameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 关闭侧滑
-                mMainDrawerLayout.closeDrawers();
                 // 跳转到登录界面
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
