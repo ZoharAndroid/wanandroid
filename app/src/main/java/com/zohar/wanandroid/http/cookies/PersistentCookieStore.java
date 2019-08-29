@@ -40,6 +40,7 @@ public class PersistentCookieStore implements CookieStore {
      *     <string name="cookie_token_passwww.wanandroid.com">ACED000573720034636F6D2E7A6F6861722E77616E616E64726F69642E687474702E636F6F6B6965732E53657269616C697A61626C65436F6F6B696558765A8013AEB70C030000787074000A746F6B656E5F70617373740020356439623930626362373036343031383365303964316537353565616438323377080000016D771F39307400127777772E77616E616E64726F69642E636F6D7400012F77040000010178</string>
      *     <string name="cookie_loginUserNamewww.wanandroid.com">ACED000573720034636F6D2E7A6F6861722E77616E616E64726F69642E687474702E636F6F6B6965732E53657269616C697A61626C65436F6F6B696558765A8013AEB70C030000787074000D6C6F67696E557365724E616D657400055A6F68617277080000016D771F39307400127777772E77616E616E64726F69642E636F6D7400012F77040000010178</string>
      * </map>
+     * <string name="loginUserName">ACED000573720034636F6D2E7A6F6861722E77616E616E64726F69642E687474702E636F6F6B6965732E53657269616C697A61626C65436F6F6B696558765A8013AEB70C030000787074000D6C6F67696E557365724E616D657400055A6F68617277080000016D77BD46207400127777772E77616E616E64726F69642E636F6D7400012F77040000010178</string>
      * <string name="cookie_loginUserName_wanandroid_comwanandroid.com">ACED000573720034636F6D2E7A6F6861722E77616E616E64726F69642E687474702E636F6F6B6965732E53657269616C697A61626C65436F6F6B696558765A8013AEB70C030000787074001C6C6F67696E557365724E616D655F77616E616E64726F69645F636F6D74000C5A6F686172416E64726F696477080000016D77B3207874000E77616E616E64726F69642E636F6D7400012F77040000000178</string>
      */
 
@@ -248,7 +249,7 @@ public class PersistentCookieStore implements CookieStore {
         return cookie == null ? null : cookie.name();
     }
 
-    protected String encodeCookie(SerializableCookie cookie) {
+    public  String encodeCookie(SerializableCookie cookie) {
         if (cookie == null)
             return null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -263,7 +264,7 @@ public class PersistentCookieStore implements CookieStore {
         return byteArrayToHexString(os.toByteArray());
     }
 
-    protected Cookie decodeCookie(String cookieString) {
+    public  Cookie decodeCookie(String cookieString) {
         byte[] bytes = hexStringToByteArray(cookieString);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         Cookie cookie = null;
@@ -278,7 +279,7 @@ public class PersistentCookieStore implements CookieStore {
         return cookie;
     }
 
-    protected String byteArrayToHexString(byte[] bytes) {
+    public String byteArrayToHexString(byte[] bytes) {
         StringBuilder sb = new StringBuilder(bytes.length * 2);
         for (byte element : bytes) {
             int v = element & 0xff;
@@ -290,7 +291,7 @@ public class PersistentCookieStore implements CookieStore {
         return sb.toString().toUpperCase(Locale.US);
     }
 
-    protected byte[] hexStringToByteArray(String hexString) {
+    public byte[] hexStringToByteArray(String hexString) {
         int len = hexString.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {

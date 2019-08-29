@@ -133,12 +133,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     public void showLoginSuccess(RegisterData registerData) {
         if (registerData.getErrorCode() == 0){
             ToastUtils.toastShow(LoginActivity.this, "登录成功");
-            // Todo: 保存登录信息
-            PersistentCookieStore cookieStore = new PersistentCookieStore(this);
-            List<Cookie> cookies = cookieStore.getCookies();
-            for (Cookie cookie : cookies){
-                LogUtils.d("登录：" + cookie.name());
-            }
             // 销毁这个界面
             finish();
         }else {

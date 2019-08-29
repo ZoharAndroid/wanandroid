@@ -1,14 +1,17 @@
 package com.zohar.wanandroid.model.login;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.User;
 import com.zohar.wanandroid.bean.register.RegisterData;
+import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.http.cookies.CookieJarImpl;
 import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
 import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.utils.MD5Utils;
 
 import java.io.IOException;
 
@@ -29,7 +32,7 @@ public class LoginModel implements ILoginModel {
     private Handler mHandler = new Handler();
 
     @Override
-    public void login(Context context, String url, final String username, final String password, final OnLoginListener loginListener) {
+    public void login(final Context context, String url, final String username, final String password, final OnLoginListener loginListener) {
         /**
          * https://www.wanandroid.com/user/login
          *
@@ -38,7 +41,6 @@ public class LoginModel implements ILoginModel {
          * 	username，password
          */
         OkHttpClient client = new OkHttpClient.Builder().cookieJar(new CookieJarImpl(new PersistentCookieStore(context))).build();
-        LogUtils.d("post 提交的地址 ：" + url + " password : " + password);
         RequestBody requestBody = new FormBody.Builder()
                 .add("username", username)
                 .add("password", password)
@@ -73,7 +75,9 @@ public class LoginModel implements ILoginModel {
                         loginListener.loginSuccess(registerData);
                     }
                 });
-
+                // 保存用户相关信息
+                SharedPreferences sp = context.getSharedPreferences(AppConstants.COOKIE_PREFS, 0);
+                sp.edit().putString(AppConstants.LOGIN_PASSWORD, MD5Utils.convertMD5(MD5Utils.string2MD5(password))).apply();
             }
         });
     }
