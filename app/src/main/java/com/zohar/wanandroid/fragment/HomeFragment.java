@@ -191,10 +191,4 @@ public class HomeFragment extends Fragment implements IHomeView {
         }
     }
 
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mArticleAdapter.getBannerView().stopAutoPlay();
-    }
 }

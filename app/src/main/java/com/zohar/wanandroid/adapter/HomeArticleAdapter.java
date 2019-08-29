@@ -198,7 +198,4 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         articles.clear();
     }
 
-    public XBanner getBannerView(){
-        return mHeaderViewHolder.banner;
-    }
 }

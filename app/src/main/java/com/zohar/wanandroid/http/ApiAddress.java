@@ -101,4 +101,10 @@ public class ApiAddress {
      * https://www.wanandroid.com/navi/json
      */
     public static final String NAVI_ADDRESS = HOST + "/navi/json";
+
+    /**
+     * 注册地址
+     * https://www.wanandroid.com/user/register
+     */
+    public static final String REGISTER_ADDRESS = HOST + "/user/register";
 }

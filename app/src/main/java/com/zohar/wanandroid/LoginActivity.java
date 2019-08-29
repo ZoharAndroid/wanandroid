@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zohar.wanandroid.presenter.LoginPresenter;
-import com.zohar.wanandroid.view.ILoginView;
+import com.zohar.wanandroid.view.login.ILoginView;
 
 /**
  * Created by zohar on 2019/8/5 21:46

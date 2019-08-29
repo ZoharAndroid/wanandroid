@@ -5,7 +5,7 @@ import android.os.Handler;
 import com.zohar.wanandroid.bean.User;
 import com.zohar.wanandroid.model.login.LoginModel;
 import com.zohar.wanandroid.model.login.OnLoginListener;
-import com.zohar.wanandroid.view.ILoginView;
+import com.zohar.wanandroid.view.login.ILoginView;
 
 /**
  * Created by zohar on 2019/8/7 15:27

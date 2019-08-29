@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.navi.NaviData;
 import com.zohar.wanandroid.http.HttpRequestUtils;
+import com.zohar.wanandroid.utils.LogUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +33,7 @@ public class NaviModel implements INaviModel {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 final String result = response.body().string();
+                LogUtils.d("navi:" + result);
                 Gson gson = new Gson();
                 NaviData data = gson.fromJson(result, NaviData.class);
                 httpListener.httpSuccess(data);

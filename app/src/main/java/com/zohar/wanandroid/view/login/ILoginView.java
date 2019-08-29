@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.view;
+package com.zohar.wanandroid.view.login;
 
 /**
  * Created by zohar on 2019/8/7 15:00
