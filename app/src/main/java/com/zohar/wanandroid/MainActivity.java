@@ -1,5 +1,6 @@
 package com.zohar.wanandroid;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -25,9 +26,12 @@ import com.zohar.wanandroid.fragment.KnowlegeHierachyFragment;
 import com.zohar.wanandroid.fragment.NavigationFragment;
 import com.zohar.wanandroid.fragment.ProjectFragment;
 import com.zohar.wanandroid.fragment.WechatFragment;
+import com.zohar.wanandroid.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout mContentFrameLayout;
     private BottomNavigationView mBottomNavigationView;
     private TextView mToolbarTitle;
+    private TextView mUsernameTextView;
+    private CircleImageView mHeaderImageView;
 
     private List<Fragment> mFragments;
 
@@ -70,14 +76,21 @@ public class MainActivity extends AppCompatActivity {
         mToolbarTitle.setText(getResources().getString(R.string.home)); // 设置标题
 
         //mNavigationView.setCheckedItem(R.id.collections);
-        // 设置侧滑
+        // 设置侧滑菜单中的item选择
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                // 关闭侧滑菜单
                 mMainDrawerLayout.closeDrawers();
+                // Todo: 对选择侧滑菜单对应的item进行处理
+//                switch (menuItem.getItemId()){
+////                    case R.id.username_text_view:
+////                        ToastUtils.toastShow(MainActivity.this, "dianjile");
+//                }
                 return true;
             }
         });
+
 
         // 底部导航栏BottomNavigationView
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -119,6 +132,18 @@ public class MainActivity extends AppCompatActivity {
 
         // 初始化Fragment
         initFragment();
+
+        // 设置注册登录点击事件
+        mUsernameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 关闭侧滑
+                mMainDrawerLayout.closeDrawers();
+                // 跳转到登录界面
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initFragment(){
@@ -162,6 +187,11 @@ public class MainActivity extends AppCompatActivity {
         mContentFrameLayout = findViewById(R.id.fragment_container);
         mBottomNavigationView = findViewById(R.id.bottom_navigation_view);
         mToolbarTitle = findViewById(R.id.toolbar_title);
+
+        // 侧滑菜单中的header
+        View headerView = mNavigationView.getHeaderView(0);
+        mUsernameTextView = headerView.findViewById(R.id.header_username_text_view);
+        mHeaderImageView = headerView.findViewById(R.id.header_avatar_image_view);
     }
 
     @Override
