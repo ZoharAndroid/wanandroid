@@ -1,8 +1,11 @@
 package com.zohar.wanandroid.presenter;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.zohar.wanandroid.bean.User;
+import com.zohar.wanandroid.bean.register.RegisterData;
+import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.login.LoginModel;
 import com.zohar.wanandroid.model.login.OnLoginListener;
 import com.zohar.wanandroid.view.login.ILoginView;
@@ -13,58 +16,51 @@ import com.zohar.wanandroid.view.login.ILoginView;
  */
 public class LoginPresenter {
 
-    private ILoginView mLoginView;
-    private LoginModel mLoginModel;
-
-
-    private Handler mHandler = new Handler();
+    private ILoginView mView;
+    private LoginModel mModel;
 
     public LoginPresenter(ILoginView loginView) {
-        mLoginView = loginView;
-        mLoginModel = new LoginModel();
+        mView = loginView;
+        mModel = new LoginModel();
     }
 
     /**
      * 处理View发送过来的登录操作
      */
-    public void login(){
-        mLoginView.showLoading();
+    public void loginRequest(String username, String password) {
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+            mView.emptyUsernameOrPassword();
+            return;
+        }
+
+        mView.showLoading();
         // 调用model的login操作去验证登录信息
-        mLoginModel.login(mLoginView.getUsername(), mLoginView.getPassword(), new OnLoginListener() {
+        mModel.login(ApiAddress.LOGIN_ADDRESS, username, password, new OnLoginListener() {
             @Override
-            public void loginSuccess(User user) {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLoginView.hideLoading();
-                        mLoginView.showLoginSuccess();
-                    }
-                });
+            public void loginSuccess(RegisterData registerData) {
+                mView.hideLoading();
+                mView.showLoginSuccess(registerData);
             }
 
             @Override
-            public void loginFailed() {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLoginView.hideLoading();
-                        mLoginView.showLoginFailed();
-                    }
-                });
+            public void loginFailed(String msg) {
+                mView.hideLoading();
+                mView.showLoginFailed(msg);
+
             }
         });
 
     }
 
     /**
-     *  创建destory
+     * 创建destory
      */
 
-    public void destory(){
-        mLoginView = null;
-        if (mLoginModel != null){
-            mLoginModel.cancelTasks();
-            mLoginModel = null;
+    public void destory() {
+        mView = null;
+        if (mModel != null) {
+            mModel.cancelTasks();
+            mModel = null;
         }
     }
 }

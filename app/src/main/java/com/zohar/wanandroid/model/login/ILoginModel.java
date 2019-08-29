@@ -13,7 +13,7 @@ public interface ILoginModel {
      * @param password 密码
      * @param loginListener 回调接口
      */
-    void login(String username, String password, OnLoginListener loginListener );
+    void login(String url, String username, String password, OnLoginListener loginListener );
 
     
 }

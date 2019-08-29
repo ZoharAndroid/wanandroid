@@ -46,8 +46,6 @@ public class RegisterModel implements IRegisterModel {
                 .url(url)
                 .build();
 
-        LogUtils.d("请求的内容：" + requestBody.toString());
-
         client.newCall(requestPost).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

@@ -107,4 +107,9 @@ public class ApiAddress {
      * https://www.wanandroid.com/user/register
      */
     public static final String REGISTER_ADDRESS = HOST + "/user/register";
+
+    /**
+     * 登录地址
+     */
+    public static final String LOGIN_ADDRESS = "https://www.wanandroid.com/user/login";
 }

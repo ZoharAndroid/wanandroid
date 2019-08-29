@@ -1,5 +1,7 @@
 package com.zohar.wanandroid.view.login;
 
+import com.zohar.wanandroid.bean.register.RegisterData;
+
 /**
  * Created by zohar on 2019/8/7 15:00
  * Describe:
@@ -34,11 +36,13 @@ public interface ILoginView {
     /**
      * 显示登录成功的信息
      */
-    void showLoginSuccess();
+    void showLoginSuccess(RegisterData registerData);
 
     /**
      * 显示登录失败的信息
      */
-    void showLoginFailed();
+    void showLoginFailed(String msg);
+
+    void emptyUsernameOrPassword();
 
 }

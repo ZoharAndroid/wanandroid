@@ -13,7 +13,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zohar.wanandroid.bean.register.RegisterData;
 import com.zohar.wanandroid.presenter.LoginPresenter;
+import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.login.ILoginView;
 
 /**
@@ -52,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
             @Override
             public void onClick(View v) {
                 // 调用presenter去请求登录操作
-                mLoginPresenter.login();
+                mLoginPresenter.loginRequest(getUsername(), getPassword());
             }
         });
 
@@ -120,13 +122,26 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     }
 
     @Override
-    public void showLoginSuccess() {
-        Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_SHORT).show();
+    public void showLoginSuccess(RegisterData registerData) {
+        if (registerData.getErrorCode() == 0){
+            ToastUtils.toastShow(LoginActivity.this, "登录成功");
+            // Todo: 保存登录信息
+
+            // 销毁这个界面
+            finish();
+        }else {
+            ToastUtils.toastShow(LoginActivity.this, registerData.getErrorMsg());
+        }
     }
 
     @Override
-    public void showLoginFailed() {
-        Toast.makeText(LoginActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
+    public void showLoginFailed(String msg) {
+        ToastUtils.toastShow(this, msg);
+    }
+
+    @Override
+    public void emptyUsernameOrPassword() {
+        ToastUtils.toastShow(this, "用户名或密码不能为空！");
     }
 
     @Override
