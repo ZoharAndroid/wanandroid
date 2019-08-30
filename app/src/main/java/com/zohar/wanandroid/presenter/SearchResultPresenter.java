@@ -39,4 +39,24 @@ public class SearchResultPresenter {
             }
         });
     }
+
+    /**
+     * 刷新
+     *
+     * @param searchContent
+     */
+    public void searchRefresh(String searchContent){
+        // 发送请求
+        mModel.search(ApiAddress.SEARCH_ADDRESS(0), searchContent, 0, new OnSearchListener() {
+            @Override
+            public void onSearchSuccess(Article articlesData) {
+                mView.searchRefreshSuccess(articlesData);
+            }
+
+            @Override
+            public void onSearchFailed(String msg) {
+                mView.searchRefreshFailed(msg);
+            }
+        });
+    }
 }

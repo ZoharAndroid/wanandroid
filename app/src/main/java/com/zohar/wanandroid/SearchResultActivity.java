@@ -2,6 +2,7 @@ package com.zohar.wanandroid;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -33,6 +34,10 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private KnowledgeListAdapter mAdapter;
+    private SwipeRefreshLayout mRefreshLayout;
+    private SearchResultPresenter mPresenter;
+
+    private int mCurrentPage = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,9 +78,18 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     private void initEventAndData() {
         // 发送请求
         if (!mSearchContent.isEmpty()){
-            SearchResultPresenter mPresenter = new SearchResultPresenter(this);
+            mPresenter = new SearchResultPresenter(this);
             mPresenter.searchRequest(mSearchContent, 0);
         }
+
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.searchRefresh(mSearchContent);
+            }
+        });
+
+
     }
 
     private void initView() {
@@ -83,6 +97,7 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
         mTitle = findViewById(R.id.search_result_title);
         mRecyclerView = findViewById(R.id.search_result_recycler_view);
         mProgressBar = findViewById(R.id.search_result_progress_bar);
+        mRefreshLayout = findViewById(R.id.search_result_swipe_refresh);
     }
 
     @Override
@@ -99,7 +114,6 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     public void searchSuccess(Article articlesData) {
         if (articlesData.getErrorCode() == 0){
             mAdapter.addArticle(articlesData.getData().getDatas());
-           // LogUtils.d("获取数据的大小：" + articlesData.getData().getDatas().size());
         }else{
             ToastUtils.toastShow(this, articlesData.getErrorMsg());
         }
@@ -107,6 +121,21 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
 
     @Override
     public void searchFailed(String msg) {
+        ToastUtils.toastShow(this, msg);
+    }
+
+    @Override
+    public void searchRefreshSuccess(Article articlesData) {
+        // 清空
+        mAdapter.clearArticle();
+        // 添加
+        mAdapter.addArticle(articlesData.getData().getDatas());
+        mCurrentPage = 0;
+        mRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void searchRefreshFailed(String msg) {
         ToastUtils.toastShow(this, msg);
     }
 }
