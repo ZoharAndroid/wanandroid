@@ -7,75 +7,88 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
 
-        <android.support.design.widget.CoordinatorLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <android.support.design.widget.AppBarLayout
+
+            <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <android.support.design.widget.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
 
-                <android.support.v7.widget.Toolbar
-                    style="@style/AppTheme.Toolbar"
-                    android:id="@+id/toolbar"
-                    android:background="@color/colorPrimary"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"
-                    app:titleTextColor="@color/white">
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        style="@style/AppTheme.Toolbar"
+                        android:background="@color/colorPrimary"
+                        app:layout_scrollFlags="scroll|enterAlways|snap"
+                        app:titleTextColor="@color/white">
 
-                    <TextView
-                        android:id="@+id/toolbar_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/tool_bar_text"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        tools:text="标题" />
+                        <TextView
+                            android:id="@+id/toolbar_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/tool_bar_text"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="标题" />
 
-                </android.support.v7.widget.Toolbar>
-            </android.support.design.widget.AppBarLayout>
+                    </android.support.v7.widget.Toolbar>
+                </android.support.design.widget.AppBarLayout>
 
 
-            <!-- 展示内容 -->
-            <FrameLayout
-                android:id="@+id/fragment_container"
+                <!-- 展示内容 -->
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+                <!-- 悬浮按钮 -->
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floating_action_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="60dp"
+                    android:src="@mipmap/icon_arrow_up" />
+
+            </android.support.design.widget.CoordinatorLayout>
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottom_navigation_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-            <!-- 悬浮按钮 -->
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/floating_action_button"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="60dp"
-                android:src="@mipmap/icon_arrow_up" />
+                android:layout_gravity="bottom"
+                android:background="@color/bottom_nav_bg"
+                app:itemIconTint="@drawable/bottom_nav_text_selector"
+                app:itemTextColor="@drawable/bottom_nav_text_selector"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_nav_men" />
+        </LinearLayout>
 
-        </android.support.design.widget.CoordinatorLayout>
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/main_progress_bar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/bottom_nav_bg"
-            app:itemIconTint="@drawable/bottom_nav_text_selector"
-            app:itemTextColor="@drawable/bottom_nav_text_selector"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_nav_men" />
-    </LinearLayout>
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
+    <!--侧边栏 -->
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_container"
         android:layout_width="wrap_content"
@@ -85,6 +98,46 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         app:itemBackground="@drawable/item_nav_bg"
-        app:menu="@menu/nav_menu_main" />
+        app:menu="@menu/nav_menu_main">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/draw_bottom_bg"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/ll_login_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:src="@mipmap/icon_login_out" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/login_out"
+                    android:textColor="@color/item_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

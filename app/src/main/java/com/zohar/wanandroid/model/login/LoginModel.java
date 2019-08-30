@@ -67,7 +67,6 @@ public class LoginModel implements ILoginModel {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
-                LogUtils.d("返回来的数据：" + result);
                 Gson gson = new Gson();
                 final RegisterData registerData = gson.fromJson(result, RegisterData.class);
                 mHandler.post(new Runnable() {

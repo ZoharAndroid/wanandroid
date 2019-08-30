@@ -112,4 +112,9 @@ public class ApiAddress {
      * 登录地址
      */
     public static final String LOGIN_ADDRESS = "https://www.wanandroid.com/user/login";
+
+    /**
+     * 退出登录地址
+     */
+    public static final String  LOGOUT_ADDRESS = "https://www.wanandroid.com/user/logout/json";
 }

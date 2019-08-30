@@ -20,4 +20,7 @@ public class AppConstants {
     public static final String LOGIN_USER_NAME = "loginUserName";
     public static final String LOGIN_PASSWORD = "loginPassword";
     public static final String CURRENT_USER_NAME = "currentUserName";
+
+    public static final int LOGIN_INTENT = 1001;
+    public static final String LOGIN_USER_NAME_INTENT = "login_user_name";
 }

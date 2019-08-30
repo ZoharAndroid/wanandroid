@@ -10,10 +10,10 @@
     <color name="nav_item_normal">#fffff6</color>
     <color name="nav_item_checked">#ffffff</color>
 
-    <color name="draw_bg_normal">#e6e6e6</color>
+    <color name="draw_bg_normal">#FFFAFA</color>
     <color name="white">#ffffff</color>
 
-    <color name="bottom_nav_bg">#FFFAFA</color>
+    <color name="bottom_nav_bg">#FFFFFF</color>
 
     <color name="tool_bar_text">#ffffff</color>
     <color name="item_text_sub">#515151</color>
@@ -24,4 +24,5 @@
     <color name="colorBackground">#C0C0C0</color>
     <color name="text_color">#000000</color>
     <color name="item_text_color">#707070</color>
+    <color name="draw_bottom_bg">#F5F5F5</color>
 </resources>

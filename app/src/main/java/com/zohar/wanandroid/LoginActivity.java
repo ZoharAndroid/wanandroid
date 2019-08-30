@@ -133,6 +133,10 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     public void showLoginSuccess(RegisterData registerData) {
         if (registerData.getErrorCode() == 0){
             ToastUtils.toastShow(LoginActivity.this, "登录成功");
+            // 将数据返回到主界面
+            Intent intent = new Intent();
+            intent.putExtra(AppConstants.LOGIN_USER_NAME_INTENT, getUsername());
+            setResult(RESULT_OK, intent);
             // 销毁这个界面
             finish();
         }else {

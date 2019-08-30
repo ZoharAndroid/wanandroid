@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.zohar.wanandroid.config.AppConstants;
+import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
 
 /**
  * Created by zohar on 2019/8/29 22:12
@@ -19,4 +20,15 @@ public class SharePreferenceUtils {
         editor.putString(AppConstants.CURRENT_USER_NAME, username);
         editor.apply();
     }
+
+    /**
+     * 清除所有信息
+     *
+     * @param context
+     */
+    public static void clearUserInfo(Context context){
+        PersistentCookieStore cookieStore = new PersistentCookieStore(context);
+        cookieStore.removeAll();
+    }
+
 }
