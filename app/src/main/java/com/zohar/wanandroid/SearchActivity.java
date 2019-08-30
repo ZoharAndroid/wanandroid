@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -19,10 +20,12 @@ import com.zohar.wanandroid.bean.search.HotSearch;
 import com.zohar.wanandroid.bean.search.HotSearchData;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.HotSearchPresenter;
+import com.zohar.wanandroid.presenter.SearchResultPresenter;
 import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ScreenUtil;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.search.IHotSearchView;
+import com.zohar.wanandroid.view.search.ISearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +55,7 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
     private void initToolbar() {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null){
+        if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -65,8 +68,23 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
 
     private void initEventAndData() {
         // 请求热搜数据
-        HotSearchPresenter mPresenter = new HotSearchPresenter(this);
+        final HotSearchPresenter mPresenter = new HotSearchPresenter(this);
         mPresenter.hotSearchRequest();
+
+        // 搜索内容
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(getSearchContent())){
+                    return;
+                }
+                // 跳转到搜索结果显示
+                startSearchResultActivity(getSearchContent());
+
+                // todo: 保存并显示搜索历史
+            }
+        });
+
     }
 
     private void initView() {
@@ -78,39 +96,37 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
 
     @Override
     public void hotSearchSuccess(HotSearchData hotSearchData) {
-        if (hotSearchData.getErrorCode() == 0){
-            //LogUtils.d(hotSearchData.getData().toString());
-            mHotSearchList = hotSearchData.getData();
+        if (hotSearchData.getErrorCode() == 0) {
+             mHotSearchList = hotSearchData.getData();
             // 设置热搜标签
             setHotSearchTag();
 
-        }else{
+        } else {
             ToastUtils.toastShow(this, hotSearchData.getErrorMsg());
         }
     }
 
+    /**
+     * 设置热搜标签
+     */
     private void setHotSearchTag() {
         mTagFlowLayout.setAdapter(new TagAdapter<HotSearch>(mHotSearchList) {
             @Override
             public View getView(FlowLayout parent, int position, HotSearch hotSearch) {
-                TextView tv = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_flow_tv , parent, false);
-                if (mHotSearchList == null){
+                TextView tv = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_flow_tv, parent, false);
+                if (mHotSearchList == null) {
                     return null;
                 }
                 String name = hotSearch.getName();
                 tv.setText(name);
                 tv.setTextColor(ScreenUtil.randomColor());
-                tv.setPadding(ScreenUtil.dp2px(parent.getContext(), 10), ScreenUtil.dp2px(parent.getContext(),10),
-                        ScreenUtil.dp2px(parent.getContext(),10), ScreenUtil.dp2px(parent.getContext(),10));
+                tv.setPadding(ScreenUtil.dp2px(parent.getContext(), 10), ScreenUtil.dp2px(parent.getContext(), 10),
+                        ScreenUtil.dp2px(parent.getContext(), 10), ScreenUtil.dp2px(parent.getContext(), 10));
                 mTagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                     @Override
                     public boolean onTagClick(View view, int position, FlowLayout parent) {
-
-//                        Intent intent = new Intent(mContext, ArticllDetailActivity.class);
-//                        intent.putExtra(AppConstants.ARTICLE_FROM_HOME, details.get(position).getLink());
-//                        intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, details.get(position).getTitle());
-//                        mContext.startActivity(intent);
-                        ToastUtils.toastShow(parent.getContext(), mHotSearchList.get(position).getName());
+                        // 到转到搜索界面
+                        startSearchResultActivity(mHotSearchList.get(position).getName());
                         return true;
                     }
                 });
@@ -123,5 +139,25 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
     @Override
     public void hotSearchFailed(String msg) {
         ToastUtils.toastShow(this, msg);
+    }
+
+    /**
+     * 启动搜索结果界面
+     *
+     * @param searchContent 搜素内容
+     */
+    private void startSearchResultActivity(String searchContent) {
+        Intent intent = new Intent(this, SearchResultActivity.class);
+        intent.putExtra(AppConstants.SEARCH_CONTENT_INTNT, searchContent);
+        startActivity(intent);
+    }
+
+    /**
+     * 获取搜索的内容
+     *
+     * @return 搜索的内容
+     */
+    public String getSearchContent() {
+        return mSearchEditText.getText().toString().trim();
     }
 }

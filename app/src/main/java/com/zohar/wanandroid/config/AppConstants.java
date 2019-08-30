@@ -23,4 +23,6 @@ public class AppConstants {
 
     public static final int LOGIN_INTENT = 1001;
     public static final String LOGIN_USER_NAME_INTENT = "login_user_name";
+
+    public static final String SEARCH_CONTENT_INTNT = "search_content";
 }

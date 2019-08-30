@@ -33,7 +33,6 @@ public class NaviModel implements INaviModel {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 final String result = response.body().string();
-                LogUtils.d("navi:" + result);
                 Gson gson = new Gson();
                 NaviData data = gson.fromJson(result, NaviData.class);
                 httpListener.httpSuccess(data);
