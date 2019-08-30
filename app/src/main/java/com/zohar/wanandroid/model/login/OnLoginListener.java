@@ -1,6 +1,5 @@
 package com.zohar.wanandroid.model.login;
 
-import com.zohar.wanandroid.bean.User;
 import com.zohar.wanandroid.bean.register.RegisterData;
 
 /**

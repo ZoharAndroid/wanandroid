@@ -1,10 +1,8 @@
 package com.zohar.wanandroid.presenter;
 
 import android.content.Context;
-import android.os.Handler;
 import android.text.TextUtils;
 
-import com.zohar.wanandroid.bean.User;
 import com.zohar.wanandroid.bean.register.RegisterData;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.login.LoginModel;

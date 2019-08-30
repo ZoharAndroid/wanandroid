@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/search_tool_bar"
+        style="@style/AppTheme.Toolbar"
+        android:background="@color/draw_bottom_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
+        app:navigationIcon="@mipmap/icon_back_black"
+        app:titleTextColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/shap_item_tag"
+                android:drawableLeft="@mipmap/icon_search_black"
+                android:focusable="true"
+                android:hint="@string/search_info"
+                android:inputType="text"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:textColorHint="@color/item_text_color" />
+
+            <TextView
+                android:id="@+id/search_start_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/shape_tag_rect"
+                android:padding="10dp"
+                android:text="@string/search"
+                android:textColor="@color/text_color" />
+        </LinearLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_navi_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dp"
+            android:text="@string/hot_search"
+            android:textColor="@color/text_color"
+            android:textSize="20sp"
+            tools:text="热搜" />
+
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/item_hot_search_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            app:max_select="0" />
+
+    </LinearLayout>
+
+</LinearLayout>

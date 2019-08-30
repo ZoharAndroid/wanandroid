@@ -1,17 +1,12 @@
 package com.zohar.wanandroid.model.login;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Handler;
 
 import com.google.gson.Gson;
-import com.zohar.wanandroid.bean.User;
 import com.zohar.wanandroid.bean.register.RegisterData;
-import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.http.cookies.CookieJarImpl;
 import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
-import com.zohar.wanandroid.utils.LogUtils;
-import com.zohar.wanandroid.utils.MD5Utils;
 import com.zohar.wanandroid.utils.SharePreferenceUtils;
 
 import java.io.IOException;

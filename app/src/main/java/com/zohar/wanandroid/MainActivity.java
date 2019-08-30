@@ -283,7 +283,10 @@ public class MainActivity extends AppCompatActivity implements ILoginOutView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search_tool_bar:
-                Toast.makeText(MainActivity.this, "搜索", Toast.LENGTH_SHORT).show();
+                // 点击搜索
+                //Toast.makeText(MainActivity.this, "搜索", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
                 break;
             case android.R.id.home:
                 mMainDrawerLayout.openDrawer(GravityCompat.START);

@@ -117,4 +117,25 @@ public class ApiAddress {
      * 退出登录地址
      */
     public static final String  LOGOUT_ADDRESS = "https://www.wanandroid.com/user/logout/json";
+
+
+    /**
+     * 热搜地址
+     */
+    public static final String HOT_SEARCH_ADDRESS = "https://www.wanandroid.com//hotkey/json";
+
+    /**
+     * 搜索内容地址
+     *
+     * @param pageNum 第几页
+     *
+     * @return
+     */
+    public static final String SEARCH_ADDRESS(int pageNum){
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/article/query/");
+        sb.append(pageNum);
+        sb.append("/json");
+        return sb.toString();
+    }
 }
