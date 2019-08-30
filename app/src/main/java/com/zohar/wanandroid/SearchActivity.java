@@ -20,14 +20,10 @@ import com.zohar.wanandroid.bean.search.HotSearch;
 import com.zohar.wanandroid.bean.search.HotSearchData;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.HotSearchPresenter;
-import com.zohar.wanandroid.presenter.SearchResultPresenter;
-import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ScreenUtil;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.search.IHotSearchView;
-import com.zohar.wanandroid.view.search.ISearchView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
