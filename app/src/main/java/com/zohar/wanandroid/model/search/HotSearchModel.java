@@ -2,7 +2,6 @@ package com.zohar.wanandroid.model.search;
 
 import android.os.Handler;
 
-import com.flyco.tablayout.widget.MsgView;
 import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.search.HotSearchData;
 import com.zohar.wanandroid.http.HttpRequestUtils;

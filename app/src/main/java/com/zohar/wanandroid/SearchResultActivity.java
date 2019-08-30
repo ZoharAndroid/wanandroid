@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.zohar.wanandroid.adapter.KnowledgeAdapter;
+import com.zohar.wanandroid.adapter.KnowledgeListAdapter;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.SearchResultPresenter;
@@ -28,6 +32,7 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     private TextView mTitle;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
+    private KnowledgeListAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +42,16 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
         initView();
         initToolbar();
         initEventAndData();
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(manager);
+        mAdapter = new KnowledgeListAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void initToolbar() {
@@ -83,7 +98,8 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     @Override
     public void searchSuccess(Article articlesData) {
         if (articlesData.getErrorCode() == 0){
-            LogUtils.d("获取数据的大小：" + articlesData.getData().getDatas().size());
+            mAdapter.addArticle(articlesData.getData().getDatas());
+           // LogUtils.d("获取数据的大小：" + articlesData.getData().getDatas().size());
         }else{
             ToastUtils.toastShow(this, articlesData.getErrorMsg());
         }
