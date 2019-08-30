@@ -15,8 +15,11 @@ import android.widget.TextView;
 
 import com.zohar.wanandroid.adapter.KnowledgeAdapter;
 import com.zohar.wanandroid.adapter.KnowledgeListAdapter;
+import com.zohar.wanandroid.adapter.OnLoadMoreListener;
 import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.bean.home.Data;
 import com.zohar.wanandroid.config.AppConstants;
+import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.SearchResultPresenter;
 import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ToastUtils;
@@ -38,6 +41,7 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     private SearchResultPresenter mPresenter;
 
     private int mCurrentPage = 0;
+    private int mPageCount = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +86,7 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
             mPresenter.searchRequest(mSearchContent, 0);
         }
 
+        // 下拉刷新
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -89,7 +94,22 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
             }
         });
 
-
+        //加载更多
+        mRecyclerView.addOnScrollListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                // 获取总的页码
+                if (++mCurrentPage < mPageCount) {
+                    // 当当前页面小于总的页数的时候是可以去请求服务器
+                    mAdapter.setFooterViewVisable();
+                    mPresenter.searchLoadMore(mSearchContent, mCurrentPage);
+                } else {
+                    // 如果当前页码等于或者大于页码的时候，隐藏加载更多界面
+                    mAdapter.deleteLastItem();
+                    ToastUtils.toastShow(SearchResultActivity.this, "已经没有更多内容了！");
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -113,6 +133,7 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     @Override
     public void searchSuccess(Article articlesData) {
         if (articlesData.getErrorCode() == 0){
+            mPageCount = articlesData.getData().getPageCount();
             mAdapter.addArticle(articlesData.getData().getDatas());
         }else{
             ToastUtils.toastShow(this, articlesData.getErrorMsg());
@@ -126,16 +147,38 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
 
     @Override
     public void searchRefreshSuccess(Article articlesData) {
-        // 清空
-        mAdapter.clearArticle();
-        // 添加
-        mAdapter.addArticle(articlesData.getData().getDatas());
-        mCurrentPage = 0;
-        mRefreshLayout.setRefreshing(false);
+        if (articlesData.getErrorCode() == 0) {
+            // 清空
+            mAdapter.clearArticle();
+            // 添加
+            mAdapter.addArticle(articlesData.getData().getDatas());
+            mCurrentPage = 0;
+            mRefreshLayout.setRefreshing(false);
+        }else{
+            ToastUtils.toastShow(this, articlesData.getErrorMsg());
+        }
     }
 
     @Override
     public void searchRefreshFailed(String msg) {
+        ToastUtils.toastShow(this, msg);
+    }
+
+    @Override
+    public void searchLoadMoreSuccess(Article articlesData) {
+        if (articlesData.getErrorCode() == 0) {
+            // 没有错误
+            Data homeData = articlesData.getData();
+            // 新获取下来的文章数目
+            // 添加到新list中
+            mAdapter.addArticle(homeData.getDatas());
+        } else {
+            ToastUtils.toastShow(this, articlesData.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void searchLoadMoreFailed(String msg) {
         ToastUtils.toastShow(this, msg);
     }
 }

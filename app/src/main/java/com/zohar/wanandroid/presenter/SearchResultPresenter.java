@@ -59,4 +59,25 @@ public class SearchResultPresenter {
             }
         });
     }
+
+    /**
+     * 加载更多
+     *
+     * @param searchContent 搜索的内容
+     * @param pageNum 页面
+     */
+    public void searchLoadMore(String searchContent, int pageNum){
+        // 发送请求
+        mModel.search(ApiAddress.SEARCH_ADDRESS(pageNum), searchContent, pageNum, new OnSearchListener() {
+            @Override
+            public void onSearchSuccess(Article articlesData) {
+                mView.searchLoadMoreSuccess(articlesData);
+            }
+
+            @Override
+            public void onSearchFailed(String msg) {
+                mView.searchLoadMoreFailed(msg);
+            }
+        });
+    }
 }

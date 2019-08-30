@@ -17,4 +17,7 @@ public interface ISearchResultView {
     void searchRefreshSuccess(Article articlesData);
     void searchRefreshFailed(String msg);
 
+    void searchLoadMoreSuccess(Article articlesData);
+    void searchLoadMoreFailed(String msg);
+
 }
