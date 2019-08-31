@@ -1,5 +1,7 @@
 package com.zohar.wanandroid.presenter;
 
+import android.content.Context;
+
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.collect.CollectModel;
@@ -23,8 +25,8 @@ public class CollectPresenter {
     /**
      * 收藏请求
      */
-    public void  collectRequest(int articleId){
-        mModel.collect(ApiAddress.COLLECT_SITE_ADDRESS(articleId), articleId, new OnCollectListener() {
+    public void  collectRequest(Context context, int articleId){
+        mModel.collect(context, ApiAddress.COLLECT_SITE_ADDRESS(articleId), articleId, new OnCollectListener() {
             @Override
             public void collectSuccess(Article data) {
                 mView.collectSuccess(data);

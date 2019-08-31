@@ -128,7 +128,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     // 请求服务器去表示去收藏
                     //mOnCollectListener.clickCollect(article);
                     CollectPresenter mPresenter = new CollectPresenter(HomeArticleAdapter.this);
-                    mPresenter.collectRequest(article.getId());
+                    mPresenter.collectRequest(mContext, article.getId());
                 }
             });
             return holder;

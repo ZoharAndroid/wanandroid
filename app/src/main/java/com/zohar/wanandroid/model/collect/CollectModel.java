@@ -1,15 +1,20 @@
 package com.zohar.wanandroid.model.collect;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.config.AppConstants;
+import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
 import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.utils.MD5Utils;
 import com.zohar.wanandroid.utils.SharePreferenceUtils;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,16 +34,26 @@ public class CollectModel implements  ICollectModel {
     private Handler mHandler = new Handler();
 
     @Override
-    public void collect(String url, int articleId, final OnCollectListener onCollectListener) {
+    public void collect(Context context, String url, int articleId, final OnCollectListener onCollectListener) {
         // post提交
         OkHttpClient client = new OkHttpClient.Builder().build();
-        LogUtils.d("Post :" + url);
-        // todo : 请求添加cookies信息
+
+        String userName = null;
+        PersistentCookieStore cookieStore = new PersistentCookieStore(context);
+        List<Cookie> cookies = cookieStore.getCookies();
+        for (Cookie cookie : cookies){
+            if (cookie.name().equals(AppConstants.LOGIN_USER_NAME)){
+                userName = cookie.value();
+                break;
+            }
+        }
+        LogUtils.d("Post :" + url + " username : " + SharePreferenceUtils.getLoginUserName(context) + " password: " + SharePreferenceUtils.getLoginPassword(context));
         RequestBody requestBody = new FormBody.Builder().build();
         Request requestPost = new Request.Builder()
                 .post(requestBody)
                 .url(url)
-                //.addHeader("Cookie","loginUserName" + )
+                .addHeader("Cookie","loginUserName=" + userName)
+                .addHeader("Cookie","loginUserPassword=" + SharePreferenceUtils.getLoginPassword(context))
                 .build();
 
         client.newCall(requestPost).enqueue(new Callback() {
@@ -55,6 +70,7 @@ public class CollectModel implements  ICollectModel {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String result = response.body().string();
+                LogUtils.d(result);
                 Gson gson = new Gson();
                 final Article data = gson.fromJson(result, Article.class);
                 mHandler.post(new Runnable() {
