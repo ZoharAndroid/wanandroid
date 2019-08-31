@@ -193,6 +193,8 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             // 设置收藏图片
             if (article.isCollect()) {
                 articleViewHolder.collectImageView.setImageResource(R.mipmap.icon_collect_select);
+            }else{
+                articleViewHolder.collectImageView.setImageResource(R.mipmap.icon_item_collection);
             }
         } else {
             // header
