@@ -98,10 +98,12 @@ public class MainActivity extends AppCompatActivity implements ILoginOutView {
                 // 关闭侧滑菜单
                 mMainDrawerLayout.closeDrawers();
                 // Todo: 对选择侧滑菜单对应的item进行处理
-//                switch (menuItem.getItemId()){
-////                    case R.id.username_text_view:
-////                        ToastUtils.toastShow(MainActivity.this, "dianjile");
-//                }
+                switch (menuItem.getItemId()){
+                    case R.id.collections:
+                        // 收藏按钮.跳转到收藏列表中
+                        Intent intent = new Intent(MainActivity.this, CollectListActivity.class);
+                        startActivity(intent);
+                }
                 return true;
             }
         });
