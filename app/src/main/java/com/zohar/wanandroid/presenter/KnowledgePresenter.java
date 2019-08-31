@@ -1,6 +1,7 @@
 package com.zohar.wanandroid.presenter;
 
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
@@ -17,10 +18,12 @@ public class KnowledgePresenter {
 
     private IKnowledgeView mKnowledgeView;
     private KnowledgeModel mKnowledgeModel;
+    private Context context;
 
     private Handler mHandler = new Handler();
 
-    public KnowledgePresenter(IKnowledgeView knowledgeView) {
+    public KnowledgePresenter(Context context,IKnowledgeView knowledgeView) {
+        this.context = context;
         mKnowledgeView = knowledgeView;
         mKnowledgeModel = new KnowledgeModel();
     }
@@ -28,7 +31,7 @@ public class KnowledgePresenter {
     // presenter 通过 model 发送http请求
     public void sendKnowledgeRequest(String url){
         mKnowledgeView.showLoadingView();
-        mKnowledgeModel.sendKnowledgeGetRequest(url, new OnKnowledgeListener() {
+        mKnowledgeModel.sendKnowledgeGetRequest(context, url, new OnKnowledgeListener() {
             @Override
             public void httpFailed(final String msg) {
                 mHandler.post(new Runnable() {
@@ -59,7 +62,7 @@ public class KnowledgePresenter {
      * 刷新请求
      */
     public void onRefresh(){
-        mKnowledgeModel.sendKnowledgeGetRequest(ApiAddress.KNOWLEDGE_TREE, new OnKnowledgeListener() {
+        mKnowledgeModel.sendKnowledgeGetRequest(context, ApiAddress.KNOWLEDGE_TREE, new OnKnowledgeListener() {
             @Override
             public void httpFailed(final String msg) {
                 mHandler.post(new Runnable() {

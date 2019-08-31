@@ -89,7 +89,7 @@ public class KnowledgeHierarchyListFragment extends Fragment implements IKnowled
 
         mCurrentPage = 0;
 
-        mPresenter = new KnowledgeListPresenter(this);
+        mPresenter = new KnowledgeListPresenter(getContext(),this);
 
         // 去分别请求不同ID的第0页数据
         mPresenter.sendHomeHttpRequest(ApiAddress.KNOWLEDGE_TREE_ARTICLE(mCurrentPage, id));

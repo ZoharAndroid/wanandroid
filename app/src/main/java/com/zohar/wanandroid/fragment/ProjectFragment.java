@@ -61,7 +61,7 @@ public class ProjectFragment extends Fragment implements IProjectView {
 
     private void initEventAndData() {
         // 通过presenter来请求公众号列表数据
-        mPresenter = new ProjectPresenter(this);
+        mPresenter = new ProjectPresenter(getContext(), this);
         mPresenter.sendProjectRequest(ApiAddress.PROJECT_CATEGORIES_ADDRESS);
     }
 

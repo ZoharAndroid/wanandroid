@@ -54,7 +54,7 @@ public class KnowlegeHierachyFragment extends Fragment implements IKnowledgeView
         super.onActivityCreated(savedInstanceState);
 
         if (mPresenter == null){
-            mPresenter = new KnowledgePresenter(this);
+            mPresenter = new KnowledgePresenter(getContext(),this);
             // 调用presenter去发送请求
             mPresenter.sendKnowledgeRequest(ApiAddress.KNOWLEDGE_TREE);
         }

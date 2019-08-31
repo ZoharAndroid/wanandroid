@@ -1,6 +1,7 @@
 package com.zohar.wanandroid.presenter;
 
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
@@ -16,10 +17,12 @@ public class WechatPresenter {
 
    private IWechatView mView;
     private KnowledgeModel mModel;
+    private Context context;
 
     private Handler mHandler = new Handler();
 
-    public WechatPresenter(IWechatView wechatView) {
+    public WechatPresenter(Context context, IWechatView wechatView) {
+        this.context = context;
         mView = wechatView;
         mModel = new KnowledgeModel();
     }
@@ -27,7 +30,7 @@ public class WechatPresenter {
     // presenter 通过 model 发送http请求
     public void sendWechatRequest(String url){
         mView.showLoadingView();
-        mModel.sendKnowledgeGetRequest(url, new OnKnowledgeListener() {
+        mModel.sendKnowledgeGetRequest(context, url, new OnKnowledgeListener() {
             @Override
             public void httpFailed(final String msg) {
                 mHandler.post(new Runnable() {

@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.presenter;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.home.Article;
@@ -18,17 +19,18 @@ public class NaviPresenter {
 
     private INaviView mView;
     private NaviModel mModel;
-
+    private Context context;
     private Handler mHandler = new Handler();
 
-    public NaviPresenter(INaviView view) {
+    public NaviPresenter(Context context, INaviView view) {
+        this.context = context;
         mView = view;
         mModel = new NaviModel();
     }
 
     public void sendNaviRequest(String url) {
         mView.showLoadingView();
-        mModel.sendHttpRequest(url, new OnHttpListener() {
+        mModel.sendHttpRequest(context, url, new OnHttpListener() {
             @Override
             public void httpSuccess(final NaviData naviData) {
                 mHandler.post(new Runnable() {

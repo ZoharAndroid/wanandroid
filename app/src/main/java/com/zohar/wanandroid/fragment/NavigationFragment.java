@@ -70,7 +70,7 @@ public class NavigationFragment extends Fragment implements INaviView {
 
     private void initEventAndData() {
         // 请求presenter 去发送请求
-        mPresenter = new NaviPresenter(this);
+        mPresenter = new NaviPresenter(getContext(), this);
         mPresenter.sendNaviRequest(ApiAddress.NAVI_ADDRESS);
     }
 

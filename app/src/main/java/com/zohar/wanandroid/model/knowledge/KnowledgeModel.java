@@ -1,5 +1,7 @@
 package com.zohar.wanandroid.model.knowledge;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.http.HttpRequestUtils;
@@ -20,8 +22,8 @@ public class KnowledgeModel implements IKnowledgeModel {
 
 
     @Override
-    public void sendKnowledgeGetRequest(String url, final OnKnowledgeListener knowledgeListener) {
-        Call call = HttpRequestUtils.sendHttpGetRequest(url);
+    public void sendKnowledgeGetRequest(Context context,String url, final OnKnowledgeListener knowledgeListener) {
+        Call call = HttpRequestUtils.sendHttpGetRequest(context, url);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {

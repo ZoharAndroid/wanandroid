@@ -1,5 +1,7 @@
 package com.zohar.wanandroid.model.navi;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.navi.NaviData;
@@ -21,8 +23,8 @@ import okhttp3.Response;
 public class NaviModel implements INaviModel {
 
     @Override
-    public void sendHttpRequest(String url, final OnHttpListener httpListener) {
-        Call call = HttpRequestUtils.sendHttpGetRequest(url);
+    public void sendHttpRequest(Context context, String url, final OnHttpListener httpListener) {
+        Call call = HttpRequestUtils.sendHttpGetRequest(context, url);
 
         call.enqueue(new Callback() {
             @Override

@@ -1,5 +1,7 @@
 package com.zohar.wanandroid.view.home;
 
+import android.view.View;
+
 import com.zohar.wanandroid.bean.home.Article;
 
 /**
@@ -10,4 +12,6 @@ public interface ICollectView {
 
     void collectSuccess(Article data);
     void collectFailed(String msg);
+
+    void changeCollectSuccessView(View clickView);
 }

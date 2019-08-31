@@ -47,7 +47,6 @@ public class CollectModel implements  ICollectModel {
                 break;
             }
         }
-        LogUtils.d("Post :" + url + " username : " + SharePreferenceUtils.getLoginUserName(context) + " password: " + SharePreferenceUtils.getLoginPassword(context));
         RequestBody requestBody = new FormBody.Builder().build();
         Request requestPost = new Request.Builder()
                 .post(requestBody)

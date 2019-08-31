@@ -37,16 +37,13 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private List<BannerData> mBannerData = new ArrayList<>();
 
-    private OnCollectListener mOnCollectListener;
 
-    public void setColllectListener(OnCollectListener onCollectListener){
-        mOnCollectListener = onCollectListener;
-    }
 
     @Override
     public void collectSuccess(Article data) {
         // 收藏成功
         if (data.getErrorCode() == 0){
+            // 变换图标颜色
 
         }else{
             ToastUtils.toastShow(mContext, data.getErrorMsg());
@@ -58,9 +55,12 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ToastUtils.toastShow(mContext, msg);
     }
 
-    public interface OnCollectListener{
-        void clickCollect(Datas article);
+    @Override
+    public void changeCollectSuccessView(View clickView) {
+        // 变换图标颜色
+        ((ImageView)clickView).setImageResource(R.mipmap.icon_collect_select);
     }
+
 
     // 正常内容
     private final static int TYPE_CONTENT = 0;
@@ -126,8 +126,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     int position = holder.getAdapterPosition(); // 获取当前点击的位置
                     final Datas article = articles.get(position - 1);
                     // 请求服务器去表示去收藏
-                    //mOnCollectListener.clickCollect(article);
-                    CollectPresenter mPresenter = new CollectPresenter(HomeArticleAdapter.this);
+                    CollectPresenter mPresenter = new CollectPresenter(HomeArticleAdapter.this, v);
                     mPresenter.collectRequest(mContext, article.getId());
                 }
             });
@@ -190,6 +189,10 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (article.getTags().size() != 0) {
                 articleViewHolder.tag.setVisibility(View.VISIBLE);
                 articleViewHolder.tag.setText(article.getTags().get(0).getName());
+            }
+            // 设置收藏图片
+            if (article.isCollect()) {
+                articleViewHolder.collectImageView.setImageResource(R.mipmap.icon_collect_select);
             }
         } else {
             // header

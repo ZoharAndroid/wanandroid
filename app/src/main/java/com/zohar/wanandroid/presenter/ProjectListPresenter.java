@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.presenter;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.home.Article;
@@ -16,10 +17,12 @@ public class ProjectListPresenter {
 
     private IProjectListView mView;
     private HomeModel mModel;
+    private Context context;
 
     private Handler mHandler = new Handler();
 
-    public ProjectListPresenter(IProjectListView view) {
+    public ProjectListPresenter(Context context, IProjectListView view) {
+        this.context = context;
         mView = view;
         mModel = new HomeModel();
     }
@@ -29,7 +32,7 @@ public class ProjectListPresenter {
         // 显示加载
         mView.showLoadingView();
         // 通过pressent调用model来发送http请求
-        mModel.sendHomeHttp(url, new OnHttpListener() {
+        mModel.sendHomeHttp(context, url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {
@@ -62,7 +65,7 @@ public class ProjectListPresenter {
     public void onRefresh(int id) {
         String url = ApiAddress.PROJECT_LIST_ADDRESS(0, id);
         // 通过pressent调用model来发送http请求
-        mModel.sendHomeHttp(url, new OnHttpListener() {
+        mModel.sendHomeHttp(context ,url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {
@@ -94,7 +97,7 @@ public class ProjectListPresenter {
      */
     public void loadMoreRequest(String url) {
         // 通过pressent调用model来发送http请求
-        mModel.sendHomeHttp(url, new OnHttpListener() {
+        mModel.sendHomeHttp(context, url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {

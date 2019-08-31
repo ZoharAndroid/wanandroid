@@ -1,6 +1,7 @@
 package com.zohar.wanandroid.presenter;
 
 import android.content.Context;
+import android.view.View;
 
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.http.ApiAddress;
@@ -16,9 +17,11 @@ public class CollectPresenter {
 
     private ICollectView mView;
     private CollectModel mModel;
+    private View clickView;
 
-    public CollectPresenter(ICollectView view) {
+    public CollectPresenter(ICollectView view, View v) {
         mView = view;
+        clickView = v;
         mModel = new CollectModel();
     }
 
@@ -30,6 +33,7 @@ public class CollectPresenter {
             @Override
             public void collectSuccess(Article data) {
                 mView.collectSuccess(data);
+                mView.changeCollectSuccessView(clickView);
             }
 
             @Override

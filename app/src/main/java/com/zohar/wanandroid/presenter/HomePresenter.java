@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.presenter;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.home.Article;
@@ -20,8 +21,10 @@ public class HomePresenter {
     private HomeModel mHomeModel;
 
     private Handler mHandler = new Handler();
+    private Context context;
 
-    public HomePresenter(IHomeView homeView) {
+    public HomePresenter(Context context, IHomeView homeView) {
+        this.context = context;
         mHomeView = homeView;
         mHomeModel = new HomeModel();
     }
@@ -32,7 +35,7 @@ public class HomePresenter {
      * @param url 网络地址
      */
     public void sendBannerHttpRequest(String url){
-        mHomeModel.sendBannerHttp(url, new OnBannerHttpListener() {
+        mHomeModel.sendBannerHttp(context, url, new OnBannerHttpListener() {
             @Override
             public void httpFailed(final String msg) {
                 mHandler.post(new Runnable() {
@@ -62,7 +65,7 @@ public class HomePresenter {
         // 显示加载
         mHomeView.showLoading();
         // 通过pressent调用model来发送http请求
-        mHomeModel.sendHomeHttp(url, new OnHttpListener() {
+        mHomeModel.sendHomeHttp(context, url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {
@@ -96,7 +99,7 @@ public class HomePresenter {
      */
     public void loadMoreRequest(String url){
         // 通过pressent调用model来发送http请求
-        mHomeModel.sendHomeHttp(url, new OnHttpListener() {
+        mHomeModel.sendHomeHttp(context, url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {
@@ -126,7 +129,7 @@ public class HomePresenter {
      */
     public void onRefresh(){
         // 通过pressent调用model来发送http请求
-        mHomeModel.sendHomeHttp(ApiAddress.homeAritcleAddress(0), new OnHttpListener() {
+        mHomeModel.sendHomeHttp(context, ApiAddress.homeAritcleAddress(0), new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {

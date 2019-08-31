@@ -28,9 +28,9 @@ import okhttp3.Response;
 public class HomeModel implements IHomeModel{
 
     @Override
-    public void sendHomeHttp(String url, final OnHttpListener httpListener) {
+    public void sendHomeHttp(Context context, String url, final OnHttpListener httpListener) {
 
-        Call call = HttpRequestUtils.sendHttpGetRequest(url);
+        Call call = HttpRequestUtils.sendHttpGetRequest(context, url);
 
         call.enqueue(new Callback() {
             @Override
@@ -50,8 +50,8 @@ public class HomeModel implements IHomeModel{
 
 
     @Override
-    public void sendBannerHttp(String url, final OnBannerHttpListener bannerListener) {
-        Call call = HttpRequestUtils.sendHttpGetRequest(url);
+    public void sendBannerHttp(Context context, String url, final OnBannerHttpListener bannerListener) {
+        Call call = HttpRequestUtils.sendHttpGetRequest(context, url);
 
         call.enqueue(new Callback() {
             @Override

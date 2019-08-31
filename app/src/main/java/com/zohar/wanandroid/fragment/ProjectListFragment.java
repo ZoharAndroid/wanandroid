@@ -88,7 +88,7 @@ public class ProjectListFragment extends Fragment implements IProjectListView {
 
         mCurrentPage = 0;
 
-        mPresenter = new ProjectListPresenter(this);
+        mPresenter = new ProjectListPresenter(getContext(), this);
         mPresenter.sendHomeHttpRequest(ApiAddress.PROJECT_LIST_ADDRESS(id, mCurrentPage));
 
         // 下拉刷新操作

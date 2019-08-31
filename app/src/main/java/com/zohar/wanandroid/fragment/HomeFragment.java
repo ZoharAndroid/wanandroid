@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment implements IHomeView {
 
         if (mPresenter == null) {
             // 调用presenter来请求网络
-            mPresenter = new HomePresenter(this);
+            mPresenter = new HomePresenter(getContext(), this);
             // 请求文章列表数据
             mPresenter.sendHomeHttpRequest(ApiAddress.homeAritcleAddress(mPageIndex));
             // 请求首页banner数据
@@ -98,13 +98,6 @@ public class HomeFragment extends Fragment implements IHomeView {
             }
         });
 
-        // 点击adapter中item的收集按钮
-        mArticleAdapter.setColllectListener(new HomeArticleAdapter.OnCollectListener() {
-            @Override
-            public void clickCollect(Datas article) {
-                ToastUtils.toastShow(getActivity(), article.getTitle());
-            }
-        });
     }
 
     //初始化recyelerview的相关设置

@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.model.search;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.google.gson.Gson;
@@ -22,9 +23,11 @@ public class HotSearchModel implements IHotSearchModel {
 
     private Handler mHandler = new Handler();
 
+
+
     @Override
-    public void hotSearch(String url, final OnHotSearchListener onHotSearchListener) {
-        Call call = HttpRequestUtils.sendHttpGetRequest(url);
+    public void hotSearch(Context context, String url, final OnHotSearchListener onHotSearchListener) {
+        Call call = HttpRequestUtils.sendHttpGetRequest(context, url);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {

@@ -64,7 +64,7 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
 
     private void initEventAndData() {
         // 请求热搜数据
-        final HotSearchPresenter mPresenter = new HotSearchPresenter(this);
+        final HotSearchPresenter mPresenter = new HotSearchPresenter(this, this);
         mPresenter.hotSearchRequest();
 
         // 搜索内容

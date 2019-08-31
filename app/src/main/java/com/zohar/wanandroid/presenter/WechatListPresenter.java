@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.presenter;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.home.Article;
@@ -17,10 +18,12 @@ public class WechatListPresenter {
 
     private IWechatListView mView;
     private HomeModel mModel;
+    private Context context;
 
     private Handler mHandler = new Handler();
 
-    public WechatListPresenter(IWechatListView view) {
+    public WechatListPresenter(Context context, IWechatListView view) {
+        this.context = context;
         mView = view;
         mModel = new HomeModel();
     }
@@ -30,7 +33,7 @@ public class WechatListPresenter {
         // 显示加载
         mView.showLoadingView();
         // 通过pressent调用model来发送http请求
-        mModel.sendHomeHttp(url, new OnHttpListener() {
+        mModel.sendHomeHttp(context, url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {
@@ -63,7 +66,7 @@ public class WechatListPresenter {
     public void onRefresh(int id) {
         String url = ApiAddress.WECHAT_ARTICLE_ADDRESS(0, id);
         // 通过pressent调用model来发送http请求
-        mModel.sendHomeHttp(url, new OnHttpListener() {
+        mModel.sendHomeHttp(context, url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {
@@ -95,7 +98,7 @@ public class WechatListPresenter {
      */
     public void loadMoreRequest(String url) {
         // 通过pressent调用model来发送http请求
-        mModel.sendHomeHttp(url, new OnHttpListener() {
+        mModel.sendHomeHttp(context, url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {

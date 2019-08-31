@@ -27,7 +27,7 @@ public class LogoutModel implements ILogoutModel {
     @Override
     public void logout(final Context context, String url, final OnLogoutListener onLogoutListener) {
         // 发送请求
-        Call call = HttpRequestUtils.sendHttpGetRequest(url);
+        Call call = HttpRequestUtils.sendHttpGetRequest(context, url);
 
         call.enqueue(new Callback() {
             @Override

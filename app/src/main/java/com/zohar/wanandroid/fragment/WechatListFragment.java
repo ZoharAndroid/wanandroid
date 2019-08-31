@@ -90,7 +90,7 @@ public class WechatListFragment extends Fragment implements IWechatListView {
 
         mCurrentPage = 0;
 
-        mPresenter = new WechatListPresenter(this);
+        mPresenter = new WechatListPresenter(getContext(), this);
 
         mPresenter.sendHomeHttpRequest(ApiAddress.WECHAT_ARTICLE_ADDRESS(id, mCurrentPage));
 

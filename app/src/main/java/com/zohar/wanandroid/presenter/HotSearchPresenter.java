@@ -1,5 +1,7 @@
 package com.zohar.wanandroid.presenter;
 
+import android.content.Context;
+
 import com.zohar.wanandroid.bean.search.HotSearchData;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.search.HotSearchModel;
@@ -14,14 +16,16 @@ public class HotSearchPresenter {
 
     private IHotSearchView mView;
     private HotSearchModel mModel;
+    private Context context;
 
-    public HotSearchPresenter(IHotSearchView view) {
+    public HotSearchPresenter(Context context, IHotSearchView view) {
+        this.context = context;
         mView = view;
         mModel = new HotSearchModel();
     }
 
     public void hotSearchRequest(){
-        mModel.hotSearch(ApiAddress.HOT_SEARCH_ADDRESS, new OnHotSearchListener() {
+        mModel.hotSearch(context, ApiAddress.HOT_SEARCH_ADDRESS, new OnHotSearchListener() {
             @Override
             public void hotSearchSuccess(HotSearchData hotSearchData) {
                 mView.hotSearchSuccess(hotSearchData);

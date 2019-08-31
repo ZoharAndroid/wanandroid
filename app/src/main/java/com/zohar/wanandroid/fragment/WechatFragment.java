@@ -61,7 +61,7 @@ public class WechatFragment extends Fragment implements IWechatView {
 
     private void initEventAndData() {
         // 通过presenter来请求公众号列表数据
-        mPresenter = new WechatPresenter(this);
+        mPresenter = new WechatPresenter(getContext(), this);
         mPresenter.sendWechatRequest(ApiAddress.WEICHAT_LIST_ADDRESS);
     }
 

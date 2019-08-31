@@ -1,6 +1,7 @@
 package com.zohar.wanandroid.presenter;
 
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
@@ -17,10 +18,11 @@ public class ProjectPresenter {
 
    private IProjectView mView;
     private KnowledgeModel mModel;
-
+    private Context context;
     private Handler mHandler = new Handler();
 
-    public ProjectPresenter(IProjectView projectView) {
+    public ProjectPresenter(Context context, IProjectView projectView) {
+        this.context = context;
         mView = projectView;
         mModel = new KnowledgeModel();
     }
@@ -28,7 +30,7 @@ public class ProjectPresenter {
     // presenter 通过 model 发送http请求
     public void sendProjectRequest(String url){
         mView.showLoadingView();
-        mModel.sendKnowledgeGetRequest(url, new OnKnowledgeListener() {
+        mModel.sendKnowledgeGetRequest(context, url, new OnKnowledgeListener() {
             @Override
             public void httpFailed(final String msg) {
                 mHandler.post(new Runnable() {
