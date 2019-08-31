@@ -18,7 +18,7 @@ public class AppConstants {
 
     public static final String COOKIE_PREFS = "CookiePrefsFile";
     public static final String LOGIN_USER_NAME = "loginUserName";
-    public static final String LOGIN_PASSWORD = "loginPassword";
+    public static final String LOGIN_PASSWORD = "loginUserPassword";
     public static final String CURRENT_USER_NAME = "currentUserName";
 
     public static final int LOGIN_INTENT = 1001;

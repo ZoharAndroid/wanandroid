@@ -131,11 +131,28 @@ public class ApiAddress {
      *
      * @return
      */
-    public static final String SEARCH_ADDRESS(int pageNum){
+    public static  String SEARCH_ADDRESS(int pageNum){
         StringBuilder sb = new StringBuilder(HOST);
         sb.append("/article/query/");
         sb.append(pageNum);
         sb.append("/json");
         return sb.toString();
     }
+
+    /**
+     * https://www.wanandroid.com/lg/collect/1165/json
+     *方法：POST
+     * 参数： 文章id，拼接在链接中。
+     * @param articleId
+     * @return
+     */
+    public static String COLLECT_SITE_ADDRESS(int articleId){
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/lg/collect/");
+        sb.append(articleId);
+        sb.append("/json");
+        return sb.toString();
+    }
+
+
 }

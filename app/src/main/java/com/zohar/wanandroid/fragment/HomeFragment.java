@@ -11,21 +11,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.stx.xhb.xbanner.XBanner;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.HomeArticleAdapter;
 import com.zohar.wanandroid.adapter.OnLoadMoreListener;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Data;
+import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.bean.home.banner.Banner;
 import com.zohar.wanandroid.bean.home.banner.BannerData;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.presenter.HomePresenter;
-import com.zohar.wanandroid.utils.LogUtils;
-import com.zohar.wanandroid.utils.ScreenUtil;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.home.IHomeView;
 
@@ -98,6 +95,14 @@ public class HomeFragment extends Fragment implements IHomeView {
             @Override
             public void onRefresh() {
                 mPresenter.onRefresh();
+            }
+        });
+
+        // 点击adapter中item的收集按钮
+        mArticleAdapter.setColllectListener(new HomeArticleAdapter.OnCollectListener() {
+            @Override
+            public void clickCollect(Datas article) {
+                ToastUtils.toastShow(getActivity(), article.getTitle());
             }
         });
     }

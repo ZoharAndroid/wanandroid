@@ -15,9 +15,13 @@ import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.viewholder.FooterViewHolder;
 import com.zohar.wanandroid.adapter.viewholder.ArticleViewHolder;
+import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.bean.home.banner.BannerData;
 import com.zohar.wanandroid.config.AppConstants;
+import com.zohar.wanandroid.presenter.CollectPresenter;
+import com.zohar.wanandroid.utils.ToastUtils;
+import com.zohar.wanandroid.view.home.ICollectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +30,37 @@ import java.util.List;
  * Created by zohar on 2019/8/8 17:08
  * Describe:
  */
-public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ICollectView {
 
     private List<Datas> articles = new ArrayList<>();
     private Context mContext;
 
     private List<BannerData> mBannerData = new ArrayList<>();
+
+    private OnCollectListener mOnCollectListener;
+
+    public void setColllectListener(OnCollectListener onCollectListener){
+        mOnCollectListener = onCollectListener;
+    }
+
+    @Override
+    public void collectSuccess(Article data) {
+        // 收藏成功
+        if (data.getErrorCode() == 0){
+
+        }else{
+            ToastUtils.toastShow(mContext, data.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void collectFailed(String msg) {
+        ToastUtils.toastShow(mContext, msg);
+    }
+
+    public interface OnCollectListener{
+        void clickCollect(Datas article);
+    }
 
     // 正常内容
     private final static int TYPE_CONTENT = 0;
@@ -75,18 +104,31 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (viewType == TYPE_CONTENT) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article, viewGroup, false);
             final ArticleViewHolder holder = new ArticleViewHolder(view);
-            // 设置点击事件
+            // 设置点击事件，进入链接文件文章详情页面
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition(); // 获取当前点击的位置
-                    Datas article = articles.get(position - 1);
+                    final Datas article = articles.get(position - 1);
                     // 跳转到内容详情页面
                     String articleLink = article.getLink();
                     Intent intent = new Intent(mContext, ArticllDetailActivity.class);
                     intent.putExtra(AppConstants.ARTICLE_FROM_HOME, articleLink); // 传递链接
                     intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, article.getTitle()); // 传递标题
                     mContext.startActivity(intent);
+                }
+            });
+            // 收藏按钮点击事件
+            holder.collectImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 获取点击的数据
+                    int position = holder.getAdapterPosition(); // 获取当前点击的位置
+                    final Datas article = articles.get(position - 1);
+                    // 请求服务器去表示去收藏
+                    //mOnCollectListener.clickCollect(article);
+                    CollectPresenter mPresenter = new CollectPresenter(HomeArticleAdapter.this);
+                    mPresenter.collectRequest(article.getId());
                 }
             });
             return holder;

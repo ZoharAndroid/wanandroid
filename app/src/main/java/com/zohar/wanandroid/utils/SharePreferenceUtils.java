@@ -31,4 +31,23 @@ public class SharePreferenceUtils {
         cookieStore.removeAll();
     }
 
+
+    /**
+     * 获取username
+     * @param mContext
+     * @return
+     */
+    public static String getLoginUserName(Context mContext){
+        return mContext.getSharedPreferences(AppConstants.COOKIE_PREFS, 0).getString(AppConstants.LOGIN_USER_NAME, null);
+    }
+
+    /**
+     * 获取用户相关信息
+     *
+     * @param mContext
+     * @return
+     */
+    public static String getLoginPassword(Context mContext){
+        return mContext.getSharedPreferences(AppConstants.COOKIE_PREFS, 0).getString(AppConstants.LOGIN_PASSWORD, null);
+    }
 }
