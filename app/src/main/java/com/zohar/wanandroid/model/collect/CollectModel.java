@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.google.gson.Gson;
+import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
@@ -81,4 +82,7 @@ public class CollectModel implements  ICollectModel {
             }
         });
     }
+
+
+
 }

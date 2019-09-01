@@ -3,6 +3,7 @@ package com.zohar.wanandroid.presenter;
 import android.content.Context;
 import android.view.View;
 
+import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.collect.CollectModel;
@@ -25,6 +26,8 @@ public class CollectPresenter {
         mModel = new CollectModel();
     }
 
+
+
     /**
      * 收藏请求
      */
@@ -42,4 +45,5 @@ public class CollectPresenter {
             }
         });
     }
+
 }

@@ -171,4 +171,41 @@ public class ApiAddress {
         return sb.toString();
     }
 
+
+    /**
+     * https://www.wanandroid.com/lg/uncollect/2805/json
+     *
+     * 方法：POST
+     * 参数：
+     * 	id:拼接在链接上
+     * 	originId:列表页下发，无则为-1
+     *
+     * @param articleId
+     * @param originId
+     * @return
+     */
+    public static String CANCEL_MY_COLLECT_ADDRESS(int articleId){
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/lg/uncollect/");
+        sb.append(articleId);
+        sb.append("/json");
+        return sb.toString();
+    }
+
+    /**
+     * https://www.wanandroid.com/lg/uncollect_originId/2333/json
+     *
+     * 方法：POST
+     * 参数：
+     * 	id:拼接在链接上
+     *
+     * @return
+     */
+    public static String CANCEL_ARTICLE_LIST_COLLECT_ADDRESS(int articleId){
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/lg/uncollect_originId/");
+        sb.append(articleId);
+        sb.append("/json");
+        return sb.toString();
+    }
 }

@@ -6,13 +6,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.viewholder.ArticleViewHolder;
 import com.zohar.wanandroid.adapter.viewholder.FooterViewHolder;
+import com.zohar.wanandroid.bean.collect.Collect;
+import com.zohar.wanandroid.bean.collect.CollectData;
+import com.zohar.wanandroid.bean.collect.CollectListData;
+import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.config.AppConstants;
+import com.zohar.wanandroid.presenter.CancelCollectPresenter;
+import com.zohar.wanandroid.presenter.CollectListPresenter;
+import com.zohar.wanandroid.presenter.CollectPresenter;
+import com.zohar.wanandroid.utils.ToastUtils;
+import com.zohar.wanandroid.view.collect.ICancelCollectView;
+import com.zohar.wanandroid.view.collect.ICollectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +32,9 @@ import java.util.List;
  * Created by zohar on 2019/8/8 17:08
  * Describe:
  */
-public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ICancelCollectView {
 
-    private List<Datas> articles = new ArrayList<>();
+    private List<Collect> articles = new ArrayList<>();
     private Context mContext;
     // 正常内容
     private final static int TYPE_CONTENT = 0;
@@ -63,7 +74,7 @@ public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition(); // 获取当前点击的位置
-                    Datas article = articles.get(position);
+                    Collect article = articles.get(position);
                     // 跳转到内容详情页面
                     String articleLink = article.getLink();
                     Intent intent = new Intent(mContext, ArticllDetailActivity.class);
@@ -76,9 +87,11 @@ public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
-                    Datas article = articles.get(position);
+                    Collect article = articles.get(position);
                     // 发送取消收藏
-
+                    CancelCollectPresenter mPresenter = new CancelCollectPresenter(CollectListAdapter.this, v);
+                    //if (article.)
+                    //mPresenter.cancelMyCollectRequest(mContext, article.getId(),);
                 }
             });
             return holder;
@@ -101,13 +114,13 @@ public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             // 正常内容
             // viewholder绑定的数据
             ArticleViewHolder articleViewHolder = (ArticleViewHolder) viewHolder;
-            Datas article = articles.get(position);
+            Collect article = articles.get(position);
 
             articleViewHolder.title.setText(article.getTitle());
             articleViewHolder.author.setText(article.getAuthor());
             articleViewHolder.date.setText(article.getNiceDate());
             articleViewHolder.chapterName.setText(article.getChapterName());
-            articleViewHolder.superChapterName.setText(article.getSuperChapterName());
+            articleViewHolder.superChapterName.setText("");
             // 设置收藏图片
             articleViewHolder.collectImageView.setImageResource(R.mipmap.icon_collect_select);
 
@@ -128,7 +141,7 @@ public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      *
      * @param addArticle
      */
-    public void addArticle(List<Datas> addArticle) {
+    public void addArticle(List<Collect> addArticle) {
         articles.addAll(addArticle);
         notifyItemRangeChanged(articles.size() - addArticle.size(), addArticle.size());
     }
@@ -149,5 +162,20 @@ public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void setFooterViewVisable() {
         isFooterShow = true;
+    }
+
+
+    @Override
+    public void cancelCollectSuccess(CollectData collectData) {
+        if (collectData.getErrorCode() == 0){
+
+        }else{
+            ToastUtils.toastShow(mContext, collectData.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void cancelCollectFailed(String msg) {
+        ToastUtils.toastShow(mContext, msg);
     }
 }

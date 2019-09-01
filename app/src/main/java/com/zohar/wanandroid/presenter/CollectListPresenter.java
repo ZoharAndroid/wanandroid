@@ -2,9 +2,11 @@ package com.zohar.wanandroid.presenter;
 
 import android.content.Context;
 
+import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.collect.CollectListModel;
+import com.zohar.wanandroid.model.collect.OnCollectListListener;
 import com.zohar.wanandroid.model.collect.OnCollectListener;
 import com.zohar.wanandroid.view.collect.ICollectListView;
 
@@ -26,10 +28,10 @@ public class CollectListPresenter {
 
     public void collectListRequest(int pageNum){
         mView.showLoadingView();
-        mModel.collectList(context, ApiAddress.COLLECT_LIST_ADDRESS(pageNum), pageNum, new OnCollectListener(){
+        mModel.collectList(context, ApiAddress.COLLECT_LIST_ADDRESS(pageNum), pageNum, new OnCollectListListener(){
 
             @Override
-            public void collectSuccess(Article data) {
+            public void collectSuccess(CollectData data) {
                 mView.hideLoadingView();
                 mView.collectListSuccess(data);
             }

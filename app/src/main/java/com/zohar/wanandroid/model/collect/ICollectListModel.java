@@ -8,6 +8,6 @@ import android.content.Context;
  */
 public interface ICollectListModel {
 
-    void collectList(Context context, String url, int pageNum, OnCollectListener onCollectListener);
+    void collectList(Context context, String url, int pageNum, OnCollectListListener onCollectListListener);
 
 }

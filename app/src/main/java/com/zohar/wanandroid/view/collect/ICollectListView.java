@@ -1,5 +1,6 @@
 package com.zohar.wanandroid.view.collect;
 
+import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 
 /**
@@ -11,6 +12,6 @@ public interface ICollectListView {
     void showLoadingView();
     void hideLoadingView();
 
-    void collectListSuccess(Article collectData);
+    void collectListSuccess(CollectData collectData);
     void collectListFailed(String msg);
 }

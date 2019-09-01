@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.zohar.wanandroid.adapter.CollectListAdapter;
 import com.zohar.wanandroid.adapter.HomeArticleAdapter;
 import com.zohar.wanandroid.adapter.KnowledgeListAdapter;
+import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.presenter.CollectListPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
@@ -90,7 +91,7 @@ public class CollectListActivity extends AppCompatActivity implements ICollectLi
     }
 
     @Override
-    public void collectListSuccess(Article collectData) {
+    public void collectListSuccess(CollectData collectData) {
         if (collectData.getErrorCode() == 0){
             mAdapter.addArticle(collectData.getData().getDatas());
         }else{
