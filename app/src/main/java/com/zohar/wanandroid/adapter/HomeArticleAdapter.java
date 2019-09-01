@@ -15,12 +15,16 @@ import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.viewholder.FooterViewHolder;
 import com.zohar.wanandroid.adapter.viewholder.ArticleViewHolder;
+import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.bean.home.banner.BannerData;
 import com.zohar.wanandroid.config.AppConstants;
+import com.zohar.wanandroid.presenter.CancelCollectPresenter;
 import com.zohar.wanandroid.presenter.CollectPresenter;
+import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ToastUtils;
+import com.zohar.wanandroid.view.collect.ICancelCollectView;
 import com.zohar.wanandroid.view.collect.ICollectView;
 
 import java.util.ArrayList;
@@ -30,7 +34,7 @@ import java.util.List;
  * Created by zohar on 2019/8/8 17:08
  * Describe:
  */
-public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ICollectView {
+public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ICollectView, ICancelCollectView {
 
     private List<Datas> articles = new ArrayList<>();
     private Context mContext;
@@ -124,9 +128,19 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     // 获取点击的数据
                     int position = holder.getAdapterPosition(); // 获取当前点击的位置
                     final Datas article = articles.get(position - 1);
-                    // 请求服务器去表示去收藏
-                    CollectPresenter mPresenter = new CollectPresenter(HomeArticleAdapter.this, v);
-                    mPresenter.collectRequest(mContext, article.getId());
+                    if (article.isCollect()){
+                        // 如果已经收藏了，那么通过presenter去取消收藏
+                        article.setCollect(false);
+                        CancelCollectPresenter mCancelPresenter = new CancelCollectPresenter(HomeArticleAdapter.this, v);
+                        mCancelPresenter.cancelArticleListCollectRequest(mContext, article.getId());
+                    }else{
+                        // 如果没有收藏，那么就通过presenter去添加到收藏
+                        // 请求服务器去表示去收藏
+                        article.setCollect(true);
+                        CollectPresenter mPresenter = new CollectPresenter(HomeArticleAdapter.this, v);
+                        mPresenter.collectRequest(mContext, article.getId());
+                    }
+
                 }
             });
             return holder;
@@ -210,6 +224,20 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemCount() {
         return articles == null ? 2 : articles.size() + 2;
+    }
+
+    @Override
+    public void cancelCollectSuccess(CollectData collectData) {
+        if (collectData.getErrorCode() == 0){
+
+        }else{
+            ToastUtils.toastShow(mContext, collectData.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void cancelCollectFailed(String msg) {
+        ToastUtils.toastShow(mContext, msg);
     }
 
 

@@ -70,7 +70,6 @@ public class CollectModel implements  ICollectModel {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String result = response.body().string();
-                LogUtils.d(result);
                 Gson gson = new Gson();
                 final Article data = gson.fromJson(result, Article.class);
                 mHandler.post(new Runnable() {
