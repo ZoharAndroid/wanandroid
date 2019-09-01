@@ -6,14 +6,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.viewholder.FooterViewHolder;
+import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.config.AppConstants;
+import com.zohar.wanandroid.presenter.CollectPresenter;
 import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.adapter.viewholder.ArticleViewHolder;
+import com.zohar.wanandroid.utils.ToastUtils;
+import com.zohar.wanandroid.view.collect.ICollectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +27,7 @@ import java.util.List;
  * Created by zohar on 2019/8/8 17:08
  * Describe:
  */
-public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ICollectView {
 
     private List<Datas> articles = new ArrayList<>();
     private Context mContext;
@@ -73,6 +78,18 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
                     mContext.startActivity(intent);
                 }
             });
+            // 收藏按钮点击事件
+            holder.collectImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 获取点击的数据
+                    int position = holder.getAdapterPosition(); // 获取当前点击的位置
+                    final Datas article = articles.get(position);
+                    // 请求服务器去表示去收藏
+                    CollectPresenter mPresenter = new CollectPresenter(KnowledgeListAdapter.this, v);
+                    mPresenter.collectRequest(mContext, article.getId());
+                }
+            });
             return holder;
         } else if (TYPE_FOOTER == viewType) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_home_article_footer, viewGroup, false);
@@ -107,6 +124,12 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (article.getTags().size() != 0) {
                 articleViewHolder.tag.setVisibility(View.VISIBLE);
                 articleViewHolder.tag.setText(article.getTags().get(0).getName());
+            }
+            // 设置收藏图标
+            if (article.isCollect()){
+                articleViewHolder.collectImageView.setImageResource(R.mipmap.icon_collect_select);
+            }else{
+                articleViewHolder.collectImageView.setImageResource(R.mipmap.icon_item_collection);
             }
         } else {
 
@@ -145,5 +168,26 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void setFooterViewVisable() {
         isFooterShow = true;
+    }
+
+    @Override
+    public void collectSuccess(Article data) {
+        // 收藏成功
+        if (data.getErrorCode() == 0){
+
+        }else{
+            ToastUtils.toastShow(mContext, data.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void collectFailed(String msg) {
+        ToastUtils.toastShow(mContext, msg);
+    }
+
+    @Override
+    public void changeCollectSuccessView(View clickView) {
+        // 变换图标颜色
+        ((ImageView)clickView).setImageResource(R.mipmap.icon_collect_select);
     }
 }

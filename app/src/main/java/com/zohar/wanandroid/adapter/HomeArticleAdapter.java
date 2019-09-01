@@ -43,7 +43,6 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void collectSuccess(Article data) {
         // 收藏成功
         if (data.getErrorCode() == 0){
-            // 变换图标颜色
 
         }else{
             ToastUtils.toastShow(mContext, data.getErrorMsg());

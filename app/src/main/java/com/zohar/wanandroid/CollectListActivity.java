@@ -105,6 +105,8 @@ public class CollectListActivity extends AppCompatActivity implements ICollectLi
                 if (++mCurrentPage < mCountPage){
                     // 如果页数小于总的页数，则去加载更多
                     mPresenter.collectListLoadMoreRequest(mCurrentPage);
+                }else{
+                    ToastUtils.toastShow(CollectListActivity.this , "没有更多内容了！");
                 }
             }
         });
