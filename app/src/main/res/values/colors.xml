@@ -25,4 +25,5 @@
     <color name="text_color">#000000</color>
     <color name="item_text_color">#707070</color>
     <color name="draw_bottom_bg">#F5F5F5</color>
+    <color name="main_background">#F8F8FF</color>
 </resources>
