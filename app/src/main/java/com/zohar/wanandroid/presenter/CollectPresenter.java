@@ -7,7 +7,7 @@ import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.collect.CollectModel;
 import com.zohar.wanandroid.model.collect.OnCollectListener;
-import com.zohar.wanandroid.view.home.ICollectView;
+import com.zohar.wanandroid.view.collect.ICollectView;
 
 /**
  * Created by zohar on 2019/8/30 16:38

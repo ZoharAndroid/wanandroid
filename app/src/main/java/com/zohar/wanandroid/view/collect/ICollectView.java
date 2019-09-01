@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.view.home;
+package com.zohar.wanandroid.view.collect;
 
 import android.view.View;
 

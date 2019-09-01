@@ -21,7 +21,7 @@ import com.zohar.wanandroid.bean.home.banner.BannerData;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.CollectPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
-import com.zohar.wanandroid.view.home.ICollectView;
+import com.zohar.wanandroid.view.collect.ICollectView;
 
 import java.util.ArrayList;
 import java.util.List;

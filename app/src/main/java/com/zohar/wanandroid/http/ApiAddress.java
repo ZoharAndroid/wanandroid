@@ -155,4 +155,20 @@ public class ApiAddress {
     }
 
 
+    /**
+     * https://www.wanandroid.com/lg/collect/list/0/json
+     *
+     * 方法：GET
+     * 参数： 页码：拼接在链接中，从0开始。
+     *
+     * @return
+     */
+    public static  String COLLECT_LIST_ADDRESS(int pageNum){
+        StringBuilder sb = new StringBuilder(HOST);
+        sb.append("/lg/collect/list/");
+        sb.append(pageNum);
+        sb.append("/json");
+        return sb.toString();
+    }
+
 }
