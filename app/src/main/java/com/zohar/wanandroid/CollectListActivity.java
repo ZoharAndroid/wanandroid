@@ -2,6 +2,7 @@ package com.zohar.wanandroid;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.zohar.wanandroid.adapter.CollectListAdapter;
 import com.zohar.wanandroid.adapter.HomeArticleAdapter;
 import com.zohar.wanandroid.adapter.KnowledgeListAdapter;
+import com.zohar.wanandroid.adapter.OnLoadMoreListener;
 import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.presenter.CollectListPresenter;
@@ -27,12 +29,16 @@ import com.zohar.wanandroid.view.collect.ICollectListView;
  */
 public class CollectListActivity extends AppCompatActivity implements ICollectListView {
 
-
+    private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private Toolbar mToolbar;
     private TextView mTextViewTitle;
     private CollectListAdapter mAdapter;
+
+    private int mCurrentPage = 0;
+    private int mCountPage = 0 ;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,9 @@ public class CollectListActivity extends AppCompatActivity implements ICollectLi
 
         mAdapter = new CollectListAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+
+        mRefreshLayout.setRefreshing(false);
+
     }
 
     private void initToolbar() {
@@ -73,11 +82,32 @@ public class CollectListActivity extends AppCompatActivity implements ICollectLi
         mProgressBar = findViewById(R.id.collect_list_progress_bar);
         mToolbar = findViewById(R.id.collect_list_tool_bar);
         mTextViewTitle = findViewById(R.id.collect_list_title);
+        mRefreshLayout = findViewById(R.id.collect_list_swipe_refresh);
     }
 
     private void initEventAndData() {
-        CollectListPresenter mPresenter = new CollectListPresenter(this, this);
+        // 请求首页
+        final CollectListPresenter mPresenter = new CollectListPresenter(this, this);
         mPresenter.collectListRequest(0);
+
+        // 刷新
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.collectListRefreshRequest();
+            }
+        });
+
+        // 加载更多
+        mRecyclerView.addOnScrollListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (++mCurrentPage < mCountPage){
+                    // 如果页数小于总的页数，则去加载更多
+                    mPresenter.collectListLoadMoreRequest(mCurrentPage);
+                }
+            }
+        });
     }
 
     @Override
@@ -93,6 +123,7 @@ public class CollectListActivity extends AppCompatActivity implements ICollectLi
     @Override
     public void collectListSuccess(CollectData collectData) {
         if (collectData.getErrorCode() == 0){
+            mCountPage = collectData.getData().getPageCount();
             mAdapter.addArticle(collectData.getData().getDatas());
         }else{
             ToastUtils.toastShow(this, collectData.getErrorMsg());
@@ -102,5 +133,29 @@ public class CollectListActivity extends AppCompatActivity implements ICollectLi
     @Override
     public void collectListFailed(String msg) {
         ToastUtils.toastShow(this, msg);
+    }
+
+    @Override
+    public void collectListRefreshSuccess(CollectData collectData) {
+        if (collectData.getErrorCode() == 0) {
+            // 清空list
+            mAdapter.clearArticle();
+            mAdapter.addArticle(collectData.getData().getDatas());
+            // 重新设置页面
+            mCurrentPage = 0;
+            // 停止刷新
+            mRefreshLayout.setRefreshing(false);
+        }else{
+            ToastUtils.toastShow(this, collectData.getErrorMsg());
+        }
+    }
+
+    @Override
+    public void collectListLoadMoreSuccess(CollectData collectData) {
+        if (collectData.getErrorCode() == 0){
+            mAdapter.addArticle(collectData.getData().getDatas());
+        }else{
+            ToastUtils.toastShow(this, collectData.getErrorMsg());
+        }
     }
 }

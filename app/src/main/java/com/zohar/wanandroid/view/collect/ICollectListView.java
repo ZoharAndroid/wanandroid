@@ -14,4 +14,8 @@ public interface ICollectListView {
 
     void collectListSuccess(CollectData collectData);
     void collectListFailed(String msg);
+
+    void collectListRefreshSuccess(CollectData collectData);
+
+    void collectListLoadMoreSuccess(CollectData collectData);
 }

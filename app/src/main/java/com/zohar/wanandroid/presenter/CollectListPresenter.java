@@ -43,4 +43,42 @@ public class CollectListPresenter {
             }
         });
     }
+
+    /**
+     * 刷新请求
+     */
+    public void collectListRefreshRequest(){
+        mModel.collectList(context, ApiAddress.COLLECT_LIST_ADDRESS(0), 0, new OnCollectListListener(){
+
+            @Override
+            public void collectSuccess(CollectData data) {
+                mView.collectListRefreshSuccess(data);
+            }
+
+            @Override
+            public void collectFailed(String msg) {
+                mView.collectListFailed(msg);
+            }
+        });
+    }
+
+    /**
+     * 加载更多
+     *
+     * @param pageNum
+     */
+    public void collectListLoadMoreRequest(int pageNum){
+        mModel.collectList(context, ApiAddress.COLLECT_LIST_ADDRESS(pageNum), pageNum, new OnCollectListListener(){
+
+            @Override
+            public void collectSuccess(CollectData data) {
+                mView.collectListLoadMoreSuccess(data);
+            }
+
+            @Override
+            public void collectFailed(String msg) {
+                mView.collectListFailed(msg);
+            }
+        });
+    }
 }
