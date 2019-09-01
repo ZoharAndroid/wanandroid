@@ -35,7 +35,7 @@ public class Collect {
     private String link;
     private String niceDate;
     private String origin;
-    private int originId;
+    private int originId = -1;
     private long publishTime;
     private String title;
     private int userId;

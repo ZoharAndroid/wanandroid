@@ -43,6 +43,7 @@ public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final static int TYPE_FOOTER_NO = 2;
 
     private boolean isFooterShow = false;
+    private int mPosition;
 
     public CollectListAdapter(Context context) {
         mContext = context;
@@ -86,12 +87,11 @@ public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             holder.collectImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = holder.getAdapterPosition();
-                    Collect article = articles.get(position);
+                    mPosition = holder.getAdapterPosition();
+                    Collect article = articles.get(mPosition);
                     // 发送取消收藏
                     CancelCollectPresenter mPresenter = new CancelCollectPresenter(CollectListAdapter.this, v);
-                    //if (article.)
-                    //mPresenter.cancelMyCollectRequest(mContext, article.getId(),);
+                    mPresenter.cancelCollectRequest(mContext, article.getId(), article.getOriginId());
                 }
             });
             return holder;
@@ -165,10 +165,16 @@ public class CollectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
 
+    public void deleteItem(int position){
+        articles.remove(position);
+        notifyItemRemoved(position);
+    }
+
     @Override
     public void cancelCollectSuccess(CollectData collectData) {
         if (collectData.getErrorCode() == 0){
-
+            // 删除成功之后，清除这个item
+            deleteItem(mPosition);
         }else{
             ToastUtils.toastShow(mContext, collectData.getErrorMsg());
         }
