@@ -1,5 +1,7 @@
 package com.zohar.wanandroid;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -123,6 +125,10 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
             case R.id.item_share_article:
                 break;
             case R.id.item_open_browser:
+                // 使用手机浏览器打开链接
+                Uri uri = Uri.parse(articleLink);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
                 break;
         }
         return true;
