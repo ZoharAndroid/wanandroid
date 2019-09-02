@@ -118,6 +118,7 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
         // menu选项
         switch (item.getItemId()){
             case R.id.item_collection_article:
+                // 收藏文章
                 break;
             case R.id.item_share_article:
                 break;
