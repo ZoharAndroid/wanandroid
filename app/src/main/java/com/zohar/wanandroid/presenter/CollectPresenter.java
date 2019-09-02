@@ -26,6 +26,11 @@ public class CollectPresenter {
         mModel = new CollectModel();
     }
 
+    public CollectPresenter(ICollectView view) {
+        mView = view;
+        mModel = new CollectModel();
+    }
+
 
 
     /**

@@ -10,6 +10,8 @@ public class AppConstants {
     public static final String ARTICLE_FROM_HOME = "article_from_home";
     public static final String ARTICLE_TITLE_FROM_HOME = "article_title_frome_home";
     public static final String IS_COLLECT = "is_collect"; // 是否收藏
+    public static final String ARTTICLE_ID = "article_id";// 文章id
+    public static final String ARTICLE = "article";
 
     public static final String KNOWLEDGE_TITLE = "knowledge_title";
     public static final String KNOWLEDGE_CHILDREN_DATA = "knowledge_children_data";

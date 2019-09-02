@@ -30,6 +30,11 @@ public class CancelCollectPresenter {
         mModel = new CancelCollectModel();
     }
 
+    public CancelCollectPresenter(ICancelCollectView cancelCollectView) {
+        mView = cancelCollectView;
+        mModel = new CancelCollectModel();
+    }
+
     /**
      * 请求我的收藏列表中的收藏
      *
@@ -67,7 +72,9 @@ public class CancelCollectPresenter {
             public void cancelCollectSuccess(CollectData data) {
                 mView.cancelCollectSuccess(data);
                 // 设置图标
-                ((ImageView)clickView).setImageResource(R.mipmap.icon_item_collection);
+                if (clickView != null) {
+                    ((ImageView) clickView).setImageResource(R.mipmap.icon_item_collection);
+                }
             }
 
             @Override

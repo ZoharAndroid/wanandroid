@@ -116,6 +116,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     // 跳转到内容详情页面
                     String articleLink = article.getLink();
                     Intent intent = new Intent(mContext, ArticllDetailActivity.class);
+                    intent.putExtra(AppConstants.ARTICLE, article);
                     intent.putExtra(AppConstants.ARTICLE_FROM_HOME, articleLink); // 传递链接
                     intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, article.getTitle()); // 传递标题
                     intent.putExtra(AppConstants.IS_COLLECT, article.isCollect());// 是否收藏

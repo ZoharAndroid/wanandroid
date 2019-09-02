@@ -16,20 +16,30 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.zohar.wanandroid.adapter.HomeArticleAdapter;
+import com.zohar.wanandroid.bean.collect.CollectData;
+import com.zohar.wanandroid.bean.home.Article;
+import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.ArticleDetailPresenter;
+import com.zohar.wanandroid.presenter.CancelCollectPresenter;
+import com.zohar.wanandroid.presenter.CollectPresenter;
+import com.zohar.wanandroid.view.collect.ICancelCollectView;
+import com.zohar.wanandroid.view.collect.ICollectView;
 import com.zohar.wanandroid.view.delail.IArticleDetailView;
 
 /**
  * Created by zohar on 2019/8/25 16:04
  * Describe:
  */
-public class ArticllDetailActivity extends AppCompatActivity implements IArticleDetailView {
+public class ArticllDetailActivity extends AppCompatActivity implements IArticleDetailView, ICollectView, ICancelCollectView {
 
     // 从主页获取的文章
     private String articleLink;
     private String articleTitle;
     private boolean isCollect;
+    private int articleId;
+    private Datas mArticle;
 
     private ArticleDetailPresenter mPresenter;
 
@@ -46,6 +56,7 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
         articleLink = getIntent().getStringExtra(AppConstants.ARTICLE_FROM_HOME);
         articleTitle = getIntent().getStringExtra(AppConstants.ARTICLE_TITLE_FROM_HOME);
         isCollect = getIntent().getBooleanExtra(AppConstants.IS_COLLECT, false);
+        mArticle = (Datas)getIntent().getSerializableExtra(AppConstants.ARTICLE);
 
         initView();
         initToolBar();
@@ -130,6 +141,21 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
         switch (item.getItemId()){
             case R.id.item_collection_article:
                 // 收藏文章
+                if (isCollect){
+                    // 如果已经收藏了，那么通过presenter去取消收藏
+                    mArticle.setCollect(false);
+                    item.setIcon(R.mipmap.icon_item_collection_article);
+                    CancelCollectPresenter mCancelPresenter = new CancelCollectPresenter(ArticllDetailActivity.this, null);
+                    mCancelPresenter.cancelArticleListCollectRequest(ArticllDetailActivity.this, mArticle.getId() );
+                }else{
+                    // 如果没有收藏，那么就通过presenter去添加到收藏
+                    // 请求服务器去表示去收藏
+                    mArticle.setCollect(true);
+                    item.setIcon(R.mipmap.icon_item_collection_article_select);
+
+                    CollectPresenter mPresenter = new CollectPresenter(ArticllDetailActivity.this, null);
+                    mPresenter.collectRequest(ArticllDetailActivity.this, mArticle.getId());
+                }
                 break;
             case R.id.item_share_article:
                 break;
@@ -172,5 +198,30 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
                 hideLoading();
             }
         });
+    }
+
+    @Override
+    public void cancelCollectSuccess(CollectData collectData) {
+
+    }
+
+    @Override
+    public void cancelCollectFailed(String msg) {
+
+    }
+
+    @Override
+    public void collectSuccess(Article data) {
+
+    }
+
+    @Override
+    public void collectFailed(String msg) {
+
+    }
+
+    @Override
+    public void changeCollectSuccessView(View clickView) {
+
     }
 }
