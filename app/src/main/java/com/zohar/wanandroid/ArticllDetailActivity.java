@@ -29,6 +29,7 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
     // 从主页获取的文章
     private String articleLink;
     private String articleTitle;
+    private boolean isCollect;
 
     private ArticleDetailPresenter mPresenter;
 
@@ -44,6 +45,7 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
         setContentView(R.layout.activity_article_detail);
         articleLink = getIntent().getStringExtra(AppConstants.ARTICLE_FROM_HOME);
         articleTitle = getIntent().getStringExtra(AppConstants.ARTICLE_TITLE_FROM_HOME);
+        isCollect = getIntent().getBooleanExtra(AppConstants.IS_COLLECT, false);
 
         initView();
         initToolBar();
@@ -78,6 +80,7 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
         settingWebView();
         mPresenter = new ArticleDetailPresenter(this);
         mPresenter.loadArticleContent();
+
     }
 
     /**
@@ -112,6 +115,12 @@ public class ArticllDetailActivity extends AppCompatActivity implements IArticle
     public boolean onCreateOptionsMenu(Menu menu) {
         // 创建菜单
         getMenuInflater().inflate(R.menu.menu_article_tool_bar, menu);
+        // 初始化设置menu的值
+        if (isCollect){
+            menu.findItem(R.id.item_collection_article).setIcon(R.mipmap.icon_item_collection_article_select);
+        }else{
+            menu.findItem(R.id.item_collection_article).setIcon(R.mipmap.icon_item_collection_article);
+        }
         return true;
     }
 

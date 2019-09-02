@@ -72,6 +72,7 @@ public class NaviAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         Intent intent = new Intent(mContext, ArticllDetailActivity.class);
                         intent.putExtra(AppConstants.ARTICLE_FROM_HOME, details.get(position).getLink());
                         intent.putExtra(AppConstants.ARTICLE_TITLE_FROM_HOME, details.get(position).getTitle());
+                        intent.putExtra(AppConstants.IS_COLLECT, details.get(position).isCollect());
                         mContext.startActivity(intent);
                         return true;
                     }
