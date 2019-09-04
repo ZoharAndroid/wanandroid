@@ -1,5 +1,6 @@
 package com.zohar.wanandroid;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.zohar.wanandroid.adapter.KnowledgeListAdapter;
 import com.zohar.wanandroid.adapter.OnLoadMoreListener;
+import com.zohar.wanandroid.base.BaseActivity;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Data;
 import com.zohar.wanandroid.config.AppConstants;
@@ -26,7 +28,7 @@ import com.zohar.wanandroid.view.search.ISearchResultView;
  * Created by zohar on 2019/8/30 13:41
  * Describe:
  */
-public class SearchResultActivity extends AppCompatActivity implements ISearchResultView {
+public class SearchResultActivity extends BaseActivity<SearchResultPresenter> implements ISearchResultView {
 
     private String mSearchContent;
     private Toolbar mToolbar;
@@ -43,12 +45,18 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result);
-        mSearchContent = getIntent().getStringExtra(AppConstants.SEARCH_CONTENT_INTNT);
-        initView();
-        initToolbar();
-        initEventAndData();
-        initRecyclerView();
+
+    }
+
+    @Override
+    protected SearchResultPresenter createPresenter() {
+        mPresenter = new SearchResultPresenter();
+        return mPresenter;
+    }
+
+    @Override
+    protected int setLayoutResId() {
+        return R.layout.activity_search_result;
     }
 
     private void initRecyclerView() {
@@ -76,10 +84,10 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
         });
     }
 
-    private void initEventAndData() {
+    @Override
+    protected void initEventAndData() {
         // 发送请求
-        if (!mSearchContent.isEmpty()){
-            mPresenter = new SearchResultPresenter(this);
+        if (mPresenter != null) {
             mPresenter.searchRequest(mSearchContent, 0);
         }
 
@@ -109,12 +117,18 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
         });
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
+        mSearchContent = getIntent().getStringExtra(AppConstants.SEARCH_CONTENT_INTNT);
+
         mToolbar = findViewById(R.id.search_result_tool_bar);
         mTitle = findViewById(R.id.search_result_title);
         mRecyclerView = findViewById(R.id.search_result_recycler_view);
         mProgressBar = findViewById(R.id.search_result_progress_bar);
         mRefreshLayout = findViewById(R.id.search_result_swipe_refresh);
+
+        initToolbar();
+        initRecyclerView();
     }
 
     @Override
@@ -128,11 +142,16 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
     }
 
     @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
     public void searchSuccess(Article articlesData) {
-        if (articlesData.getErrorCode() == 0){
+        if (articlesData.getErrorCode() == 0) {
             mPageCount = articlesData.getData().getPageCount();
             mAdapter.addArticle(articlesData.getData().getDatas());
-        }else{
+        } else {
             ToastUtils.toastShow(this, articlesData.getErrorMsg());
         }
     }
@@ -151,7 +170,7 @@ public class SearchResultActivity extends AppCompatActivity implements ISearchRe
             mAdapter.addArticle(articlesData.getData().getDatas());
             mCurrentPage = 0;
             mRefreshLayout.setRefreshing(false);
-        }else{
+        } else {
             ToastUtils.toastShow(this, articlesData.getErrorMsg());
         }
     }

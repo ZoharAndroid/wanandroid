@@ -14,7 +14,7 @@ import java.lang.reflect.Proxy;
  *
  *  Presenter的基类
  */
-public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
+public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> implements IBasePresenter<V> {
 
     private V mView;
     private M module;
