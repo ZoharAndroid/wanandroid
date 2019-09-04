@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.presenter;
+package com.zohar.wanandroid.presenter.register;
 
 import android.content.Context;
 import android.os.Handler;

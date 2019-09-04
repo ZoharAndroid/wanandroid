@@ -16,7 +16,7 @@ import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.bean.knowledge.SubKnowledge;
 import com.zohar.wanandroid.http.ApiAddress;
-import com.zohar.wanandroid.presenter.ProjectPresenter;
+import com.zohar.wanandroid.presenter.project.ProjectPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.project.IProjectView;
 

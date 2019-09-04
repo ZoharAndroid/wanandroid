@@ -13,15 +13,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.zohar.wanandroid.adapter.KnowledgeAdapter;
 import com.zohar.wanandroid.adapter.KnowledgeListAdapter;
 import com.zohar.wanandroid.adapter.OnLoadMoreListener;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Data;
 import com.zohar.wanandroid.config.AppConstants;
-import com.zohar.wanandroid.http.ApiAddress;
-import com.zohar.wanandroid.presenter.SearchResultPresenter;
-import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.presenter.search.SearchResultPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.search.ISearchResultView;
 

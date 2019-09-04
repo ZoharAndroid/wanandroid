@@ -6,7 +6,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 
 import com.zohar.wanandroid.bean.register.RegisterData;
 import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
-import com.zohar.wanandroid.presenter.RegisterPresenter;
+import com.zohar.wanandroid.presenter.register.RegisterPresenter;
 import com.zohar.wanandroid.utils.LogUtils;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.register.IRegisterView;

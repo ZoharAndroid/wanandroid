@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.presenter;
+package com.zohar.wanandroid.presenter.knowledge;
 
 import android.content.Context;
 import android.os.Handler;
@@ -7,22 +7,21 @@ import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.home.HomeModel;
 import com.zohar.wanandroid.model.home.OnHttpListener;
-import com.zohar.wanandroid.view.project.IProjectListView;
-import com.zohar.wanandroid.view.wechat.IWechatListView;
+import com.zohar.wanandroid.view.knowledge.IKnowledgeListView;
 
 /**
  * Created by zohar on 2019/8/27 22:36
  * Describe:
  */
-public class WechatListPresenter {
+public class KnowledgeListPresenter {
 
-    private IWechatListView mView;
+    private IKnowledgeListView mView;
     private HomeModel mModel;
     private Context context;
 
     private Handler mHandler = new Handler();
 
-    public WechatListPresenter(Context context, IWechatListView view) {
+    public KnowledgeListPresenter(Context context, IKnowledgeListView view) {
         this.context = context;
         mView = view;
         mModel = new HomeModel();
@@ -64,7 +63,7 @@ public class WechatListPresenter {
      * 刷新
      */
     public void onRefresh(int id) {
-        String url = ApiAddress.WECHAT_ARTICLE_ADDRESS(0, id);
+        String url = ApiAddress.KNOWLEDGE_TREE_ARTICLE(0, id);
         // 通过pressent调用model来发送http请求
         mModel.sendHomeHttp(context, url, new OnHttpListener() {
 

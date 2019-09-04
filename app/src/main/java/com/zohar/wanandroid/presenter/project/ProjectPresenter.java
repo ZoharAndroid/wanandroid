@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.presenter;
+package com.zohar.wanandroid.presenter.project;
 
 
 import android.content.Context;
@@ -7,28 +7,28 @@ import android.os.Handler;
 import com.zohar.wanandroid.bean.knowledge.Knowledge;
 import com.zohar.wanandroid.model.knowledge.KnowledgeModel;
 import com.zohar.wanandroid.model.knowledge.OnKnowledgeListener;
+import com.zohar.wanandroid.view.project.IProjectView;
 import com.zohar.wanandroid.view.wechat.IWechatView;
 
 /**
  * Created by zohar on 2019/8/27 14:02
  * Describe:
  */
-public class WechatPresenter {
+public class ProjectPresenter {
 
-   private IWechatView mView;
+   private IProjectView mView;
     private KnowledgeModel mModel;
     private Context context;
-
     private Handler mHandler = new Handler();
 
-    public WechatPresenter(Context context, IWechatView wechatView) {
+    public ProjectPresenter(Context context, IProjectView projectView) {
         this.context = context;
-        mView = wechatView;
+        mView = projectView;
         mModel = new KnowledgeModel();
     }
 
     // presenter 通过 model 发送http请求
-    public void sendWechatRequest(String url){
+    public void sendProjectRequest(String url){
         mView.showLoadingView();
         mModel.sendKnowledgeGetRequest(context, url, new OnKnowledgeListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.presenter;
+package com.zohar.wanandroid.presenter.collect;
 
 import android.content.Context;
 import android.view.View;
@@ -8,10 +8,8 @@ import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.collect.CancelCollectModel;
-import com.zohar.wanandroid.model.collect.CollectModel;
 import com.zohar.wanandroid.model.collect.OnCancelCollectListener;
 import com.zohar.wanandroid.view.collect.ICancelCollectView;
-import com.zohar.wanandroid.view.collect.ICollectView;
 
 /**
  * Created by zohar on 2019/9/1 11:53

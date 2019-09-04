@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Data;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.http.ApiAddress;
-import com.zohar.wanandroid.presenter.KnowledgeListPresenter;
+import com.zohar.wanandroid.presenter.knowledge.KnowledgeListPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.knowledge.IKnowledgeListView;
 

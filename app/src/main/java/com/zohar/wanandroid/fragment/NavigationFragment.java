@@ -3,7 +3,6 @@ package com.zohar.wanandroid.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +16,7 @@ import com.zohar.wanandroid.adapter.NaviAdapter;
 import com.zohar.wanandroid.bean.navi.NaviArticles;
 import com.zohar.wanandroid.bean.navi.NaviData;
 import com.zohar.wanandroid.http.ApiAddress;
-import com.zohar.wanandroid.presenter.NaviPresenter;
-import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.presenter.navi.NaviPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.navi.INaviView;
 

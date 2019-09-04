@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.presenter;
+package com.zohar.wanandroid.presenter.wechat;
 
 import android.content.Context;
 import android.os.Handler;
@@ -8,20 +8,21 @@ import com.zohar.wanandroid.http.ApiAddress;
 import com.zohar.wanandroid.model.home.HomeModel;
 import com.zohar.wanandroid.model.home.OnHttpListener;
 import com.zohar.wanandroid.view.project.IProjectListView;
+import com.zohar.wanandroid.view.wechat.IWechatListView;
 
 /**
  * Created by zohar on 2019/8/27 22:36
  * Describe:
  */
-public class ProjectListPresenter {
+public class WechatListPresenter {
 
-    private IProjectListView mView;
+    private IWechatListView mView;
     private HomeModel mModel;
     private Context context;
 
     private Handler mHandler = new Handler();
 
-    public ProjectListPresenter(Context context, IProjectListView view) {
+    public WechatListPresenter(Context context, IWechatListView view) {
         this.context = context;
         mView = view;
         mModel = new HomeModel();
@@ -63,9 +64,9 @@ public class ProjectListPresenter {
      * 刷新
      */
     public void onRefresh(int id) {
-        String url = ApiAddress.PROJECT_LIST_ADDRESS(0, id);
+        String url = ApiAddress.WECHAT_ARTICLE_ADDRESS(0, id);
         // 通过pressent调用model来发送http请求
-        mModel.sendHomeHttp(context ,url, new OnHttpListener() {
+        mModel.sendHomeHttp(context, url, new OnHttpListener() {
 
             @Override
             public void httpSuccess(final Article article) {

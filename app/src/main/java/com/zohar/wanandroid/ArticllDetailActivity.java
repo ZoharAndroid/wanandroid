@@ -16,14 +16,13 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.zohar.wanandroid.adapter.HomeArticleAdapter;
 import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.ArticleDetailPresenter;
-import com.zohar.wanandroid.presenter.CancelCollectPresenter;
-import com.zohar.wanandroid.presenter.CollectPresenter;
+import com.zohar.wanandroid.presenter.collect.CancelCollectPresenter;
+import com.zohar.wanandroid.presenter.collect.CollectPresenter;
 import com.zohar.wanandroid.view.collect.ICancelCollectView;
 import com.zohar.wanandroid.view.collect.ICollectView;
 import com.zohar.wanandroid.view.delail.IArticleDetailView;

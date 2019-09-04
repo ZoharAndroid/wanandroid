@@ -2,7 +2,6 @@ package com.zohar.wanandroid;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -36,7 +35,7 @@ import com.zohar.wanandroid.fragment.NavigationFragment;
 import com.zohar.wanandroid.fragment.ProjectFragment;
 import com.zohar.wanandroid.fragment.WechatFragment;
 import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
-import com.zohar.wanandroid.presenter.LogoutPresenter;
+import com.zohar.wanandroid.presenter.login.LogoutPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.login.ILoginOutView;
 

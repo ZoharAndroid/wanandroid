@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.presenter;
+package com.zohar.wanandroid.presenter.login;
 
 import android.content.Context;
 import android.text.TextUtils;

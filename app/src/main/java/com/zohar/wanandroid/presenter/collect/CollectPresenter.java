@@ -1,4 +1,4 @@
-package com.zohar.wanandroid.presenter;
+package com.zohar.wanandroid.presenter.collect;
 
 import android.content.Context;
 import android.view.View;

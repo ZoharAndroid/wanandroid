@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
@@ -14,16 +13,10 @@ import com.zohar.wanandroid.adapter.viewholder.ArticleViewHolder;
 import com.zohar.wanandroid.adapter.viewholder.FooterViewHolder;
 import com.zohar.wanandroid.bean.collect.Collect;
 import com.zohar.wanandroid.bean.collect.CollectData;
-import com.zohar.wanandroid.bean.collect.CollectListData;
-import com.zohar.wanandroid.bean.home.Article;
-import com.zohar.wanandroid.bean.home.Datas;
 import com.zohar.wanandroid.config.AppConstants;
-import com.zohar.wanandroid.presenter.CancelCollectPresenter;
-import com.zohar.wanandroid.presenter.CollectListPresenter;
-import com.zohar.wanandroid.presenter.CollectPresenter;
+import com.zohar.wanandroid.presenter.collect.CancelCollectPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.collect.ICancelCollectView;
-import com.zohar.wanandroid.view.collect.ICollectView;
 
 import java.util.ArrayList;
 import java.util.List;

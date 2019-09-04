@@ -1,7 +1,6 @@
 package com.zohar.wanandroid;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -12,19 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zohar.wanandroid.bean.register.RegisterData;
 import com.zohar.wanandroid.config.AppConstants;
-import com.zohar.wanandroid.http.cookies.PersistentCookieStore;
-import com.zohar.wanandroid.presenter.LoginPresenter;
-import com.zohar.wanandroid.utils.LogUtils;
+import com.zohar.wanandroid.presenter.login.LoginPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.login.ILoginView;
-
-import java.util.List;
-
-import okhttp3.Cookie;
 
 /**
  * Created by zohar on 2019/8/5 21:46

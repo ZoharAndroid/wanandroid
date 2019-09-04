@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,12 +13,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zohar.wanandroid.adapter.CollectListAdapter;
-import com.zohar.wanandroid.adapter.HomeArticleAdapter;
-import com.zohar.wanandroid.adapter.KnowledgeListAdapter;
 import com.zohar.wanandroid.adapter.OnLoadMoreListener;
 import com.zohar.wanandroid.bean.collect.CollectData;
-import com.zohar.wanandroid.bean.home.Article;
-import com.zohar.wanandroid.presenter.CollectListPresenter;
+import com.zohar.wanandroid.presenter.collect.CollectListPresenter;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.collect.ICollectListView;
 

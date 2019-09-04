@@ -2,7 +2,6 @@ package com.zohar.wanandroid.view.collect;
 
 import android.view.View;
 
-import com.zohar.wanandroid.bean.collect.CollectData;
 import com.zohar.wanandroid.bean.home.Article;
 
 /**
