@@ -16,7 +16,7 @@ import java.lang.reflect.Proxy;
  */
 public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
 
-    private V view;
+    private V mView;
     private M module;
     private WeakReference<V> mWeakReference;
 
@@ -25,9 +25,10 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
      *
      * @param view
      */
+    @SuppressWarnings("unchecked")
     public void attachView(V view){
         mWeakReference = new WeakReference<>(view);
-        view = (V)Proxy.newProxyInstance(view.getClass().getClassLoader(), view.getClass().getInterfaces(), new MvpViewHandler(mWeakReference.get()));
+        mView = (V)Proxy.newProxyInstance(view.getClass().getClassLoader(), view.getClass().getInterfaces(), new MvpViewHandler(mWeakReference.get()));
         if (this.module == null){
             this.module = createModule();
         }
@@ -60,7 +61,7 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
      * @return view
      */
     protected V getView(){
-        return view;
+        return mView;
     }
 
     /**

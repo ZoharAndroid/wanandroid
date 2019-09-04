@@ -1,7 +1,9 @@
 package com.zohar.wanandroid;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -14,8 +16,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zohar.wanandroid.base.BaseActivity;
 import com.zohar.wanandroid.bean.register.RegisterData;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.fragment.HomeFragment;
@@ -45,7 +46,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Cookie;
 
-public class MainActivity extends AppCompatActivity implements ILoginOutView {
+public class MainActivity extends BaseActivity<LogoutPresenter> implements ILoginOutView {
 
     private static final String TAG = "MainActivity";
 
@@ -69,15 +70,111 @@ public class MainActivity extends AppCompatActivity implements ILoginOutView {
     private NavigationFragment mNavigationFragment;
     private ProjectFragment mProjectFragment;
     private LinearLayout mLoginOutView;
+    private LogoutPresenter mPresenter;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mFragments = new ArrayList<>();
-        // 初始化View
-        initView();
+    protected LogoutPresenter createPresenter() {
+        mPresenter = new LogoutPresenter();
+        return mPresenter;
+    }
 
+    @Override
+    protected int setLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == AppConstants.LOGIN_INTENT) {
+                mUsernameTextView.setText(data.getStringExtra(AppConstants.LOGIN_USER_NAME_INTENT));
+                mUsernameTextView.setClickable(false);
+            }
+        }
+
+    }
+
+    /**
+     * 退出登录
+     */
+    private void loginOut() {
+        // 跳出提示框
+        AlertDialog dialog = new AlertDialog.Builder(this).setMessage("是否确认退出登录？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 调用退出登录
+                        //LogoutPresenter mPresenter = new LogoutPresenter(MainActivity.this);
+                        mPresenter.logoutRequest(MainActivity.this);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void initFragment() {
+        mHomeFragment = HomeFragment.newInstance();
+        mKnowlegeHierachyFragment = KnowlegeHierachyFragment.newInstance();
+        mWechatFragment = WechatFragment.newInstance();
+        mNavigationFragment = NavigationFragment.newInstance();
+        mProjectFragment = ProjectFragment.newInstance();
+
+        mFragments.add(mHomeFragment);
+        mFragments.add(mKnowlegeHierachyFragment);
+        mFragments.add(mWechatFragment);
+        mFragments.add(mNavigationFragment);
+        mFragments.add(mProjectFragment);
+
+        switchFragment(mCurrentIndex);
+
+    }
+
+    private void switchFragment(int position) {
+        FragmentManager mFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        Fragment targetFragment = mFragments.get(position);
+        Fragment currentFragment = mFragments.get(mCurrentIndex);
+        mCurrentIndex = position;
+        fragmentTransaction.hide(currentFragment);
+        if (!targetFragment.isAdded()) {
+            // 如果目标fragment没有被添加,那么就进行谈价
+            getSupportFragmentManager().beginTransaction().remove(targetFragment).commitAllowingStateLoss();
+            fragmentTransaction.add(R.id.fragment_container, targetFragment);
+        }
+        fragmentTransaction.show(targetFragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void initView() {
+        mToolbar = findViewById(R.id.toolbar);
+        mMainDrawerLayout = findViewById(R.id.main_drawer_layout);
+        mNavigationView = findViewById(R.id.navigation_container);
+        mFloatingActionButton = findViewById(R.id.floating_action_button);
+        mContentFrameLayout = findViewById(R.id.fragment_container);
+        mBottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        mToolbarTitle = findViewById(R.id.toolbar_title);
+        mProgressBar = findViewById(R.id.main_progress_bar);
+
+        // 侧滑菜单中的header
+        View headerView = mNavigationView.getHeaderView(0);
+        mUsernameTextView = headerView.findViewById(R.id.header_username_text_view);
+        mHeaderImageView = headerView.findViewById(R.id.header_avatar_image_view);
+
+        // 侧滑菜单中的底部布局
+        mLoginOutView = mNavigationView.findViewById(R.id.ll_login_out);
+    }
+
+    @Override
+    protected void initEventAndData() {
+        mFragments = new ArrayList<>();
         setSupportActionBar(mToolbar);
         // 设置侧滑菜单
         ActionBar actionBar = getSupportActionBar();
@@ -97,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements ILoginOutView {
                 // 关闭侧滑菜单
                 mMainDrawerLayout.closeDrawers();
                 // Todo: 对选择侧滑菜单对应的item进行处理
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.collections:
                         // 收藏按钮.跳转到收藏列表中
                         Intent intent = new Intent(MainActivity.this, CollectListActivity.class);
@@ -189,92 +286,6 @@ public class MainActivity extends AppCompatActivity implements ILoginOutView {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK){
-            if (requestCode == AppConstants.LOGIN_INTENT){
-                mUsernameTextView.setText(data.getStringExtra(AppConstants.LOGIN_USER_NAME_INTENT));
-                mUsernameTextView.setClickable(false);
-            }
-        }
-
-    }
-
-    /**
-     * 退出登录
-     */
-    private void loginOut() {
-        // 跳出提示框
-        AlertDialog dialog = new AlertDialog.Builder(this).setMessage("是否确认退出登录？")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 调用退出登录
-                        LogoutPresenter mPresenter = new LogoutPresenter(MainActivity.this);
-                        mPresenter.logoutRequest(MainActivity.this);
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
-
-    private void initFragment() {
-        mHomeFragment = HomeFragment.newInstance();
-        mKnowlegeHierachyFragment = KnowlegeHierachyFragment.newInstance();
-        mWechatFragment = WechatFragment.newInstance();
-        mNavigationFragment = NavigationFragment.newInstance();
-        mProjectFragment = ProjectFragment.newInstance();
-
-        mFragments.add(mHomeFragment);
-        mFragments.add(mKnowlegeHierachyFragment);
-        mFragments.add(mWechatFragment);
-        mFragments.add(mNavigationFragment);
-        mFragments.add(mProjectFragment);
-
-        switchFragment(mCurrentIndex);
-
-    }
-
-    private void switchFragment(int position) {
-        FragmentManager mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-        Fragment targetFragment = mFragments.get(position);
-        Fragment currentFragment = mFragments.get(mCurrentIndex);
-        mCurrentIndex = position;
-        fragmentTransaction.hide(currentFragment);
-        if (!targetFragment.isAdded()) {
-            // 如果目标fragment没有被添加,那么就进行谈价
-            getSupportFragmentManager().beginTransaction().remove(targetFragment).commitAllowingStateLoss();
-            fragmentTransaction.add(R.id.fragment_container, targetFragment);
-        }
-        fragmentTransaction.show(targetFragment);
-        fragmentTransaction.commit();
-    }
-
-    private void initView() {
-        mToolbar = findViewById(R.id.toolbar);
-        mMainDrawerLayout = findViewById(R.id.main_drawer_layout);
-        mNavigationView = findViewById(R.id.navigation_container);
-        mFloatingActionButton = findViewById(R.id.floating_action_button);
-        mContentFrameLayout = findViewById(R.id.fragment_container);
-        mBottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        mToolbarTitle = findViewById(R.id.toolbar_title);
-        mProgressBar = findViewById(R.id.main_progress_bar);
-
-        // 侧滑菜单中的header
-        View headerView = mNavigationView.getHeaderView(0);
-        mUsernameTextView = headerView.findViewById(R.id.header_username_text_view);
-        mHeaderImageView = headerView.findViewById(R.id.header_avatar_image_view);
-
-        // 侧滑菜单中的底部布局
-        mLoginOutView = mNavigationView.findViewById(R.id.ll_login_out);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.men_main, menu);
         return true;
@@ -307,12 +318,17 @@ public class MainActivity extends AppCompatActivity implements ILoginOutView {
     }
 
     @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
     public void logoutSuccess(RegisterData logoutData) {
         // 退出登录成功
-        if (logoutData.getErrorCode() == 0){
+        if (logoutData.getErrorCode() == 0) {
             mUsernameTextView.setText(getResources().getString(R.string.login));
             mUsernameTextView.setClickable(true);
-        }else{
+        } else {
             ToastUtils.toastShow(this, logoutData.getErrorMsg());
         }
     }

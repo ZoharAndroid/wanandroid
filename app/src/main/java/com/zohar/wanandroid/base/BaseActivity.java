@@ -17,6 +17,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(setLayoutResId());
+        initView();
+        initEventAndData();
         // 创建Presenter
         presenter = createPresenter();
         if (presenter != null){
@@ -39,4 +42,21 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      * @return P Presenter对象
      */
     protected abstract P createPresenter();
+
+    /**
+     * 插入布局文件
+     *
+     * @return
+     */
+    protected abstract int setLayoutResId();
+
+    /**
+     * 初始化布局View
+     */
+    protected abstract void initView();
+
+    /**
+     * 初始哈化事件和数据
+     */
+    protected abstract void initEventAndData();
 }

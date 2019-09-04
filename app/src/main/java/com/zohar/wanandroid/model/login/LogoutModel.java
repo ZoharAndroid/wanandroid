@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.google.gson.Gson;
+import com.zohar.wanandroid.base.IBaseModel;
 import com.zohar.wanandroid.bean.register.RegisterData;
 import com.zohar.wanandroid.http.HttpRequestUtils;
 import com.zohar.wanandroid.utils.SharePreferenceUtils;
