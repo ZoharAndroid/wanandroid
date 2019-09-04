@@ -19,8 +19,8 @@ public class KeyboardUtils {
      * @param context context
      * @param editText EditText View
      */
-    public static void openKeyboard(Context context, EditText editText){
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    public static void openKeyboard(EditText editText){
+        InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             // 显示软件盘
             imm.showSoftInput(editText, 0);

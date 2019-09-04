@@ -20,11 +20,14 @@ import com.zohar.wanandroid.bean.search.HotSearch;
 import com.zohar.wanandroid.bean.search.HotSearchData;
 import com.zohar.wanandroid.config.AppConstants;
 import com.zohar.wanandroid.presenter.search.HotSearchPresenter;
+import com.zohar.wanandroid.utils.KeyboardUtils;
 import com.zohar.wanandroid.utils.ScreenUtil;
 import com.zohar.wanandroid.utils.ToastUtils;
 import com.zohar.wanandroid.view.search.IHotSearchView;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by zohar on 2019/8/30 9:51
@@ -88,6 +91,17 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
         mSearchEditText = findViewById(R.id.search_edit_text);
         mSearchButton = findViewById(R.id.search_start_button);
         mTagFlowLayout = findViewById(R.id.hot_search_tag_container_tag_layout);
+
+        // 打开软键盘
+        mSearchEditText.requestFocus();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                KeyboardUtils.openKeyboard(mSearchEditText);
+            }
+        }, 600);  //在一秒后打开
     }
 
     @Override
