@@ -101,7 +101,7 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
             public void run() {
                 KeyboardUtils.openKeyboard(mSearchEditText);
             }
-        }, 600);  //在一秒后打开
+        }, 600);  //在0.6秒后打开
     }
 
     @Override
