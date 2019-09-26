@@ -1,8 +1,5 @@
 package com.zohar.wanandroid.base;
 
-import android.icu.util.IndianCalendar;
-import android.view.View;
-
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -26,6 +23,7 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> i
      * @param view
      */
     @SuppressWarnings("unchecked")
+    @Override
     public void attachView(V view){
         mWeakReference = new WeakReference<>(view);
         mView = (V)Proxy.newProxyInstance(view.getClass().getClassLoader(), view.getClass().getInterfaces(), new MvpViewHandler(mWeakReference.get()));
@@ -37,6 +35,7 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> i
     /**
      * 分离View
      */
+    @Override
     public void detachView(){
         this.module = null;
         if (isViewAttached()){
@@ -50,6 +49,7 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> i
      *
      * @return
      */
+    @Override
     public boolean isViewAttached(){
         return mWeakReference != null && mWeakReference.get() != null;
     }

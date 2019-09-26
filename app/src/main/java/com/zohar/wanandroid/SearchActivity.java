@@ -1,5 +1,6 @@
 package com.zohar.wanandroid;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
+import com.zohar.wanandroid.base.BaseActivity;
 import com.zohar.wanandroid.bean.search.HotSearch;
 import com.zohar.wanandroid.bean.search.HotSearchData;
 import com.zohar.wanandroid.config.AppConstants;
@@ -33,22 +35,25 @@ import java.util.TimerTask;
  * Created by zohar on 2019/8/30 9:51
  * Describe:
  */
-public class SearchActivity extends AppCompatActivity implements IHotSearchView {
+public class SearchActivity extends BaseActivity<HotSearchPresenter> implements IHotSearchView {
 
     private Toolbar mToolbar;
     private EditText mSearchEditText;
     private TextView mSearchButton;
     private TagFlowLayout mTagFlowLayout;
     private List<HotSearch> mHotSearchList;
+    private HotSearchPresenter mPresenter;
+
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        initView();
-        initToolbar();
-        initEventAndData();
+    protected HotSearchPresenter createPresenter() {
+        mPresenter = new HotSearchPresenter();
+        return mPresenter;
+    }
 
+    @Override
+    protected int setLayoutResId() {
+        return R.layout.activity_search;
     }
 
     private void initToolbar() {
@@ -65,9 +70,9 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
         });
     }
 
-    private void initEventAndData() {
+    @Override
+    protected void initEventAndData() {
         // 请求热搜数据
-        final HotSearchPresenter mPresenter = new HotSearchPresenter(this, this);
         mPresenter.hotSearchRequest();
 
         // 搜索内容
@@ -86,11 +91,14 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
 
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         mToolbar = findViewById(R.id.search_tool_bar);
         mSearchEditText = findViewById(R.id.search_edit_text);
         mSearchButton = findViewById(R.id.search_start_button);
         mTagFlowLayout = findViewById(R.id.hot_search_tag_container_tag_layout);
+
+        initToolbar();
 
         // 打开软键盘
         mSearchEditText.requestFocus();
@@ -169,5 +177,20 @@ public class SearchActivity extends AppCompatActivity implements IHotSearchView 
      */
     public String getSearchContent() {
         return mSearchEditText.getText().toString().trim();
+    }
+
+    @Override
+    public void showLoadingView() {
+
+    }
+
+    @Override
+    public void hideLoadingView() {
+
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

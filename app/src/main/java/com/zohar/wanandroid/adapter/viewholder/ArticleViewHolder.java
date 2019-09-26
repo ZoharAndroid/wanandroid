@@ -23,6 +23,7 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder {
     public ImageView collectImageView;
     public TextView refresh;
     public TextView tag;
+    public ImageView image;
 
     public ArticleViewHolder(View itemView) {
         super(itemView);
@@ -35,5 +36,6 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder {
         collectImageView = itemView.findViewById(R.id.item_collect_image_view);
         refresh = itemView.findViewById(R.id.item_tag_refresh);
         tag = itemView.findViewById(R.id.item_tag);
+        image = itemView.findViewById(R.id.item_image);
     }
 }

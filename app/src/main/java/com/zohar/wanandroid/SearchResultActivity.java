@@ -60,7 +60,6 @@ public class SearchResultActivity extends BaseActivity<SearchResultPresenter> im
     }
 
     private void initRecyclerView() {
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);

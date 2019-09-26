@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.zohar.wanandroid.ArticllDetailActivity;
 import com.zohar.wanandroid.R;
 import com.zohar.wanandroid.adapter.viewholder.FooterViewHolder;
@@ -142,6 +143,13 @@ public class KnowledgeListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 articleViewHolder.collectImageView.setImageResource(R.mipmap.icon_collect_select);
             }else{
                 articleViewHolder.collectImageView.setImageResource(R.mipmap.icon_item_collection);
+            }
+            // 设置图片
+            if (article.getEnvelopePic() != null){
+                articleViewHolder.image.setVisibility(View.VISIBLE);
+                Glide.with(mContext).load(article.getEnvelopePic()).into(articleViewHolder.image);
+            }else{
+                articleViewHolder.image.setVisibility(View.GONE);
             }
         } else {
 
